@@ -11,7 +11,8 @@ public class Numero implements Serializable {
 	String tapa;
 	String estado;
 	String resenha;
-	BufferedImage img;
+	byte[] img;
+	//BufferedImage img;
 	int idColeccion;
 	
 	public Numero() {
@@ -19,7 +20,7 @@ public class Numero implements Serializable {
 	}
 
 	public Numero(int id, String titulo, Date fechaAdquisicion, String tapa, String estado, String resenha,
-			BufferedImage img, int idColeccion) {
+			byte[] img, int idColeccion) {
 		super();
 		this.id = id;
 		this.titulo = titulo;
@@ -79,11 +80,11 @@ public class Numero implements Serializable {
 		this.resenha = resenha;
 	}
 
-	public BufferedImage getImg() {
+	public byte[] getImg() {
 		return img;
 	}
 
-	public void setImg(BufferedImage img) {
+	public void setImg(byte[] img) {
 		this.img = img;
 	}
 

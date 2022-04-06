@@ -6,13 +6,13 @@ import java.io.Serializable;
 public class Coleccion implements Serializable{
 	int id;
 	String nombre;
-	BufferedImage img;
+	byte[] img;
 	
 	public Coleccion() {
 		super();
 	}
 
-	public Coleccion(int id, String nombre, BufferedImage img) {
+	public Coleccion(int id, String nombre, byte[] img) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -35,11 +35,11 @@ public class Coleccion implements Serializable{
 		this.nombre = nombre;
 	}
 
-	public BufferedImage getImg() {
+	public byte[] getImg() {
 		return img;
 	}
 
-	public void setImg(BufferedImage img) {
+	public void setImg(byte[] img) {
 		this.img = img;
 	}
 

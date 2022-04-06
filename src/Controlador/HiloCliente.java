@@ -12,10 +12,13 @@ import java.util.ArrayList;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 
 import Modelo.Coleccion;
 import Modelo.Numero;
+import Modelo.TablaComics;
+import Vista.PantallaBusqueda;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,6 +31,7 @@ public class HiloCliente extends Thread {
     ObjectOutputStream objeto_salida;
     ObjectInputStream objeto_entrada;
     Coleccion coleccion;
+    JTable tbComics;
     
     public HiloCliente(Socket socketCliente, String peticion, Object obj) {
         this.socketCliente = socketCliente;
@@ -48,6 +52,21 @@ public class HiloCliente extends Thread {
         this.peticion = peticion;
         this.objeto = obj;
         this.coleccion = col;
+ 
+        try {
+            objeto_salida = new ObjectOutputStream(socketCliente.getOutputStream());
+        } catch (IOException ex) {
+            // Logger.getLogger(HiloCliente.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NullPointerException e) {
+            JOptionPane.showMessageDialog(null, "Servidor desconectado", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    public HiloCliente(Socket socketCliente, String peticion, Object obj, JTable tbComic) {
+        this.socketCliente = socketCliente;
+        this.peticion = peticion;
+        this.objeto = obj;
+        tbComics = tbComic;
 
         try {
             objeto_salida = new ObjectOutputStream(socketCliente.getOutputStream());
@@ -91,11 +110,15 @@ public class HiloCliente extends Thread {
                     break;
                 case "cargarComics": ArrayList<Numero> comics = (ArrayList<Numero>) objeto_entrada.readObject();
                 
-                		objeto = comics;
+                		PantallaBusqueda.listaComics = comics;
+                
+                		tbComics.setModel(new TablaComics(comics,socketCliente));
                     break;    
                 case "colByComic": objeto_salida.writeObject(objeto);
                 
                 		coleccion = (Coleccion) objeto_entrada.readObject();
+                		
+                		TablaComics.coleccion = coleccion;
                 		
                 	break;
                 default:

@@ -287,7 +287,7 @@ public class PantallaBusqueda {
 	private void cargarComics(Socket skCliente) {
 		listaComics.clear();
 		
-		HiloCliente hilo = new HiloCliente(skCliente,"cargarComics",listaComics);
+		HiloCliente hilo = new HiloCliente(skCliente,"cargarComics",null,tbComics);
 		hilo.start();
 		
 		try {
@@ -296,8 +296,6 @@ public class PantallaBusqueda {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		tbComics.setModel(new TablaComics(listaComics,skCliente));
 		
 	}
 

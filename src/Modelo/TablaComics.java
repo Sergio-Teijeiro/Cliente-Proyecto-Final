@@ -13,6 +13,8 @@ public class TablaComics extends AbstractTableModel {
 	private String[] columnas = {"Título","Colección"};
 	private Socket socketCliente;
 	
+	public static Coleccion coleccion;
+	
 	public TablaComics(ArrayList<Numero> listaComics,String[] columnas) {
 		super();
 		this.listaComics = listaComics;
@@ -39,10 +41,17 @@ public class TablaComics extends AbstractTableModel {
 	public Object getValueAt(int row, int col) {
 		if (row != -1 && row < listaComics.size()) {
 			Numero n = listaComics.get(row);
-			Coleccion coleccion = null;
+			coleccion = null;
 			
 			HiloCliente hilo = new HiloCliente(socketCliente,"colByComic",n,coleccion);
 			hilo.start();
+			
+			try {
+				hilo.join();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 			
 			switch (col) {
