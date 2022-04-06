@@ -1,13 +1,17 @@
 package Modelo;
 
+import java.net.Socket;
 import java.text.DateFormat;
 import java.util.ArrayList;
 
 import javax.swing.table.AbstractTableModel;
 
+import Controlador.HiloCliente;
+
 public class TablaComics extends AbstractTableModel {
 	private ArrayList<Numero> listaComics;
 	private String[] columnas = {"Título","Colección"};
+	private Socket socketCliente;
 	
 	public TablaComics(ArrayList<Numero> listaComics,String[] columnas) {
 		super();
@@ -15,9 +19,10 @@ public class TablaComics extends AbstractTableModel {
 		this.columnas = columnas;
 	}
 	
-	public TablaComics(ArrayList<Numero> listaComics) {
+	public TablaComics(ArrayList<Numero> listaComics, Socket skCliente) {
 		super();
 		this.listaComics = listaComics;
+		this.socketCliente = skCliente;
 	}
 	
 	@Override
@@ -35,6 +40,9 @@ public class TablaComics extends AbstractTableModel {
 		if (row != -1 && row < listaComics.size()) {
 			Numero n = listaComics.get(row);
 			Coleccion coleccion = null;
+			
+			HiloCliente hilo = new HiloCliente(socketCliente,"colByComic",n,coleccion);
+			hilo.start();
 			
 			
 			switch (col) {

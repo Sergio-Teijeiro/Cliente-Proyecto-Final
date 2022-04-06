@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
+
+import Modelo.Coleccion;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,6 +26,7 @@ public class HiloCliente extends Thread {
     Object objeto;
     ObjectOutputStream objeto_salida;
     ObjectInputStream objeto_entrada;
+    Coleccion coleccion;
     
     public HiloCliente(Socket socketCliente, String peticion, Object obj) {
         this.socketCliente = socketCliente;
@@ -38,9 +42,25 @@ public class HiloCliente extends Thread {
         }
     }
     
+    public HiloCliente(Socket socketCliente, String peticion, Object obj, Coleccion col) {
+        this.socketCliente = socketCliente;
+        this.peticion = peticion;
+        this.objeto = obj;
+        this.coleccion = col;
+
+        try {
+            objeto_salida = new ObjectOutputStream(socketCliente.getOutputStream());
+        } catch (IOException ex) {
+            // Logger.getLogger(HiloCliente.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NullPointerException e) {
+            JOptionPane.showMessageDialog(null, "Servidor desconectado", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
     @Override
     public void run() {
         try {
+        	
             String mensaje = "";
             OutputStream out = socketCliente.getOutputStream();
             DataOutputStream flujo_salida = new DataOutputStream(out);
@@ -69,7 +89,12 @@ public class HiloCliente extends Thread {
                 case "modificar":
                     break;
                 case "consultar":
-                    break;     
+                    break;    
+                case "colByComic": objeto_salida.writeObject(objeto);
+                
+                		coleccion = (Coleccion) objeto_entrada.readObject();
+                		
+                	break;
                 default:
                     break;
             }
@@ -87,5 +112,5 @@ public class HiloCliente extends Thread {
 
             Logger.getLogger(HiloCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }    
+    }
 }
