@@ -1,22 +1,28 @@
 package Vista;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.sql.SQLException;
 import java.util.Locale;
 import java.util.Properties;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.UIManager;
 
 import com.jtattoo.plaf.fast.FastLookAndFeel;
@@ -28,6 +34,7 @@ public class PantallaPrincipal {
 	private String mensajeSalir = "¿Deseas salir de la aplicación?", cerrarPrograma = "Cerrar programa", tituloPantalla = "Comicalia";
 	private JMenu menuIdioma;
 	private JMenuItem itemEspanhol, itemGallego;
+	private JButton btnConectar, btnInfo;
 
 	/**
 	 * Launch the application.
@@ -116,6 +123,22 @@ public class PantallaPrincipal {
 		});
 		itemGallego.setFont(new Font("Caladea", Font.PLAIN, 16));
 		menuIdioma.add(itemGallego);
+		
+		JPanel panelBotones = new JPanel();
+		FlowLayout flowLayout = (FlowLayout) panelBotones.getLayout();
+		flowLayout.setVgap(15);
+		frmPrincipal.getContentPane().add(panelBotones, BorderLayout.SOUTH);
+		
+		btnConectar = new JButton("Conectar");
+		btnConectar.setPreferredSize(new Dimension(180, 30));
+		btnConectar.setFont(new Font("Caladea", Font.PLAIN, 18));
+		btnConectar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		btnConectar.setMargin(new Insets(2, 44, 2, 44));
+		panelBotones.add(btnConectar);
 	}
 
 }
