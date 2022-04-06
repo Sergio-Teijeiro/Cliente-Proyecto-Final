@@ -50,11 +50,11 @@ public class PantallaBusqueda {
 	private JPanel panelBusquedaCol;
 	private JLabel lblColeccion;
 	private JTextField txtColeccion;
-	private JButton btnLupa;
+	private JButton btnBuscarPorCol;
 	private JPanel panelBusquedaComic;
 	private JLabel lblComic;
 	private JTextField txtComic;
-	private JButton btnLupa2;
+	private JButton btnBuscarPorTitulo;
 	private JTable tbComics;
 	
 	
@@ -215,22 +215,36 @@ public class PantallaBusqueda {
 		panelBusquedaCol.add(txtColeccion);
 		txtColeccion.setColumns(30);
 		
-		btnLupa = new JButton("");
-		btnLupa.setBorder(new EmptyBorder(0, 0, 0, 0));
-		btnLupa.setToolTipText("Buscar cómic según colección");
-		btnLupa.setMaximumSize(new Dimension(40, 40));
-		btnLupa.setBounds(5, 5, 20, 20);
-		btnLupa.setFocusPainted(false);
-		btnLupa.setContentAreaFilled(false);
-		btnLupa.setBorderPainted(false);
+		btnBuscarPorCol = new JButton("");
+		btnBuscarPorCol.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//Buscar los comics de la coleccion especificada
+				
+				if (!txtColeccion.getText().isBlank()) {
+					if (txtColeccion.getText().length() > 200) {
+						JOptionPane.showMessageDialog(frmBusqueda, "Comprueba la ayuda para ver la longitud máxima de cada campo", "Error",
+								JOptionPane.ERROR_MESSAGE);
+					} else {
+						cargarComicsPorColeccion(skCliente);
+					}
+				}
+			}
+		});
+		btnBuscarPorCol.setBorder(new EmptyBorder(0, 0, 0, 0));
+		btnBuscarPorCol.setToolTipText("Buscar cómic según colección");
+		btnBuscarPorCol.setMaximumSize(new Dimension(40, 40));
+		btnBuscarPorCol.setBounds(5, 5, 20, 20);
+		btnBuscarPorCol.setFocusPainted(false);
+		btnBuscarPorCol.setContentAreaFilled(false);
+		btnBuscarPorCol.setBorderPainted(false);
 		
 		ImageIcon icono = new ImageIcon(PantallaBusqueda.class.getResource("/img/lupa.png"));
-		btnLupa.setMaximumSize(new Dimension(40, 40));
-		ImageIcon iconoEscala = new ImageIcon(icono.getImage().getScaledInstance(btnLupa.getWidth(),
-				btnLupa.getHeight(), java.awt.Image.SCALE_FAST));
-		btnLupa.setIcon(iconoEscala);
+		btnBuscarPorCol.setMaximumSize(new Dimension(40, 40));
+		ImageIcon iconoEscala = new ImageIcon(icono.getImage().getScaledInstance(btnBuscarPorCol.getWidth(),
+				btnBuscarPorCol.getHeight(), java.awt.Image.SCALE_FAST));
+		btnBuscarPorCol.setIcon(iconoEscala);
 
-		panelBusquedaCol.add(btnLupa);
+		panelBusquedaCol.add(btnBuscarPorCol);
 		
 		panelBusquedaComic = new JPanel();
 		FlowLayout fl_panelBusquedaComic = (FlowLayout) panelBusquedaComic.getLayout();
@@ -246,21 +260,21 @@ public class PantallaBusqueda {
 		txtComic.setColumns(30);
 		panelBusquedaComic.add(txtComic);
 		
-		btnLupa2 = new JButton("");
-		btnLupa2.setToolTipText("Buscar c\u00F3mic seg\u00FAn título");
-		btnLupa2.setMaximumSize(new Dimension(40, 40));
-		btnLupa2.setFocusPainted(false);
-		btnLupa2.setContentAreaFilled(false);
-		btnLupa2.setBorderPainted(false);
-		btnLupa2.setBorder(new EmptyBorder(0, 0, 0, 0));
+		btnBuscarPorTitulo = new JButton("");
+		btnBuscarPorTitulo.setToolTipText("Buscar c\u00F3mic seg\u00FAn título");
+		btnBuscarPorTitulo.setMaximumSize(new Dimension(40, 40));
+		btnBuscarPorTitulo.setFocusPainted(false);
+		btnBuscarPorTitulo.setContentAreaFilled(false);
+		btnBuscarPorTitulo.setBorderPainted(false);
+		btnBuscarPorTitulo.setBorder(new EmptyBorder(0, 0, 0, 0));
 		
 		ImageIcon icono2 = new ImageIcon(PantallaBusqueda.class.getResource("/img/lupa.png"));
-		btnLupa2.setMaximumSize(new Dimension(40, 40));
-		ImageIcon iconoEscala2 = new ImageIcon(icono2.getImage().getScaledInstance(btnLupa.getWidth(),
-				btnLupa.getHeight(), java.awt.Image.SCALE_FAST));
-		btnLupa2.setIcon(iconoEscala2);
+		btnBuscarPorTitulo.setMaximumSize(new Dimension(40, 40));
+		ImageIcon iconoEscala2 = new ImageIcon(icono2.getImage().getScaledInstance(btnBuscarPorCol.getWidth(),
+				btnBuscarPorCol.getHeight(), java.awt.Image.SCALE_FAST));
+		btnBuscarPorTitulo.setIcon(iconoEscala2);
 		
-		panelBusquedaComic.add(btnLupa2);
+		panelBusquedaComic.add(btnBuscarPorTitulo);
 		
 		JScrollPane cabeceraTabla = new JScrollPane();
 		cabeceraTabla.setBounds(0,0,594,299);
@@ -281,6 +295,21 @@ public class PantallaBusqueda {
 		panelTabla.add(cabeceraTabla, BorderLayout.CENTER);
 		
 		cargarComics(skCliente);
+		
+	}
+
+	private void cargarComicsPorColeccion(Socket skCliente) {
+		listaComics.clear();
+		
+		HiloCliente hilo = new HiloCliente(skCliente,"cargarComicsPorCol",null,tbComics);
+		hilo.start();
+		
+		try {
+			hilo.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 
