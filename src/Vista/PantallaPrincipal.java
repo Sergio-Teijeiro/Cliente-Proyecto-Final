@@ -6,6 +6,7 @@ import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Insets;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -170,6 +171,25 @@ public class PantallaPrincipal {
 		btnInfo.setIcon(iconoEscala);
 		
 		panelTitulo.add(btnInfo);
+		
+		JPanel panelImagen = new JPanel();
+		panelPrincipal.add(panelImagen);
+
+		JButton btnImagen = new JButton("");
+
+		btnImagen.setBounds(new Rectangle(0, 0, 800, 450));
+
+		ImageIcon icono2 = new ImageIcon(PantallaPrincipal.class.getResource("/img/avengers.jpg"));
+		ImageIcon iconoEscala2 = new ImageIcon(icono2.getImage().getScaledInstance(btnImagen.getWidth(),
+				btnImagen.getHeight(), java.awt.Image.SCALE_FAST));
+
+		btnImagen.setIcon(iconoEscala2);
+
+		btnImagen.setFocusPainted(false);
+		btnImagen.setContentAreaFilled(false);
+		btnImagen.setBorderPainted(false);
+
+		panelImagen.add(btnImagen);
 	}
 
 }
