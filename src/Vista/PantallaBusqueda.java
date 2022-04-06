@@ -8,6 +8,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
+import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -15,6 +19,8 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+
+import Controlador.HiloCliente;
 
 public class PantallaBusqueda {
 
@@ -32,7 +38,7 @@ public class PantallaBusqueda {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					PantallaBusqueda window = new PantallaBusqueda();
+					PantallaBusqueda window = new PantallaBusqueda(null);
 					window.frmBusqueda.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -43,15 +49,17 @@ public class PantallaBusqueda {
 
 	/**
 	 * Create the application.
+	 * @param skCliente 
 	 */
-	public PantallaBusqueda() {
-		initialize();
+	public PantallaBusqueda(Socket skCliente) {
+		initialize(skCliente);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
+	 * @param skCliente 
 	 */
-	private void initialize() {
+	private void initialize(Socket skCliente) {
 		frmBusqueda = new JFrame();
 		frmBusqueda.addWindowListener(new WindowAdapter() {
 			@Override
@@ -69,6 +77,23 @@ public class PantallaBusqueda {
 
 				} else if (respuesta == 0) {
 					frmBusqueda.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+					
+					//si cierra el programa, se cierra la conexion del cliente y se envia la orden de salir
+					try {
+			            if (skCliente != null) {
+			                //mando orden salir y cierro conexion
+			                HiloCliente hilo = new HiloCliente(skCliente, "fin", null);
+			                hilo.start();
+			                hilo.join();
+
+			                skCliente.close();
+			            }
+			        } catch (IOException ex) {
+			            Logger.getLogger(PantallaBusqueda.class.getName()).log(Level.SEVERE, null, ex);
+			        } catch (InterruptedException ex) {
+			            Logger.getLogger(PantallaBusqueda.class.getName()).log(Level.SEVERE, null, ex);
+			        }
+					
 				} else { // si cierra el dialogo de confirmacion, no cierra la ventana principal
 					frmBusqueda.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 				}

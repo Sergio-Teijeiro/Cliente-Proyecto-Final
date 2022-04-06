@@ -146,7 +146,7 @@ public class PantallaPrincipal {
 		            
 		            frmPrincipal.dispose();
 		            
-		            PantallaBusqueda p = new PantallaBusqueda();
+		            PantallaBusqueda p = new PantallaBusqueda(skCliente);
 		            
 		            p.frmBusqueda.setVisible(true);
 
