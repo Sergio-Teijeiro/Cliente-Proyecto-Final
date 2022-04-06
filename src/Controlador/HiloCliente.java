@@ -58,11 +58,11 @@ public class HiloCliente extends Thread {
 
                     mensaje = flujo_entrada.readUTF();
 
-                   // if (mensaje.contains("existe")) {
-                        JOptionPane.showMessageDialog(null, mensaje, "Prueba", JOptionPane.INFORMATION_MESSAGE);
-                  /*  } else {
+                    if (mensaje.contains("existe")) {
+                        JOptionPane.showMessageDialog(null, mensaje, "Prueba", JOptionPane.ERROR_MESSAGE);
+                    } else {
                         JOptionPane.showMessageDialog(null, mensaje, "Inserción completada", JOptionPane.INFORMATION_MESSAGE);
-                    }*/
+                    }
                     break;
                 case "baja":
                     break;
