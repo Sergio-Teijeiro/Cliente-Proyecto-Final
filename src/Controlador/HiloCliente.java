@@ -131,6 +131,16 @@ public class HiloCliente extends Thread {
         
         				tbComics.setModel(new TablaComics(comicsColeccion,socketCliente));
                 	break;
+                case "cargarComicsPorTitulo": String titulo = (String) objeto;
+        		
+        				flujo_salida.writeUTF(titulo);
+        
+        				ArrayList<Numero> comicsTitulo = (ArrayList<Numero>) objeto_entrada.readObject();
+        
+        				PantallaBusqueda.listaComics = comicsTitulo;
+
+        				tbComics.setModel(new TablaComics(comicsTitulo,socketCliente));
+        	break;                	
                 default:
                     break;
             }
