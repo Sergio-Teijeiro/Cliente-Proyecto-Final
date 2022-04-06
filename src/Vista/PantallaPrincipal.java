@@ -136,7 +136,7 @@ public class PantallaPrincipal {
 		btnConectar.setFont(new Font("Caladea", Font.PLAIN, 18));
 		btnConectar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				String conectar;
 			}
 		});
 		btnConectar.setMargin(new Insets(2, 44, 2, 44));
