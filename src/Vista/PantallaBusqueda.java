@@ -24,11 +24,14 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 
 import Controlador.HiloCliente;
 import Fuentes.Fuentes;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.JButton;
 
 public class PantallaBusqueda {
@@ -48,6 +51,7 @@ public class PantallaBusqueda {
 	private JLabel lblComic;
 	private JTextField txtComic;
 	private JButton btnLupa2;
+	private JTable tbComics;
 
 	/**
 	 * Launch the application.
@@ -227,6 +231,7 @@ public class PantallaBusqueda {
 		panelPrincipal.add(panelBusquedaComic);
 		
 		lblComic = new JLabel("C\u00F3mic");
+		lblComic.setBorder(new EmptyBorder(0, 0, 0, 30));
 		lblComic.setFont(new Font("Caladea", Font.PLAIN, 20));
 		panelBusquedaComic.add(lblComic);
 		
@@ -250,7 +255,23 @@ public class PantallaBusqueda {
 		
 		panelBusquedaComic.add(btnLupa2);
 		
+		JScrollPane cabeceraTabla = new JScrollPane();
+		cabeceraTabla.setBounds(0,0,594,299);
 		
+		tbComics = new JTable();
+		tbComics.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+		tbComics.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		tbComics.setBounds(60,23,506,209);
+		tbComics.getTableHeader().setReorderingAllowed(false); //impedir mover columnas
+		
+		JPanel panelTabla = new JPanel();
+		frmBusqueda.getContentPane().add(panelTabla, BorderLayout.SOUTH);
+		panelTabla.setLayout(new BorderLayout(0, 0));
+		
+		tbComics.setFillsViewportHeight(true);
+		cabeceraTabla.setViewportView(tbComics);
+		
+		panelTabla.add(cabeceraTabla, BorderLayout.CENTER);
 		
 	}
 
