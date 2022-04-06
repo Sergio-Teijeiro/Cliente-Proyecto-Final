@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.net.Socket;
 import java.util.Properties;
 
 import javax.swing.BoxLayout;
@@ -40,6 +41,7 @@ public class PantallaPrincipal {
 	private JMenuItem itemEspanhol, itemGallego;
 	private JButton btnConectar, btnInfo;
 	private JLabel lblTitulo;
+	Socket skCliente;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -136,7 +138,24 @@ public class PantallaPrincipal {
 		btnConectar.setFont(new Font("Caladea", Font.PLAIN, 18));
 		btnConectar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String conectar;
+				
+		        try {
+		            //Nos Conectamos a un Servidor mediante IP+PUERTO
+		            skCliente = new Socket("192.168.56.101", 2000);
+		            
+		            frmPrincipal.dispose();
+
+		        } catch (Exception ex) {
+		            if (ex.getClass().getName().equals("java.net.ConnectException")) {
+		            	JOptionPane.showMessageDialog(frmPrincipal,"No se ha podido conectar con el servidor", "Error al conectar",
+		            			JOptionPane.ERROR_MESSAGE);
+		            }
+		            //ex.printStackTrace();
+		        }
+				
+				/*Pantalla p = new Pantalla();
+
+				p.frmPeliculas.setVisible(true);*/
 			}
 		});
 		btnConectar.setMargin(new Insets(2, 44, 2, 44));
