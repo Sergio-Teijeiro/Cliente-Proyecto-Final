@@ -11,13 +11,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.sql.SQLException;
-import java.util.Locale;
 import java.util.Properties;
 
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -35,6 +35,7 @@ public class PantallaPrincipal {
 	private JMenu menuIdioma;
 	private JMenuItem itemEspanhol, itemGallego;
 	private JButton btnConectar, btnInfo;
+	private JLabel lblTitulo;
 
 	/**
 	 * Launch the application.
@@ -139,6 +140,36 @@ public class PantallaPrincipal {
 		});
 		btnConectar.setMargin(new Insets(2, 44, 2, 44));
 		panelBotones.add(btnConectar);
+		
+		JPanel panelPrincipal = new JPanel();
+		frmPrincipal.getContentPane().add(panelPrincipal, BorderLayout.CENTER);
+		panelPrincipal.setLayout(new BoxLayout(panelPrincipal, BoxLayout.Y_AXIS));
+
+		JPanel panelTitulo = new JPanel();
+		FlowLayout flowLayout_1 = (FlowLayout) panelTitulo.getLayout();
+		flowLayout_1.setHgap(35);
+		flowLayout_1.setVgap(35);
+		panelPrincipal.add(panelTitulo);
+
+		lblTitulo = new JLabel("COMICALIA");
+		lblTitulo.setFont(new Font("Caladea", Font.PLAIN, 60));
+		panelTitulo.add(lblTitulo);
+		
+		btnInfo = new JButton("");
+		btnInfo.setToolTipText("Ayuda");
+		btnInfo.setMaximumSize(new Dimension(40, 40));
+		btnInfo.setBounds(5, 5, 20, 20);
+		btnInfo.setFocusPainted(false);
+		btnInfo.setContentAreaFilled(false);
+		btnInfo.setBorderPainted(false);
+		
+		ImageIcon icono = new ImageIcon(PantallaPrincipal.class.getResource("/ayuda/img/info.png"));
+		btnInfo.setMaximumSize(new Dimension(40, 40));
+		ImageIcon iconoEscala = new ImageIcon(icono.getImage().getScaledInstance(btnInfo.getWidth(),
+				btnInfo.getHeight(), java.awt.Image.SCALE_FAST));
+		btnInfo.setIcon(iconoEscala);
+		
+		panelTitulo.add(btnInfo);
 	}
 
 }
