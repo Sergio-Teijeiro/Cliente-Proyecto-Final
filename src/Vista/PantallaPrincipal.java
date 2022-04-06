@@ -144,7 +144,11 @@ public class PantallaPrincipal {
 		            //Nos Conectamos a un Servidor mediante IP+PUERTO
 		            skCliente = new Socket("192.168.56.101", 2000);
 		            
-		            //frmPrincipal.dispose();
+		            frmPrincipal.dispose();
+		            
+		            PantallaBusqueda p = new PantallaBusqueda();
+		            
+		            p.frmBusqueda.setVisible(true);
 
 		        } catch (Exception ex) {
 		            if (ex.getClass().getName().equals("java.net.ConnectException")) {
@@ -153,10 +157,6 @@ public class PantallaPrincipal {
 		            }
 		            //ex.printStackTrace();
 		        }
-				
-				/*Pantalla p = new Pantalla();
-
-				p.frmPeliculas.setVisible(true);*/
 			}
 		});
 		btnConectar.setMargin(new Insets(2, 44, 2, 44));
