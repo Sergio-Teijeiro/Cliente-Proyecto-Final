@@ -2,13 +2,20 @@ package Vista;
 
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Locale;
 import java.util.Properties;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
@@ -19,6 +26,8 @@ public class PantallaPrincipal {
 	private JFrame frmPrincipal;
 	private String[] opciones = { "Sí", "No" };
 	private String mensajeSalir = "¿Deseas salir de la aplicación?", cerrarPrograma = "Cerrar programa", tituloPantalla = "Comicalia";
+	private JMenu menuIdioma;
+	private JMenuItem itemEspanhol, itemGallego;
 
 	/**
 	 * Launch the application.
@@ -82,6 +91,31 @@ public class PantallaPrincipal {
 		frmPrincipal.setLocationRelativeTo(null);
 		frmPrincipal.setIconImage(
 				Toolkit.getDefaultToolkit().getImage(PantallaPrincipal.class.getResource("/img/app_icon.png")));
+		
+		JMenuBar menuBar = new JMenuBar();
+		frmPrincipal.setJMenuBar(menuBar);
+
+		menuIdioma = new JMenu("Cambiar idioma");
+		menuIdioma.setFont(new Font("Caladea", Font.PLAIN, 16));
+		menuBar.add(menuIdioma);
+		
+		itemEspanhol = new JMenuItem("Espa\u00F1ol");
+		itemEspanhol.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+			}
+		});
+		itemEspanhol.setFont(new Font("Caladea", Font.PLAIN, 16));
+		menuIdioma.add(itemEspanhol);
+		
+		itemGallego = new JMenuItem("Gallego");
+		itemGallego.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+			}
+		});
+		itemGallego.setFont(new Font("Caladea", Font.PLAIN, 16));
+		menuIdioma.add(itemGallego);
 	}
 
 }
