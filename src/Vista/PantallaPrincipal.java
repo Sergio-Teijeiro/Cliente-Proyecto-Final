@@ -29,6 +29,7 @@ import javax.swing.UIManager;
 
 import com.jtattoo.plaf.fast.FastLookAndFeel;
 
+import Controlador.HiloCliente;
 import Fuentes.Fuentes;
 import javax.swing.border.EmptyBorder;
 
@@ -143,7 +144,10 @@ public class PantallaPrincipal {
 		            //Nos Conectamos a un Servidor mediante IP+PUERTO
 		            skCliente = new Socket("192.168.56.101", 2000);
 		            
-		            frmPrincipal.dispose();
+		            HiloCliente hilo = new HiloCliente(skCliente,"alta",null);
+		            hilo.start();
+		            
+		            //frmPrincipal.dispose();
 
 		        } catch (Exception ex) {
 		            if (ex.getClass().getName().equals("java.net.ConnectException")) {

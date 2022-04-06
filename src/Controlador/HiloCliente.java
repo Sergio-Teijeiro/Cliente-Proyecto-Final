@@ -24,7 +24,7 @@ public class HiloCliente extends Thread {
     ObjectOutputStream objeto_salida;
     ObjectInputStream objeto_entrada;
     
-    public HiloCliente(Socket socketCliente, String peticion, JLabel lblEstadoCliente, Object obj) {
+    public HiloCliente(Socket socketCliente, String peticion, Object obj) {
         this.socketCliente = socketCliente;
         this.peticion = peticion;
         this.objeto = obj;
