@@ -263,6 +263,22 @@ public class PantallaBusqueda {
 		panelBusquedaComic.add(txtComic);
 		
 		btnBuscarPorTitulo = new JButton("");
+		btnBuscarPorTitulo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//Buscar los comics del titulo especificado
+				
+				if (!txtComic.getText().isBlank()) {
+					if (txtComic.getText().length() > 200) {
+						JOptionPane.showMessageDialog(frmBusqueda, "Comprueba la ayuda para ver la longitud máxima de cada campo", "Error",
+								JOptionPane.ERROR_MESSAGE);
+					} else {
+						cargarComicsPorTitulo(skCliente,txtComic.getText());
+					}
+				} else {
+					cargarComics(skCliente);
+				}
+			}
+		});
 		btnBuscarPorTitulo.setToolTipText("Buscar por cómic");
 		btnBuscarPorTitulo.setMaximumSize(new Dimension(40, 40));
 		btnBuscarPorTitulo.setFocusPainted(false);
@@ -297,6 +313,21 @@ public class PantallaBusqueda {
 		panelTabla.add(cabeceraTabla, BorderLayout.CENTER);
 		
 		cargarComics(skCliente);
+		
+	}
+
+	protected void cargarComicsPorTitulo(Socket skCliente, String titulo) {
+		listaComics.clear();
+		
+		HiloCliente hilo = new HiloCliente(skCliente,"cargarComicsPorTitulo",titulo,tbComics);
+		hilo.start();
+		
+		try {
+			hilo.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 
