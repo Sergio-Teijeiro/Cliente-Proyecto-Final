@@ -121,6 +121,12 @@ public class HiloCliente extends Thread {
                 		TablaComics.coleccion = coleccion;
                 		
                 	break;
+                case "cargarComicsPorCol": ArrayList<Numero> comicsColeccion = (ArrayList<Numero>) objeto_entrada.readObject();
+                
+        				PantallaBusqueda.listaComics = comicsColeccion;
+        
+        				tbComics.setModel(new TablaComics(comicsColeccion,socketCliente));
+                	break;
                 default:
                     break;
             }
