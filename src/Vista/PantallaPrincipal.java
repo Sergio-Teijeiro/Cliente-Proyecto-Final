@@ -2,6 +2,7 @@ package Vista;
 
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Properties;
@@ -78,6 +79,9 @@ public class PantallaPrincipal {
 		frmPrincipal.setTitle(tituloPantalla);
 		frmPrincipal.setBounds(100, 100, 450, 300);
 		frmPrincipal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmPrincipal.setLocationRelativeTo(null);
+		frmPrincipal.setIconImage(
+				Toolkit.getDefaultToolkit().getImage(PantallaPrincipal.class.getResource("/img/app_icon.png")));
 	}
 
 }
