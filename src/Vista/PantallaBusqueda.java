@@ -1,7 +1,9 @@
 package Vista;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -13,14 +15,19 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 
 import Controlador.HiloCliente;
+import Fuentes.Fuentes;
 
 public class PantallaBusqueda {
 
@@ -30,6 +37,9 @@ public class PantallaBusqueda {
 	private String tituloPantalla = "Catálogo de cómics";
 	private JMenu menuComics, menuColecciones, menuInformes;
 	private JMenuItem itemBusqueda,itemComics,itemColecciones,itemInformes;
+	private JLabel lblTitulo;
+	private JPanel panelBusqueda;
+	private JLabel lblColeccion;
 
 	/**
 	 * Launch the application.
@@ -153,6 +163,34 @@ public class PantallaBusqueda {
 		});
 		itemInformes.setFont(new Font("Caladea", Font.PLAIN, 16));
 		menuInformes.add(itemInformes);
+		
+		JPanel panelPrincipal = new JPanel();
+		frmBusqueda.getContentPane().add(panelPrincipal, BorderLayout.CENTER);
+		panelPrincipal.setLayout(new BoxLayout(panelPrincipal, BoxLayout.Y_AXIS));
+
+		JPanel panelTitulo = new JPanel();
+		FlowLayout flowLayout_1 = (FlowLayout) panelTitulo.getLayout();
+		flowLayout_1.setHgap(35);
+		flowLayout_1.setVgap(35);
+		panelPrincipal.add(panelTitulo);
+
+		lblTitulo = new JLabel("CATÁLOGO DE CÓMICS");
+		lblTitulo.setBorder(new EmptyBorder(25, 5, 0, 5));
+		
+		Fuentes fuentes = new Fuentes();
+		Font fuenteTitulo = fuentes.getFuente(fuentes.BOUNCY, Font.BOLD, 60);
+		
+		lblTitulo.setFont(fuenteTitulo);
+		panelTitulo.add(lblTitulo);
+		
+		panelBusqueda = new JPanel();
+		panelPrincipal.add(panelBusqueda);
+		panelBusqueda.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		lblColeccion = new JLabel("Colecci\u00F3n");
+		lblColeccion.setFont(new Font("Caladea", Font.PLAIN, 20));
+		panelBusqueda.add(lblColeccion);
+		
 		
 		
 	}
