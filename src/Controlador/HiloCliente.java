@@ -69,7 +69,7 @@ public class HiloCliente extends Thread {
                 case "modificar":
                     break;
                 case "consultar":
-                    break;                  
+                    break;     
                 default:
                     break;
             }
