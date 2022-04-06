@@ -28,6 +28,8 @@ import javax.swing.border.EmptyBorder;
 
 import Controlador.HiloCliente;
 import Fuentes.Fuentes;
+import javax.swing.JTextField;
+import javax.swing.JButton;
 
 public class PantallaBusqueda {
 
@@ -38,8 +40,14 @@ public class PantallaBusqueda {
 	private JMenu menuComics, menuColecciones, menuInformes;
 	private JMenuItem itemBusqueda,itemComics,itemColecciones,itemInformes;
 	private JLabel lblTitulo;
-	private JPanel panelBusqueda;
+	private JPanel panelBusquedaCol;
 	private JLabel lblColeccion;
+	private JTextField txtColeccion;
+	private JButton btnLupa;
+	private JPanel panelBusquedaComic;
+	private JLabel lblComic;
+	private JTextField txtComic;
+	private JButton btnLupa2;
 
 	/**
 	 * Launch the application.
@@ -183,13 +191,64 @@ public class PantallaBusqueda {
 		lblTitulo.setFont(fuenteTitulo);
 		panelTitulo.add(lblTitulo);
 		
-		panelBusqueda = new JPanel();
-		panelPrincipal.add(panelBusqueda);
-		panelBusqueda.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		panelBusquedaCol = new JPanel();
+		FlowLayout fl_panelBusquedaCol = (FlowLayout) panelBusquedaCol.getLayout();
+		fl_panelBusquedaCol.setHgap(20);
+		panelPrincipal.add(panelBusquedaCol);
 		
 		lblColeccion = new JLabel("Colecci\u00F3n");
 		lblColeccion.setFont(new Font("Caladea", Font.PLAIN, 20));
-		panelBusqueda.add(lblColeccion);
+		panelBusquedaCol.add(lblColeccion);
+		
+		txtColeccion = new JTextField();
+		panelBusquedaCol.add(txtColeccion);
+		txtColeccion.setColumns(30);
+		
+		btnLupa = new JButton("");
+		btnLupa.setBorder(new EmptyBorder(0, 0, 0, 0));
+		btnLupa.setToolTipText("Buscar cómic según colección");
+		btnLupa.setMaximumSize(new Dimension(40, 40));
+		btnLupa.setBounds(5, 5, 20, 20);
+		btnLupa.setFocusPainted(false);
+		btnLupa.setContentAreaFilled(false);
+		btnLupa.setBorderPainted(false);
+		
+		ImageIcon icono = new ImageIcon(PantallaBusqueda.class.getResource("/img/lupa.png"));
+		btnLupa.setMaximumSize(new Dimension(40, 40));
+		ImageIcon iconoEscala = new ImageIcon(icono.getImage().getScaledInstance(btnLupa.getWidth(),
+				btnLupa.getHeight(), java.awt.Image.SCALE_FAST));
+		btnLupa.setIcon(iconoEscala);
+
+		panelBusquedaCol.add(btnLupa);
+		
+		panelBusquedaComic = new JPanel();
+		FlowLayout fl_panelBusquedaComic = (FlowLayout) panelBusquedaComic.getLayout();
+		fl_panelBusquedaComic.setHgap(20);
+		panelPrincipal.add(panelBusquedaComic);
+		
+		lblComic = new JLabel("C\u00F3mic");
+		lblComic.setFont(new Font("Caladea", Font.PLAIN, 20));
+		panelBusquedaComic.add(lblComic);
+		
+		txtComic = new JTextField();
+		txtComic.setColumns(30);
+		panelBusquedaComic.add(txtComic);
+		
+		btnLupa2 = new JButton("");
+		btnLupa2.setToolTipText("Buscar c\u00F3mic seg\u00FAn título");
+		btnLupa2.setMaximumSize(new Dimension(40, 40));
+		btnLupa2.setFocusPainted(false);
+		btnLupa2.setContentAreaFilled(false);
+		btnLupa2.setBorderPainted(false);
+		btnLupa2.setBorder(new EmptyBorder(0, 0, 0, 0));
+		
+		ImageIcon icono2 = new ImageIcon(PantallaBusqueda.class.getResource("/img/lupa.png"));
+		btnLupa2.setMaximumSize(new Dimension(40, 40));
+		ImageIcon iconoEscala2 = new ImageIcon(icono2.getImage().getScaledInstance(btnLupa.getWidth(),
+				btnLupa.getHeight(), java.awt.Image.SCALE_FAST));
+		btnLupa2.setIcon(iconoEscala2);
+		
+		panelBusquedaComic.add(btnLupa2);
 		
 		
 		
