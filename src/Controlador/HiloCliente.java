@@ -121,7 +121,11 @@ public class HiloCliente extends Thread {
                 		TablaComics.coleccion = coleccion;
                 		
                 	break;
-                case "cargarComicsPorCol": ArrayList<Numero> comicsColeccion = (ArrayList<Numero>) objeto_entrada.readObject();
+                case "cargarComicsPorCol": String nombreCol = (String) objeto;
+                		
+                		flujo_salida.writeUTF(nombreCol);
+                
+                		ArrayList<Numero> comicsColeccion = (ArrayList<Numero>) objeto_entrada.readObject();
                 
         				PantallaBusqueda.listaComics = comicsColeccion;
         

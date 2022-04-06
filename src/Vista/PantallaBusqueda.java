@@ -225,7 +225,7 @@ public class PantallaBusqueda {
 						JOptionPane.showMessageDialog(frmBusqueda, "Comprueba la ayuda para ver la longitud máxima de cada campo", "Error",
 								JOptionPane.ERROR_MESSAGE);
 					} else {
-						cargarComicsPorColeccion(skCliente);
+						cargarComicsPorColeccion(skCliente,txtColeccion.getText());
 					}
 				}
 			}
@@ -298,10 +298,10 @@ public class PantallaBusqueda {
 		
 	}
 
-	private void cargarComicsPorColeccion(Socket skCliente) {
+	private void cargarComicsPorColeccion(Socket skCliente, String nombreColeccion) {
 		listaComics.clear();
 		
-		HiloCliente hilo = new HiloCliente(skCliente,"cargarComicsPorCol",null,tbComics);
+		HiloCliente hilo = new HiloCliente(skCliente,"cargarComicsPorCol",nombreColeccion,tbComics);
 		hilo.start();
 		
 		try {
