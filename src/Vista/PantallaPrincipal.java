@@ -1,6 +1,7 @@
 package Vista;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
@@ -27,6 +28,9 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 
 import com.jtattoo.plaf.fast.FastLookAndFeel;
+
+import Fuentes.Fuentes;
+import javax.swing.border.EmptyBorder;
 
 public class PantallaPrincipal {
 
@@ -153,7 +157,12 @@ public class PantallaPrincipal {
 		panelPrincipal.add(panelTitulo);
 
 		lblTitulo = new JLabel("COMICALIA");
-		lblTitulo.setFont(new Font("Caladea", Font.PLAIN, 60));
+		lblTitulo.setBorder(new EmptyBorder(15, 5, 0, 5));
+		
+		Fuentes fuentes = new Fuentes();
+		Font fuenteTitulo = fuentes.getFuente(fuentes.BOUNCY, Font.BOLD, 80);
+		
+		lblTitulo.setFont(fuenteTitulo);
 		panelTitulo.add(lblTitulo);
 		
 		btnInfo = new JButton("");
