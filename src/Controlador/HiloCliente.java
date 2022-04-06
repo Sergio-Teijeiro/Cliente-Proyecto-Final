@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 
 import Modelo.Coleccion;
+import Modelo.Numero;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -88,7 +89,9 @@ public class HiloCliente extends Thread {
                     break;
                 case "modificar":
                     break;
-                case "consultar":
+                case "cargarComics": ArrayList<Numero> comics = (ArrayList<Numero>) objeto_entrada.readObject();
+                
+                		objeto = comics;
                     break;    
                 case "colByComic": objeto_salida.writeObject(objeto);
                 

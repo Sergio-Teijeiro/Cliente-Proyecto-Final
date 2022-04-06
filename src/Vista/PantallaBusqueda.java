@@ -12,6 +12,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,6 +31,9 @@ import javax.swing.border.EmptyBorder;
 
 import Controlador.HiloCliente;
 import Fuentes.Fuentes;
+import Modelo.Numero;
+import Modelo.TablaComics;
+
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.JButton;
@@ -52,6 +56,9 @@ public class PantallaBusqueda {
 	private JTextField txtComic;
 	private JButton btnLupa2;
 	private JTable tbComics;
+	
+	
+	public static ArrayList<Numero> listaComics = new ArrayList<>();
 
 	/**
 	 * Launch the application.
@@ -272,6 +279,25 @@ public class PantallaBusqueda {
 		cabeceraTabla.setViewportView(tbComics);
 		
 		panelTabla.add(cabeceraTabla, BorderLayout.CENTER);
+		
+		cargarComics(skCliente);
+		
+	}
+
+	private void cargarComics(Socket skCliente) {
+		listaComics.clear();
+		
+		HiloCliente hilo = new HiloCliente(skCliente,"cargarComics",listaComics);
+		hilo.start();
+		
+		try {
+			hilo.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		tbComics.setModel(new TablaComics(listaComics,skCliente));
 		
 	}
 
