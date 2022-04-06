@@ -227,11 +227,13 @@ public class PantallaBusqueda {
 					} else {
 						cargarComicsPorColeccion(skCliente,txtColeccion.getText());
 					}
+				} else {
+					cargarComics(skCliente);
 				}
 			}
 		});
 		btnBuscarPorCol.setBorder(new EmptyBorder(0, 0, 0, 0));
-		btnBuscarPorCol.setToolTipText("Buscar cómic según colección");
+		btnBuscarPorCol.setToolTipText("Buscar por colección");
 		btnBuscarPorCol.setMaximumSize(new Dimension(40, 40));
 		btnBuscarPorCol.setBounds(5, 5, 20, 20);
 		btnBuscarPorCol.setFocusPainted(false);
@@ -261,7 +263,7 @@ public class PantallaBusqueda {
 		panelBusquedaComic.add(txtComic);
 		
 		btnBuscarPorTitulo = new JButton("");
-		btnBuscarPorTitulo.setToolTipText("Buscar c\u00F3mic seg\u00FAn título");
+		btnBuscarPorTitulo.setToolTipText("Buscar por cómic");
 		btnBuscarPorTitulo.setMaximumSize(new Dimension(40, 40));
 		btnBuscarPorTitulo.setFocusPainted(false);
 		btnBuscarPorTitulo.setContentAreaFilled(false);
