@@ -11,7 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
-import com.jtattoo.plaf.graphite.GraphiteLookAndFeel;
+import com.jtattoo.plaf.fast.FastLookAndFeel;
 
 public class PantallaPrincipal {
 
@@ -28,8 +28,8 @@ public class PantallaPrincipal {
 				try {
 					Properties props = new Properties();
 					props.put("logoString", "...");
-					GraphiteLookAndFeel.setCurrentTheme(props);
-					UIManager.setLookAndFeel(new GraphiteLookAndFeel());
+					FastLookAndFeel.setCurrentTheme(props);
+					UIManager.setLookAndFeel(new FastLookAndFeel());
 					
 					PantallaPrincipal window = new PantallaPrincipal();
 					window.frmPrincipal.setVisible(true);
