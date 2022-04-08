@@ -308,7 +308,8 @@ public class PantallaBusqueda {
 					Numero numero = listaComics.get(tbComics.getSelectedRow());
 					
 					if (numero != null) {
-						System.out.println(numero.getTitulo());
+						DetalleComic detalle = new DetalleComic(numero);
+						detalle.setVisible(true);
 					}
 				}
 			}
