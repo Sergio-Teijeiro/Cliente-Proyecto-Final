@@ -72,9 +72,9 @@ public class DetalleComic extends JDialog {
 		JLabel lblID = new JLabel("ID");
 		lblID.setBorder(new EmptyBorder(5, 0, 0, 5));
 		Fuentes fuentes = new Fuentes();
-		Font fuenteID = fuentes.getFuente(fuentes.BOUNCY, Font.PLAIN, 30);
+		Font fuente = fuentes.getFuente(fuentes.BOUNCY, Font.PLAIN, 30);
 		
-		lblID.setFont(fuenteID);
+		lblID.setFont(fuente);
 		panelIDTitulo.add(lblID);
 		
 		JTextField txtID = new JTextField();
@@ -88,9 +88,8 @@ public class DetalleComic extends JDialog {
 		
 		JLabel lblTitulo = new JLabel("TÍTULO");
 		lblTitulo.setBorder(new EmptyBorder(10, 0, 0, 5));
-		Font fuenteTitulo = fuentes.getFuente(fuentes.BOUNCY, Font.PLAIN, 30);
 		
-		lblTitulo.setFont(fuenteTitulo);
+		lblTitulo.setFont(fuente);
 		panelIDTitulo.add(lblTitulo);
 		
 		JTextField txtTitulo = new JTextField();
@@ -102,7 +101,42 @@ public class DetalleComic extends JDialog {
 		txtTitulo.setEditable(false);
 		panelIDTitulo.add(txtTitulo);
 		
+		JPanel panelFechaTapa = new JPanel();
+		FlowLayout flowLayout2 = (FlowLayout) panelFechaTapa.getLayout();
+		flowLayout2.setHgap(25);
+		flowLayout2.setAlignment(FlowLayout.LEFT);
+		flowLayout2.setVgap(25);
+		panelDatos.add(panelFechaTapa);
 		
+		JLabel lblFecha = new JLabel("FECHA ADQUISICIÓN");
+		lblFecha.setBorder(new EmptyBorder(10, 0, 10, 5));
+		
+		lblFecha.setFont(fuente);
+		panelFechaTapa.add(lblFecha);
+		
+		JTextField txtFecha= new JTextField();
+		txtFecha.setPreferredSize(new Dimension(20,40));
+		txtFecha.setColumns(7);
+		txtFecha.setText(numero.getFechaAdquisicion().toString());
+		txtFecha.setFont(new Font("Caladea", Font.PLAIN, 20));
+		txtFecha.setCaretPosition(0); //poner cursor al principio
+		txtFecha.setEditable(false);
+		panelFechaTapa.add(txtFecha);
+		
+		JLabel lblTapa= new JLabel("TAPA");
+		lblTapa.setBorder(new EmptyBorder(5, 0, 0, 5));
+		
+		lblTapa.setFont(fuente);
+		panelFechaTapa.add(lblTapa);
+		
+		JTextField txtTapa= new JTextField();
+		txtTapa.setPreferredSize(new Dimension(20,40));
+		txtTapa.setColumns(7);
+		txtTapa.setText(numero.getTapa());
+		txtTapa.setFont(new Font("Caladea", Font.PLAIN, 20));
+		txtTapa.setCaretPosition(0); //poner cursor al principio
+		txtTapa.setEditable(false);
+		panelFechaTapa.add(txtTapa);
 
 	}
 
