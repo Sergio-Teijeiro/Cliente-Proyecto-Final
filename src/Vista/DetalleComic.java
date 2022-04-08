@@ -1,11 +1,16 @@
 package Vista;
 
+import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Toolkit;
 
 import javax.swing.JDialog;
 
+import Modelo.Numero;
+
 public class DetalleComic extends JDialog {
 
+	private String tituloPantalla = "";
 	/**
 	 * Launch the application.
 	 */
@@ -13,7 +18,7 @@ public class DetalleComic extends JDialog {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					DetalleComic dialog = new DetalleComic();
+					DetalleComic dialog = new DetalleComic(null);
 					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 					dialog.setVisible(true);
 				} catch (Exception e) {
@@ -26,8 +31,15 @@ public class DetalleComic extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public DetalleComic() {
-		setBounds(100, 100, 450, 300);
+	public DetalleComic(Numero numero) {
+		tituloPantalla = numero.getTitulo();
+		
+		setBounds(0, 0, 450, 300);
+		setMinimumSize(new Dimension(850, 720));
+		setTitle(tituloPantalla);
+		setLocationRelativeTo(null);
+		setIconImage(
+				Toolkit.getDefaultToolkit().getImage(PantallaPrincipal.class.getResource("/img/app_icon.png")));
 
 	}
 
