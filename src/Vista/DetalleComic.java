@@ -16,8 +16,11 @@ import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.BoundedRangeModel;
 import javax.swing.BoxLayout;
 import java.awt.FlowLayout;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 
 public class DetalleComic extends JDialog {
 
@@ -74,9 +77,14 @@ public class DetalleComic extends JDialog {
 		lblID.setFont(fuenteID);
 		panelIDTitulo.add(lblID);
 		
-		JLabel lblValorID = new JLabel(String.valueOf(numero.getId()));
-		lblValorID.setFont(new Font("Caladea", Font.PLAIN, 20));
-		panelIDTitulo.add(lblValorID);
+		JTextField txtID = new JTextField();
+		txtID.setPreferredSize(new Dimension(10,40));
+		txtID.setColumns(3);
+		txtID.setText(String.valueOf(numero.getId()));
+		txtID.setFont(new Font("Caladea", Font.PLAIN, 20));
+		txtID.setCaretPosition(0); //poner cursor al principio
+		txtID.setEditable(false);
+		panelIDTitulo.add(txtID);
 		
 		JLabel lblTitulo = new JLabel("TÍTULO");
 		lblTitulo.setBorder(new EmptyBorder(10, 0, 0, 5));
@@ -85,14 +93,15 @@ public class DetalleComic extends JDialog {
 		lblTitulo.setFont(fuenteTitulo);
 		panelIDTitulo.add(lblTitulo);
 		
-		JTextField txt = new JTextField();
-		txt.setPreferredSize(new Dimension(20,40));
-		txt.setColumns(30);
-		txt.setText(numero.getTitulo());
-		txt.setFont(new Font("Caladea", Font.PLAIN, 20));
-		txt.setCaretPosition(0); //poner cursor al principio
-		txt.setEditable(false);
-		panelIDTitulo.add(txt);
+		JTextField txtTitulo = new JTextField();
+		txtTitulo.setPreferredSize(new Dimension(20,40));
+		txtTitulo.setColumns(30);
+		txtTitulo.setText(numero.getTitulo());
+		txtTitulo.setFont(new Font("Caladea", Font.PLAIN, 20));
+		txtTitulo.setCaretPosition(0); //poner cursor al principio
+		txtTitulo.setEditable(false);
+		panelIDTitulo.add(txtTitulo);
+		
 		
 
 	}
