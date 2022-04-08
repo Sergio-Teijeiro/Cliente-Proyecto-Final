@@ -144,11 +144,11 @@ public class PantallaPrincipal {
 		            //Nos Conectamos a un Servidor mediante IP+PUERTO
 		            skCliente = new Socket("192.168.56.101", 2000);
 		            
-		            frmPrincipal.dispose();
-		            
 		            PantallaBusqueda p = new PantallaBusqueda(skCliente);
 		            
 		            p.frmBusqueda.setVisible(true);
+		            
+		            frmPrincipal.dispose();
 
 		        } catch (Exception ex) {
 		            if (ex.getClass().getName().equals("java.net.ConnectException")) {

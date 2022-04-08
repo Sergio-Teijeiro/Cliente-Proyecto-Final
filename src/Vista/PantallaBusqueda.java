@@ -5,9 +5,12 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
@@ -298,6 +301,18 @@ public class PantallaBusqueda {
 		cabeceraTabla.setBounds(0,0,594,299);
 		
 		tbComics = new JTable();
+		tbComics.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2) {
+					Numero numero = listaComics.get(tbComics.getSelectedRow());
+					
+					if (numero != null) {
+						System.out.println(numero.getTitulo());
+					}
+				}
+			}
+		});
 		tbComics.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 		tbComics.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tbComics.setBounds(60,23,506,209);
@@ -313,7 +328,7 @@ public class PantallaBusqueda {
 		panelTabla.add(cabeceraTabla, BorderLayout.CENTER);
 		
 		cargarComics(skCliente);
-		
+
 	}
 
 	protected void cargarComicsPorTitulo(Socket skCliente, String titulo) {
