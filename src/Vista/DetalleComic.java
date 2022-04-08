@@ -32,14 +32,17 @@ public class DetalleComic extends JDialog {
 	 * Create the dialog.
 	 */
 	public DetalleComic(Numero numero) {
+		setResizable(false);
 		tituloPantalla = numero.getTitulo();
 		
 		setBounds(0, 0, 450, 300);
 		setMinimumSize(new Dimension(850, 720));
+		setMaximumSize(new Dimension(850, 720));
 		setTitle(tituloPantalla);
 		setLocationRelativeTo(null);
 		setIconImage(
 				Toolkit.getDefaultToolkit().getImage(PantallaPrincipal.class.getResource("/img/app_icon.png")));
+		setModalityType(ModalityType.APPLICATION_MODAL);
 
 	}
 
