@@ -11,4 +11,4 @@ Por último, el programa dispone de una **ayuda en línea** tanto en español (:
 
 ¡Disfruta de la mejor colección de tus superhéroes y villanos de cómic favoritos!🦸🦸‍♀️🦹🦹‍♀️⚡💣💥
 
-![app_icon](https://user-images.githubusercontent.com/98803542/162590867-607159af-4191-40ac-ab07-9cc53cd03410.png)
+![program_icon](https://user-images.githubusercontent.com/98803542/162590867-607159af-4191-40ac-ab07-9cc53cd03410.png)
