@@ -10,3 +10,5 @@ Además, se pueden consultar **informes** 📰📉 predefinidos y personalizados
 Por último, el programa dispone de una **ayuda en línea** tanto en español (:es:) como en gallego y está disponible en ambos idiomas igualmente.
 
 ¡Disfruta de la mejor colección de tus superhéroes y villanos de cómic favoritos!🦸🦸‍♀️🦹🦹‍♀️⚡💣💥
+
+![app_icon](https://user-images.githubusercontent.com/98803542/162590867-607159af-4191-40ac-ab07-9cc53cd03410.png)
