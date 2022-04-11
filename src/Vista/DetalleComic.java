@@ -3,7 +3,13 @@ package Vista;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JDialog;
 
@@ -16,12 +22,16 @@ import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.imageio.ImageIO;
 import javax.swing.BoundedRangeModel;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+
 import java.awt.FlowLayout;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JButton;
 
 public class DetalleComic extends JDialog {
 
@@ -177,6 +187,35 @@ public class DetalleComic extends JDialog {
 		txtAreaResenha.setEditable(false);
 		txtAreaResenha.setLineWrap(true);
 		panelEstadoResenha.add(txtAreaResenha);
+		
+		JPanel panelImg = new JPanel();
+		FlowLayout flowLayout4 = (FlowLayout) panelImg.getLayout();
+		flowLayout4.setHgap(25);
+		flowLayout4.setAlignment(FlowLayout.LEFT);
+		flowLayout4.setVgap(25);
+		panelDatos.add(panelImg);
+		
+		JButton btnImgNumero = new JButton();
+
+		btnImgNumero.setBounds(new Rectangle(0, 0, 400, 350));
+		
+		byte[] data = numero.getImg();
+		BufferedImage img = null;
+		try {
+			img = ImageIO.read(new ByteArrayInputStream(data));
+		} catch (IOException ex) {
+			Logger.getLogger(DetalleComic.class.getName()).log(Level.SEVERE, null, ex);
+		}
+
+		ImageIcon iconoEscala = new ImageIcon(img.getScaledInstance(btnImgNumero.getWidth(),
+				btnImgNumero.getHeight(), java.awt.Image.SCALE_FAST));
+
+		btnImgNumero.setIcon(iconoEscala);
+
+		btnImgNumero.setFocusPainted(false);
+		btnImgNumero.setContentAreaFilled(false);
+		btnImgNumero.setBorderPainted(false);
+		panelImg.add(btnImgNumero);
 	}
 
 }
