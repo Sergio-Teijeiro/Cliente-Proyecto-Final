@@ -21,6 +21,7 @@ import javax.swing.BoxLayout;
 import java.awt.FlowLayout;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 public class DetalleComic extends JDialog {
 
@@ -137,6 +138,42 @@ public class DetalleComic extends JDialog {
 		txtTapa.setCaretPosition(0); //poner cursor al principio
 		txtTapa.setEditable(false);
 		panelFechaTapa.add(txtTapa);
+		
+		JPanel panelEstadoResenha = new JPanel();
+		FlowLayout flowLayout3 = (FlowLayout) panelEstadoResenha.getLayout();
+		flowLayout3.setHgap(25);
+		flowLayout3.setAlignment(FlowLayout.LEFT);
+		flowLayout3.setVgap(25);
+		panelDatos.add(panelEstadoResenha);
+		
+		JLabel lblEstado = new JLabel("ESTADO");
+		lblEstado.setBorder(new EmptyBorder(10, 0, 0, 5));
+		
+		lblEstado.setFont(fuente);
+		panelEstadoResenha.add(lblEstado);
+		
+		JTextField txtEstado= new JTextField();
+		txtEstado.setPreferredSize(new Dimension(20,40));
+		txtEstado.setColumns(7);
+		txtEstado.setText(numero.getEstado());
+		txtEstado.setFont(new Font("Caladea", Font.PLAIN, 20));
+		txtEstado.setCaretPosition(0); //poner cursor al principio
+		txtEstado.setEditable(false);
+		panelEstadoResenha.add(txtEstado);
+		
+		JLabel lblResenha = new JLabel("RESEÑA");
+		lblResenha.setBorder(new EmptyBorder(10, 0, 0, 5));
+		
+		lblResenha.setFont(fuente);
+		panelEstadoResenha.add(lblResenha);
+		
+		JTextArea txtAreaResenha = new JTextArea();
+		txtAreaResenha.setColumns(20);
+		txtAreaResenha.setText(numero.getResenha());
+		txtAreaResenha.setFont(new Font("Caladea", Font.PLAIN, 20));
+		txtAreaResenha.setCaretPosition(0); //poner cursor al principio
+		txtAreaResenha.setEditable(false);
+		panelEstadoResenha.add(txtAreaResenha);
 
 	}
 
