@@ -168,11 +168,14 @@ public class DetalleComic extends JDialog {
 		panelEstadoResenha.add(lblResenha);
 		
 		JTextArea txtAreaResenha = new JTextArea();
+		txtAreaResenha.setWrapStyleWord(true);
+		//txtAreaResenha.setMaximumSize(new Dimension(20,10));
 		txtAreaResenha.setColumns(20);
 		txtAreaResenha.setText(numero.getResenha());
 		txtAreaResenha.setFont(new Font("Caladea", Font.PLAIN, 20));
 		txtAreaResenha.setCaretPosition(0); //poner cursor al principio
 		txtAreaResenha.setEditable(false);
+		txtAreaResenha.setLineWrap(true);
 		panelEstadoResenha.add(txtAreaResenha);
 	}
 
