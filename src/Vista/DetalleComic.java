@@ -174,6 +174,8 @@ public class DetalleComic extends JDialog {
 		txtAreaResenha.setCaretPosition(0); //poner cursor al principio
 		txtAreaResenha.setEditable(false);
 		panelEstadoResenha.add(txtAreaResenha);
+		
+		
 
 	}
 
