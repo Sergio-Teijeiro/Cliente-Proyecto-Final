@@ -205,7 +205,8 @@ public class DetalleComic extends JDialog {
 		
 		JButton btnImgNumero = new JButton();
 
-		btnImgNumero.setBounds(new Rectangle(0, 0, 400, 330));
+		btnImgNumero.setBounds(new Rectangle(0, 0, 216, 332));
+		//btnImgNumero.setBounds(new Rectangle(0, 0, 400, 330));
 		
 		byte[] data = numero.getImg();
 		BufferedImage img = null;
@@ -228,7 +229,8 @@ public class DetalleComic extends JDialog {
 		JButton btnImgColeccion = new JButton();
 		btnImgColeccion.setFocusPainted(false);
 		btnImgColeccion.setContentAreaFilled(false);
-		btnImgColeccion.setBounds(new Rectangle(0, 0, 400, 330));
+		//btnImgColeccion.setBounds(new Rectangle(0, 0, 400, 330));
+		btnImgColeccion.setBounds(new Rectangle(0, 0, 216, 332));
 		btnImgColeccion.setBorderPainted(false);
 		
 		Coleccion coleccion = new Coleccion();
