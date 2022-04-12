@@ -153,7 +153,6 @@ public class DetalleComic extends JDialog {
 		FlowLayout flowLayout3 = (FlowLayout) panelEstadoResenha.getLayout();
 		flowLayout3.setHgap(25);
 		flowLayout3.setAlignment(FlowLayout.LEFT);
-		flowLayout3.setVgap(15);
 		panelDatos.add(panelEstadoResenha);
 		
 		JLabel lblEstado = new JLabel("ESTADO");
@@ -197,7 +196,7 @@ public class DetalleComic extends JDialog {
 		
 		JButton btnImgNumero = new JButton();
 
-		btnImgNumero.setBounds(new Rectangle(0, 0, 400, 350));
+		btnImgNumero.setBounds(new Rectangle(0, 0, 400, 330));
 		
 		byte[] data = numero.getImg();
 		BufferedImage img = null;
