@@ -160,6 +160,7 @@ public class DetalleComic extends JDialog {
 		JPanel panelEstadoResenha = new JPanel();
 		FlowLayout flowLayout3 = (FlowLayout) panelEstadoResenha.getLayout();
 		flowLayout3.setHgap(25);
+		flowLayout3.setVgap(20);
 		flowLayout3.setAlignment(FlowLayout.LEFT);
 		panelDatos.add(panelEstadoResenha);
 		
@@ -186,15 +187,19 @@ public class DetalleComic extends JDialog {
 		
 		JTextArea txtAreaResenha = new JTextArea();
 		txtAreaResenha.setWrapStyleWord(true);
-		txtAreaResenha.setMaximumSize(new Dimension(20,150));
-		txtAreaResenha.setPreferredSize(new Dimension(20,150));
+		txtAreaResenha.setRows(5);
 		txtAreaResenha.setColumns(20);
 		txtAreaResenha.setText(numero.getResenha());
 		txtAreaResenha.setFont(new Font("Caladea", Font.PLAIN, 20));
 		txtAreaResenha.setCaretPosition(0); //poner cursor al principio
 		txtAreaResenha.setEditable(false);
 		txtAreaResenha.setLineWrap(true);
-		panelEstadoResenha.add(txtAreaResenha);
+		
+		JScrollPane scroll = new JScrollPane();
+		scroll.setBounds(0, 0, 20, 150);
+		scroll.setViewportView(txtAreaResenha);
+
+		panelEstadoResenha.add(scroll);
 		
 		JPanel panelImg = new JPanel();
 		FlowLayout flowLayout4 = (FlowLayout) panelImg.getLayout();
