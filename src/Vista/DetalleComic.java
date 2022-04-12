@@ -205,7 +205,6 @@ public class DetalleComic extends JDialog {
 		FlowLayout flowLayout4 = (FlowLayout) panelImg.getLayout();
 		flowLayout4.setVgap(0);
 		flowLayout4.setHgap(25);
-		flowLayout4.setAlignment(FlowLayout.LEFT);
 		panelDatos.add(panelImg);
 		
 		JButton btnImgNumero = new JButton();
@@ -262,6 +261,25 @@ public class DetalleComic extends JDialog {
 
 		ImageIcon iconoEscala2 = new ImageIcon(imgCol.getScaledInstance(btnImgColeccion.getWidth(),
 				btnImgColeccion.getHeight(), java.awt.Image.SCALE_FAST));
+		
+		JPanel panelColeccion = new JPanel();
+		panelImg.add(panelColeccion);
+		panelColeccion.setLayout(new BoxLayout(panelColeccion, BoxLayout.Y_AXIS));
+		
+		JLabel lblColeccion = new JLabel("COLECCIÓN:");
+		lblColeccion.setBorder(new EmptyBorder(10, 5, 10, 5));
+		
+		lblColeccion.setFont(fuente);
+		panelColeccion.add(lblColeccion);
+		
+		JTextField txtColeccion = new JTextField();
+		txtColeccion.setPreferredSize(new Dimension(20,40));
+		txtColeccion.setColumns(10);
+		txtColeccion.setText(coleccion.getNombre());
+		txtColeccion.setFont(new Font("Caladea", Font.PLAIN, 20));
+		txtColeccion.setCaretPosition(0); //poner cursor al principio
+		txtColeccion.setEditable(false);
+		panelColeccion.add(txtColeccion);
 
 		btnImgColeccion.setIcon(iconoEscala2);
 		
