@@ -8,12 +8,16 @@ import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.JDialog;
 
+import Modelo.Coleccion;
 import Modelo.Numero;
+import Modelo.TablaComics;
+
 import javax.swing.JLabel;
 
 import Fuentes.Fuentes;
@@ -22,6 +26,9 @@ import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+
+import Controlador.HiloCliente;
+
 import javax.imageio.ImageIO;
 import javax.swing.BoundedRangeModel;
 import javax.swing.BoxLayout;
@@ -43,7 +50,7 @@ public class DetalleComic extends JDialog {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					DetalleComic dialog = new DetalleComic(null);
+					DetalleComic dialog = new DetalleComic(null,null);
 					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 					dialog.setVisible(true);
 				} catch (Exception e) {
@@ -55,8 +62,9 @@ public class DetalleComic extends JDialog {
 
 	/**
 	 * Create the dialog.
+	 * @param skCliente 
 	 */
-	public DetalleComic(Numero numero) {
+	public DetalleComic(Numero numero, Socket skCliente) {
 		setResizable(false);
 		tituloPantalla = numero.getTitulo();
 		
@@ -222,6 +230,20 @@ public class DetalleComic extends JDialog {
 		btnImgColeccion.setContentAreaFilled(false);
 		btnImgColeccion.setBounds(new Rectangle(0, 0, 400, 330));
 		btnImgColeccion.setBorderPainted(false);
+		
+		Coleccion coleccion = new Coleccion();
+		
+		HiloCliente hilo = new HiloCliente(skCliente,"colByComic",numero,coleccion);
+		hilo.start();
+		
+		try {
+			hilo.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		coleccion = TablaComics.coleccion;
 		
 		byte[] dataCol = numero.getImg();
 		BufferedImage imgCol = null;

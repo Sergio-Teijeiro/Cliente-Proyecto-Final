@@ -308,7 +308,7 @@ public class PantallaBusqueda {
 					Numero numero = listaComics.get(tbComics.getSelectedRow());
 					
 					if (numero != null) {
-						DetalleComic detalle = new DetalleComic(numero);
+						DetalleComic detalle = new DetalleComic(numero,skCliente);
 						detalle.setVisible(true);
 					}
 				}
