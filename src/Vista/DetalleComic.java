@@ -247,7 +247,7 @@ public class DetalleComic extends JDialog {
 		
 		coleccion = TablaComics.coleccion;
 		
-		byte[] dataCol = numero.getImg();
+		byte[] dataCol = coleccion.getImg();
 		BufferedImage imgCol = null;
 		try {
 			imgCol = ImageIO.read(new ByteArrayInputStream(dataCol));
