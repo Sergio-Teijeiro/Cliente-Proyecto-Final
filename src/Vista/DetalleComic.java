@@ -22,10 +22,14 @@ import javax.swing.JLabel;
 
 import Fuentes.Fuentes;
 
+import java.awt.Adjustable;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.plaf.ScrollBarUI;
 
 import Controlador.HiloCliente;
 
@@ -96,14 +100,31 @@ public class DetalleComic extends JDialog {
 		lblID.setFont(fuente);
 		panelIDTitulo.add(lblID);
 		
-		JTextField txtID = new JTextField();
+		JTextArea txtID = new JTextArea();
+		txtID.setWrapStyleWord(true);
+		txtID.setRows(1);
+		txtID.setColumns(3);
+		txtID.setText(String.valueOf(numero.getId()));
+		txtID.setFont(new Font("Caladea", Font.PLAIN, 20));
+		txtID.setCaretPosition(0); //poner cursor al principio
+		txtID.setEditable(false);
+		txtID.setLineWrap(true);
+		
+		JScrollPane scrollID = new JScrollPane();
+		scrollID.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		scrollID.setBounds(0, 0, 20, 150);
+		scrollID.setViewportView(txtID);
+
+		panelIDTitulo.add(scrollID);
+		
+		/*JTextField txtID = new JTextField();
 		txtID.setPreferredSize(new Dimension(10,40));
 		txtID.setColumns(3);
 		txtID.setText(String.valueOf(numero.getId()));
 		txtID.setFont(new Font("Caladea", Font.PLAIN, 20));
 		txtID.setCaretPosition(0); //poner cursor al principio
 		txtID.setEditable(false);
-		panelIDTitulo.add(txtID);
+		panelIDTitulo.add(txtID);*/
 		
 		JLabel lblTitulo = new JLabel("TÍTULO");
 		lblTitulo.setBorder(new EmptyBorder(10, 0, 0, 5));
@@ -272,14 +293,31 @@ public class DetalleComic extends JDialog {
 		lblColeccion.setFont(fuente);
 		panelColeccion.add(lblColeccion);
 		
-		JTextField txtColeccion = new JTextField();
+		/*JTextField txtColeccion = new JTextField();
 		txtColeccion.setPreferredSize(new Dimension(20,40));
 		txtColeccion.setColumns(10);
 		txtColeccion.setText(coleccion.getNombre());
 		txtColeccion.setFont(new Font("Caladea", Font.PLAIN, 20));
 		txtColeccion.setCaretPosition(0); //poner cursor al principio
-		txtColeccion.setEditable(false);
-		panelColeccion.add(txtColeccion);
+		txtColeccion.setEditable(false);*/
+		
+		JTextArea txtAreaColeccion = new JTextArea();
+		txtAreaColeccion.setWrapStyleWord(true);
+		txtAreaColeccion.setRows(5);
+		txtAreaColeccion.setColumns(10);
+		txtAreaColeccion.setText(coleccion.getNombre());
+		txtAreaColeccion.setFont(new Font("Caladea", Font.PLAIN, 20));
+		txtAreaColeccion.setCaretPosition(0); //poner cursor al principio
+		txtAreaColeccion.setEditable(false);
+		txtAreaColeccion.setLineWrap(true);
+		
+		JScrollPane scrollCol = new JScrollPane();
+		scrollCol.setBounds(0, 0, 20, 150);
+		scrollCol.setViewportView(txtAreaColeccion);
+
+		panelColeccion.add(scrollCol);
+		
+		//panelColeccion.add(txtColeccion);
 
 		btnImgColeccion.setIcon(iconoEscala2);
 		
