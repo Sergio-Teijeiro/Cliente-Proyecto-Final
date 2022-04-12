@@ -190,6 +190,7 @@ public class DetalleComic extends JDialog {
 		
 		JPanel panelImg = new JPanel();
 		FlowLayout flowLayout4 = (FlowLayout) panelImg.getLayout();
+		flowLayout4.setVgap(0);
 		flowLayout4.setHgap(25);
 		flowLayout4.setAlignment(FlowLayout.LEFT);
 		panelDatos.add(panelImg);
@@ -215,6 +216,27 @@ public class DetalleComic extends JDialog {
 		btnImgNumero.setContentAreaFilled(false);
 		btnImgNumero.setBorderPainted(false);
 		panelImg.add(btnImgNumero);
+		
+		JButton btnImgColeccion = new JButton();
+		btnImgColeccion.setFocusPainted(false);
+		btnImgColeccion.setContentAreaFilled(false);
+		btnImgColeccion.setBounds(new Rectangle(0, 0, 400, 330));
+		btnImgColeccion.setBorderPainted(false);
+		
+		byte[] dataCol = numero.getImg();
+		BufferedImage imgCol = null;
+		try {
+			imgCol = ImageIO.read(new ByteArrayInputStream(dataCol));
+		} catch (IOException ex) {
+			Logger.getLogger(DetalleComic.class.getName()).log(Level.SEVERE, null, ex);
+		}
+
+		ImageIcon iconoEscala2 = new ImageIcon(imgCol.getScaledInstance(btnImgColeccion.getWidth(),
+				btnImgColeccion.getHeight(), java.awt.Image.SCALE_FAST));
+
+		btnImgColeccion.setIcon(iconoEscala2);
+		
+		panelImg.add(btnImgColeccion);
 	}
 
 }
