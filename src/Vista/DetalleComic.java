@@ -67,6 +67,7 @@ public class DetalleComic extends JDialog {
 	/**
 	 * Create the dialog.
 	 * @param skCliente 
+	 * @param coleccion2 
 	 */
 	public DetalleComic(Numero numero, Socket skCliente) {
 		setResizable(false);
@@ -261,7 +262,6 @@ public class DetalleComic extends JDialog {
 		JButton btnImgColeccion = new JButton();
 		btnImgColeccion.setFocusPainted(false);
 		btnImgColeccion.setContentAreaFilled(false);
-		//btnImgColeccion.setBounds(new Rectangle(0, 0, 400, 330));
 		btnImgColeccion.setBounds(new Rectangle(0, 0, 216, 332));
 		btnImgColeccion.setBorderPainted(false);
 		
@@ -323,8 +323,6 @@ public class DetalleComic extends JDialog {
 		scrollCol.setViewportView(txtAreaColeccion);
 
 		panelColeccion.add(scrollCol);
-		
-		//panelColeccion.add(txtColeccion);
 
 		btnImgColeccion.setIcon(iconoEscala2);
 		

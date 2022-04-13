@@ -1,7 +1,6 @@
 package Modelo;
 
 import java.net.Socket;
-import java.text.DateFormat;
 import java.util.ArrayList;
 
 import javax.swing.table.AbstractTableModel;
@@ -67,7 +66,7 @@ public class TablaComics extends AbstractTableModel {
 				}
 				
 				colecciones.add(coleccion);
-			}	
+			}
 			
 			switch (col) {
 			case 0:

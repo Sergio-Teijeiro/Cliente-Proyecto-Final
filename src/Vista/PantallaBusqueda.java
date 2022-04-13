@@ -34,6 +34,7 @@ import javax.swing.border.EmptyBorder;
 
 import Controlador.HiloCliente;
 import Fuentes.Fuentes;
+import Modelo.Coleccion;
 import Modelo.Numero;
 import Modelo.TablaComics;
 
