@@ -117,29 +117,28 @@ public class DetalleComic extends JDialog {
 
 		panelIDTitulo.add(scrollID);
 		
-		/*JTextField txtID = new JTextField();
-		txtID.setPreferredSize(new Dimension(10,40));
-		txtID.setColumns(3);
-		txtID.setText(String.valueOf(numero.getId()));
-		txtID.setFont(new Font("Caladea", Font.PLAIN, 20));
-		txtID.setCaretPosition(0); //poner cursor al principio
-		txtID.setEditable(false);
-		panelIDTitulo.add(txtID);*/
-		
 		JLabel lblTitulo = new JLabel("TÍTULO");
 		lblTitulo.setBorder(new EmptyBorder(10, 0, 0, 5));
 		
 		lblTitulo.setFont(fuente);
 		panelIDTitulo.add(lblTitulo);
 		
-		JTextField txtTitulo = new JTextField();
-		txtTitulo.setPreferredSize(new Dimension(20,40));
+		JTextArea txtTitulo = new JTextArea();
+		txtTitulo.setWrapStyleWord(true);
+		txtTitulo.setRows(1);
 		txtTitulo.setColumns(30);
 		txtTitulo.setText(numero.getTitulo());
 		txtTitulo.setFont(new Font("Caladea", Font.PLAIN, 20));
 		txtTitulo.setCaretPosition(0); //poner cursor al principio
 		txtTitulo.setEditable(false);
-		panelIDTitulo.add(txtTitulo);
+		txtTitulo.setLineWrap(true);
+		
+		JScrollPane scrollTitulo = new JScrollPane();
+		scrollTitulo.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		scrollTitulo.setBounds(0, 0, 20, 150);
+		scrollTitulo.setViewportView(txtTitulo);
+
+		panelIDTitulo.add(scrollTitulo);
 		
 		JPanel panelFechaTapa = new JPanel();
 		FlowLayout flowLayout2 = (FlowLayout) panelFechaTapa.getLayout();
@@ -191,14 +190,22 @@ public class DetalleComic extends JDialog {
 		lblEstado.setFont(fuente);
 		panelEstadoResenha.add(lblEstado);
 		
-		JTextField txtEstado= new JTextField();
-		txtEstado.setPreferredSize(new Dimension(20,40));
+		JTextArea txtEstado = new JTextArea();
+		txtEstado.setWrapStyleWord(true);
+		txtEstado.setRows(1);
 		txtEstado.setColumns(7);
 		txtEstado.setText(numero.getEstado());
 		txtEstado.setFont(new Font("Caladea", Font.PLAIN, 20));
 		txtEstado.setCaretPosition(0); //poner cursor al principio
 		txtEstado.setEditable(false);
-		panelEstadoResenha.add(txtEstado);
+		txtEstado.setLineWrap(true);
+		
+		JScrollPane scrollEstado = new JScrollPane();
+		scrollEstado.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		scrollEstado.setBounds(0, 0, 20, 150);
+		scrollEstado.setViewportView(txtEstado);
+
+		panelEstadoResenha.add(scrollEstado);
 		
 		JLabel lblResenha = new JLabel("RESEÑA");
 		lblResenha.setBorder(new EmptyBorder(10, 0, 0, 5));
