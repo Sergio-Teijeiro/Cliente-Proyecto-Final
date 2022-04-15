@@ -217,7 +217,7 @@ public class OperacionesComics {
 		JTextArea txtID = new JTextArea();
 		txtID.setWrapStyleWord(true);
 		txtID.setRows(1);
-		txtID.setColumns(3);
+		txtID.setColumns(5);
 		txtID.setFont(new Font("Caladea", Font.PLAIN, 20));
 		txtID.setCaretPosition(0); //poner cursor al principio
 		txtID.setLineWrap(true);
