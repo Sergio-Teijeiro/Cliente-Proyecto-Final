@@ -156,7 +156,9 @@ public class HiloCliente extends Thread {
         				PantallaBusqueda.listaComics = comicsTitulo;
         				
         				tbComics.setModel(new TablaComics(comicsTitulo,socketCliente));
-        	break;                	
+        			break;
+                case "cargarColecciones":
+                	break;
                 default:
                     break;
             }
