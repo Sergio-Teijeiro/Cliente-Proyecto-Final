@@ -1,5 +1,6 @@
 package Vista;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -13,12 +14,17 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 
 import Controlador.HiloCliente;
 
@@ -30,6 +36,7 @@ public class OperacionesComics {
 	private String tituloPantalla = "Gestión de cómics";
 	private JMenu menuComics, menuColecciones, menuInformes;
 	private JMenuItem itemBusqueda,itemComics,itemColecciones,itemInformes;
+	private JTable tbComics;
 
 	/**
 	 * Launch the application.
@@ -155,6 +162,29 @@ public class OperacionesComics {
 		});
 		itemInformes.setFont(new Font("Caladea", Font.PLAIN, 16));
 		menuInformes.add(itemInformes);
+		
+		JScrollPane cabeceraTabla = new JScrollPane();
+		cabeceraTabla.setBounds(0, 0, 594, 299);
+
+		tbComics = new JTable();
+		tbComics.setPreferredScrollableViewportSize(new Dimension(450, 250));
+		tbComics.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+		tbComics.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		tbComics.setBounds(60, 23, 506, 209);
+		tbComics.getTableHeader().setReorderingAllowed(false); // impedir mover columnas
+
+		JPanel panelTabla = new JPanel();
+		frmComics.getContentPane().add(panelTabla, BorderLayout.SOUTH);
+		panelTabla.setLayout(new BorderLayout(0, 0));
+
+		tbComics.setFillsViewportHeight(true);
+		cabeceraTabla.setViewportView(tbComics);
+
+		panelTabla.add(cabeceraTabla, BorderLayout.CENTER);
+
+		JPanel panelPrincipal = new JPanel();
+		frmComics.getContentPane().add(panelPrincipal, BorderLayout.CENTER);
+		panelPrincipal.setLayout(new BoxLayout(panelPrincipal, BoxLayout.Y_AXIS));
 	}
 
 }
