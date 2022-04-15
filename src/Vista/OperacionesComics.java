@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.BoxLayout;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -25,12 +26,15 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 
 import Controlador.HiloCliente;
 import java.awt.FlowLayout;
 import javax.swing.JLabel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JComboBox;
 
 public class OperacionesComics {
 
@@ -44,6 +48,11 @@ public class OperacionesComics {
 	private JPanel panelIDTitulo;
 	private JLabel lblID;
 	private JLabel lblTitulo;
+	private JPanel panelFechaTapa;
+	private JLabel lblFecha;
+	private JLabel lblTapa;
+	private JComboBox cmbTapas;
+	private DefaultComboBoxModel<String> modeloCombo = new DefaultComboBoxModel<String>();
 
 	/**
 	 * Launch the application.
@@ -236,6 +245,38 @@ public class OperacionesComics {
 		scrollTitulo.setViewportView(txtTitulo);
 
 		panelIDTitulo.add(scrollTitulo);
+		
+		panelFechaTapa = new JPanel();
+		FlowLayout flowLayout_1 = (FlowLayout) panelFechaTapa.getLayout();
+		flowLayout_1.setAlignment(FlowLayout.LEFT);
+		flowLayout_1.setHgap(25);
+		panelPrincipal.add(panelFechaTapa);
+		
+		lblFecha = new JLabel("Fecha adquisici\u00F3n");
+		lblFecha.setBorder(new EmptyBorder(0, 0, 0, 5));
+		lblFecha.setFont(new Font("Caladea", Font.PLAIN, 20));
+		panelFechaTapa.add(lblFecha);
+		
+		JTextField txtFecha= new JTextField();
+		txtFecha.setPreferredSize(new Dimension(20,40));
+		txtFecha.setColumns(7);
+		txtFecha.setFont(new Font("Caladea", Font.PLAIN, 20));
+		txtFecha.setCaretPosition(0); //poner cursor al principio
+		panelFechaTapa.add(txtFecha);
+		
+		lblTapa = new JLabel("Tapa");
+		lblTapa.setFont(new Font("Caladea", Font.PLAIN, 20));
+		panelFechaTapa.add(lblTapa);
+		
+		cmbTapas = new JComboBox();
+		cmbTapas.setFont(new Font("Caladea", Font.PLAIN, 20));
+		
+		cmbTapas.setModel(modeloCombo);
+		
+		modeloCombo.addElement("Blanda");
+		modeloCombo.addElement("Dura");
+		
+		panelFechaTapa.add(cmbTapas);
 	}
 
 }
