@@ -53,6 +53,8 @@ public class OperacionesComics {
 	private JLabel lblTapa;
 	private JComboBox cmbTapas;
 	private DefaultComboBoxModel<String> modeloCombo = new DefaultComboBoxModel<String>();
+	private JPanel panelEstadoResenha;
+	private JLabel lblEstado;
 
 	/**
 	 * Launch the application.
@@ -277,6 +279,31 @@ public class OperacionesComics {
 		modeloCombo.addElement("Dura");
 		
 		panelFechaTapa.add(cmbTapas);
+		
+		panelEstadoResenha = new JPanel();
+		FlowLayout flowLayout_2 = (FlowLayout) panelEstadoResenha.getLayout();
+		flowLayout_2.setHgap(25);
+		flowLayout_2.setAlignment(FlowLayout.LEFT);
+		panelPrincipal.add(panelEstadoResenha);
+		
+		lblEstado = new JLabel("Estado");
+		lblEstado.setFont(new Font("Caladea", Font.PLAIN, 20));
+		panelEstadoResenha.add(lblEstado);
+		
+		JTextArea txtEstado = new JTextArea();
+		txtEstado.setWrapStyleWord(true);
+		txtEstado.setRows(1);
+		txtEstado.setColumns(7);
+		txtEstado.setFont(new Font("Caladea", Font.PLAIN, 20));
+		txtEstado.setCaretPosition(0); //poner cursor al principio
+		txtEstado.setLineWrap(true);
+		
+		JScrollPane scrollEstado = new JScrollPane();
+		scrollEstado.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		scrollEstado.setBounds(0, 0, 20, 150);
+		scrollEstado.setViewportView(txtEstado);
+
+		panelEstadoResenha.add(scrollEstado);
 	}
 
 }
