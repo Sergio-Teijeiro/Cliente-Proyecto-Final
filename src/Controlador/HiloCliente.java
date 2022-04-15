@@ -10,6 +10,7 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -32,6 +33,7 @@ public class HiloCliente extends Thread {
     ObjectInputStream objeto_entrada;
     Coleccion coleccion;
     JTable tbComics;
+    DefaultComboBoxModel<Coleccion> modeloCombo;
     
     public HiloCliente(Socket socketCliente, String peticion, Object obj) {
         this.socketCliente = socketCliente;
@@ -67,6 +69,20 @@ public class HiloCliente extends Thread {
         this.peticion = peticion;
         this.objeto = obj;
         tbComics = tbComic;
+
+        try {
+            objeto_salida = new ObjectOutputStream(socketCliente.getOutputStream());
+        } catch (IOException ex) {
+            // Logger.getLogger(HiloCliente.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NullPointerException e) {
+            JOptionPane.showMessageDialog(null, "Servidor desconectado", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    public HiloCliente(Socket socketCliente, String peticion, DefaultComboBoxModel<Coleccion> modeloCombo) {
+        this.socketCliente = socketCliente;
+        this.peticion = peticion;
+        this.modeloCombo = modeloCombo;
 
         try {
             objeto_salida = new ObjectOutputStream(socketCliente.getOutputStream());
