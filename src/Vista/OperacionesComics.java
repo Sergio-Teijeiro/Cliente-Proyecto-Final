@@ -11,6 +11,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -32,6 +33,7 @@ import javax.swing.ScrollPaneConstants;
 
 import Controlador.HiloCliente;
 import Modelo.Coleccion;
+import Modelo.Numero;
 
 import java.awt.FlowLayout;
 import javax.swing.JLabel;
@@ -394,6 +396,8 @@ public class OperacionesComics {
 		btnBorrar.setPreferredSize(new Dimension(90,35));
 		btnBorrar.setFont(new Font("Caladea", Font.PLAIN, 20));
 		panelBotones.add(btnBorrar);
+		
+		cargarComics(skCliente);
 	}
 
 	private void cargarColecciones(Socket skCliente) {
@@ -414,6 +418,21 @@ public class OperacionesComics {
 				modeloComboColecciones.getElementAt(i).setNombre(nuevoNombre);
 			}
 		}
+	}
+	
+	private void cargarComics(Socket skCliente) {
+		PantallaBusqueda.listaComics.clear();
+		
+		HiloCliente hilo = new HiloCliente(skCliente,"cargarComics",null,tbComics);
+		hilo.start();
+		
+		try {
+			hilo.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 }
