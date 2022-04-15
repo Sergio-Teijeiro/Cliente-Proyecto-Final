@@ -111,8 +111,8 @@ public class HiloCliente extends Thread {
                 case "cargarComics": ArrayList<Numero> comics = (ArrayList<Numero>) objeto_entrada.readObject();
                 
                 		PantallaBusqueda.listaComics = comics;
-                
-                		tbComics.setModel(new TablaComics(comics,socketCliente));
+                		
+                		tbComics.setModel(new TablaComics(comics,socketCliente));;
                     break;    
                 case "colByComic": objeto_salida.writeObject(objeto);
                 
@@ -138,7 +138,7 @@ public class HiloCliente extends Thread {
         				ArrayList<Numero> comicsTitulo = (ArrayList<Numero>) objeto_entrada.readObject();
         
         				PantallaBusqueda.listaComics = comicsTitulo;
-
+        				
         				tbComics.setModel(new TablaComics(comicsTitulo,socketCliente));
         	break;                	
                 default:
