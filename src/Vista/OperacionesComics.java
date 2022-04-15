@@ -27,7 +27,7 @@ public class OperacionesComics {
 	JFrame frmComics;
 	private String[] opciones = { "Sí", "No" };
 	private String mensajeSalir = "¿Deseas salir de la aplicación?", cerrarPrograma = "Cerrar programa";
-	private String tituloPantalla = "Catálogo de cómics";
+	private String tituloPantalla = "Gestión de cómics";
 	private JMenu menuComics, menuColecciones, menuInformes;
 	private JMenuItem itemBusqueda,itemComics,itemColecciones,itemInformes;
 
@@ -117,7 +117,10 @@ public class OperacionesComics {
 		itemBusqueda = new JMenuItem("Consultar cómics");
 		itemBusqueda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				frmComics.dispose();
 
+				PantallaBusqueda p = new PantallaBusqueda(skCliente);
+				p.frmBusqueda.setVisible(true);
 			}
 		});
 		itemBusqueda.setFont(new Font("Caladea", Font.PLAIN, 16));
