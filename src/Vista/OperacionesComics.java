@@ -357,14 +357,16 @@ public class OperacionesComics {
 		cmbColecciones.setModel(modeloComboColecciones);
 		cmbColecciones.setFont(new Font("Caladea", Font.PLAIN, 20));
 		
-		cargarColecciones();
+		cargarColecciones(skCliente);
 
 		panelImgColeccion.add(cmbColecciones);
 	}
 
-	private void cargarColecciones() {
+	private void cargarColecciones(Socket skCliente) {
+		modeloComboColecciones.removeAllElements();
 		
-		
+		HiloCliente hilo = new HiloCliente(skCliente, "cargarColecciones", modeloComboColecciones);
+		hilo.start();
 	}
 
 }
