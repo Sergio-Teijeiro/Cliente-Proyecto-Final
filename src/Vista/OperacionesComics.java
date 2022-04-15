@@ -38,6 +38,8 @@ import javax.swing.JLabel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
+import javax.swing.JSeparator;
+import java.awt.Insets;
 
 public class OperacionesComics {
 
@@ -65,6 +67,11 @@ public class OperacionesComics {
 	private JButton btnEscogerImg;
 	private JLabel lblColeccion;
 	private JComboBox cmbColecciones;
+	private JSeparator separator;
+	private JPanel panelBotones;
+	private JButton btnInsertar;
+	private JButton btnModificar;
+	private JButton btnBorrar;
 
 	/**
 	 * Launch the application.
@@ -360,6 +367,33 @@ public class OperacionesComics {
 		cargarColecciones(skCliente);
 
 		panelImgColeccion.add(cmbColecciones);
+		
+		separator = new JSeparator();
+		panelPrincipal.add(separator);
+		
+		panelBotones = new JPanel();
+		FlowLayout flowLayout_4 = (FlowLayout) panelBotones.getLayout();
+		flowLayout_4.setHgap(25);
+		panelPrincipal.add(panelBotones);
+		
+		btnInsertar = new JButton("Insertar");
+		btnInsertar.setPreferredSize(new Dimension(100,35));
+		btnInsertar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnInsertar.setFont(new Font("Caladea", Font.PLAIN, 20));
+		panelBotones.add(btnInsertar);
+		
+		btnModificar = new JButton("Modificar");
+		btnModificar.setPreferredSize(new Dimension(114,35));
+		btnModificar.setFont(new Font("Caladea", Font.PLAIN, 20));
+		panelBotones.add(btnModificar);
+		
+		btnBorrar = new JButton("Borrar");
+		btnBorrar.setPreferredSize(new Dimension(90,35));
+		btnBorrar.setFont(new Font("Caladea", Font.PLAIN, 20));
+		panelBotones.add(btnBorrar);
 	}
 
 	private void cargarColecciones(Socket skCliente) {
