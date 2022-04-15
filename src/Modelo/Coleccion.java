@@ -45,6 +45,6 @@ public class Coleccion implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Coleccion [id=" + id + ", nombre=" + nombre + ", img=" + img + "]";
+		return nombre;
 	}
 }
