@@ -55,6 +55,7 @@ public class OperacionesComics {
 	private DefaultComboBoxModel<String> modeloCombo = new DefaultComboBoxModel<String>();
 	private JPanel panelEstadoResenha;
 	private JLabel lblEstado;
+	private JLabel lblResenha;
 
 	/**
 	 * Launch the application.
@@ -288,12 +289,13 @@ public class OperacionesComics {
 		
 		lblEstado = new JLabel("Estado");
 		lblEstado.setFont(new Font("Caladea", Font.PLAIN, 20));
+		lblEstado.setBorder(new EmptyBorder(0, 0, 0, 5));
 		panelEstadoResenha.add(lblEstado);
 		
 		JTextArea txtEstado = new JTextArea();
 		txtEstado.setWrapStyleWord(true);
 		txtEstado.setRows(1);
-		txtEstado.setColumns(7);
+		txtEstado.setColumns(12);
 		txtEstado.setFont(new Font("Caladea", Font.PLAIN, 20));
 		txtEstado.setCaretPosition(0); //poner cursor al principio
 		txtEstado.setLineWrap(true);
@@ -304,6 +306,24 @@ public class OperacionesComics {
 		scrollEstado.setViewportView(txtEstado);
 
 		panelEstadoResenha.add(scrollEstado);
+		
+		lblResenha = new JLabel("Rese\u00F1a");
+		lblResenha.setFont(new Font("Caladea", Font.PLAIN, 20));
+		panelEstadoResenha.add(lblResenha);
+		
+		JTextArea txtAreaResenha = new JTextArea();
+		txtAreaResenha.setWrapStyleWord(true);
+		txtAreaResenha.setRows(5);
+		txtAreaResenha.setColumns(20);
+		txtAreaResenha.setFont(new Font("Caladea", Font.PLAIN, 20));
+		txtAreaResenha.setCaretPosition(0); //poner cursor al principio
+		txtAreaResenha.setLineWrap(true);
+		
+		JScrollPane scrollResenha = new JScrollPane();
+		scrollResenha.setBounds(0, 0, 20, 150);
+		scrollResenha.setViewportView(txtAreaResenha);
+
+		panelEstadoResenha.add(scrollResenha);
 	}
 
 }
