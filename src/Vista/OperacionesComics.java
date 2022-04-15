@@ -31,10 +31,13 @@ import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 
 import Controlador.HiloCliente;
+import Modelo.Coleccion;
+
 import java.awt.FlowLayout;
 import javax.swing.JLabel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JComboBox;
+import javax.swing.JButton;
 
 public class OperacionesComics {
 
@@ -52,10 +55,16 @@ public class OperacionesComics {
 	private JLabel lblFecha;
 	private JLabel lblTapa;
 	private JComboBox cmbTapas;
-	private DefaultComboBoxModel<String> modeloCombo = new DefaultComboBoxModel<String>();
+	private DefaultComboBoxModel<String> modeloComboTapas = new DefaultComboBoxModel<String>();
+	private DefaultComboBoxModel<Coleccion> modeloComboColecciones = new DefaultComboBoxModel<Coleccion>();
 	private JPanel panelEstadoResenha;
 	private JLabel lblEstado;
 	private JLabel lblResenha;
+	private JPanel panelImgColeccion;
+	private JLabel lblImg;
+	private JButton btnEscogerImg;
+	private JLabel lblColeccion;
+	private JComboBox cmbColecciones;
 
 	/**
 	 * Launch the application.
@@ -274,10 +283,10 @@ public class OperacionesComics {
 		cmbTapas = new JComboBox();
 		cmbTapas.setFont(new Font("Caladea", Font.PLAIN, 20));
 		
-		cmbTapas.setModel(modeloCombo);
+		cmbTapas.setModel(modeloComboTapas);
 		
-		modeloCombo.addElement("Blanda");
-		modeloCombo.addElement("Dura");
+		modeloComboTapas.addElement("Blanda");
+		modeloComboTapas.addElement("Dura");
 		
 		panelFechaTapa.add(cmbTapas);
 		
@@ -324,6 +333,38 @@ public class OperacionesComics {
 		scrollResenha.setViewportView(txtAreaResenha);
 
 		panelEstadoResenha.add(scrollResenha);
+		
+		panelImgColeccion = new JPanel();
+		FlowLayout flowLayout_3 = (FlowLayout) panelImgColeccion.getLayout();
+		flowLayout_3.setHgap(25);
+		flowLayout_3.setAlignment(FlowLayout.LEFT);
+		panelPrincipal.add(panelImgColeccion);
+		
+		lblImg = new JLabel("Imagen");
+		lblImg.setFont(new Font("Caladea", Font.PLAIN, 20));
+		panelImgColeccion.add(lblImg);
+		
+		btnEscogerImg = new JButton("Escoger");
+		btnEscogerImg.setFont(new Font("Caladea", Font.PLAIN, 20));
+		panelImgColeccion.add(btnEscogerImg);
+		
+		lblColeccion = new JLabel("Colecci\u00F3n");
+		lblColeccion.setFont(new Font("Caladea", Font.PLAIN, 20));
+		panelImgColeccion.add(lblColeccion);
+		
+		cmbColecciones = new JComboBox();
+		
+		cmbColecciones.setModel(modeloComboColecciones);
+		cmbColecciones.setFont(new Font("Caladea", Font.PLAIN, 20));
+		
+		cargarColecciones();
+
+		panelImgColeccion.add(cmbColecciones);
+	}
+
+	private void cargarColecciones() {
+		
+		
 	}
 
 }
