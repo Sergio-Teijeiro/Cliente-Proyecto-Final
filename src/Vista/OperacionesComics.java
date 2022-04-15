@@ -367,6 +367,19 @@ public class OperacionesComics {
 		
 		HiloCliente hilo = new HiloCliente(skCliente, "cargarColecciones", modeloComboColecciones);
 		hilo.start();
+		
+		try {
+			hilo.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		for (int i=0;i<modeloComboColecciones.getSize();i++) {
+			if (modeloComboColecciones.getElementAt(i).getNombre().length() > 55) {
+				String nuevoNombre = modeloComboColecciones.getElementAt(i).getNombre().substring(0, 51)+"...";
+				modeloComboColecciones.getElementAt(i).setNombre(nuevoNombre);
+			}
+		}
 	}
 
 }
