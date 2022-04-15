@@ -24,9 +24,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
+import javax.swing.ScrollPaneConstants;
 
 import Controlador.HiloCliente;
+import java.awt.FlowLayout;
+import javax.swing.JLabel;
 
 public class OperacionesComics {
 
@@ -37,6 +41,9 @@ public class OperacionesComics {
 	private JMenu menuComics, menuColecciones, menuInformes;
 	private JMenuItem itemBusqueda,itemComics,itemColecciones,itemInformes;
 	private JTable tbComics;
+	private JPanel panelIDTitulo;
+	private JLabel lblID;
+	private JLabel lblTitulo;
 
 	/**
 	 * Launch the application.
@@ -185,6 +192,50 @@ public class OperacionesComics {
 		JPanel panelPrincipal = new JPanel();
 		frmComics.getContentPane().add(panelPrincipal, BorderLayout.CENTER);
 		panelPrincipal.setLayout(new BoxLayout(panelPrincipal, BoxLayout.Y_AXIS));
+		
+		panelIDTitulo = new JPanel();
+		FlowLayout flowLayout = (FlowLayout) panelIDTitulo.getLayout();
+		flowLayout.setHgap(25);
+		flowLayout.setAlignment(FlowLayout.LEFT);
+		panelPrincipal.add(panelIDTitulo);
+		
+		lblID = new JLabel("ID");
+		lblID.setFont(new Font("Caladea", Font.PLAIN, 20));
+		panelIDTitulo.add(lblID);
+		
+		JTextArea txtID = new JTextArea();
+		txtID.setWrapStyleWord(true);
+		txtID.setRows(1);
+		txtID.setColumns(3);
+		txtID.setFont(new Font("Caladea", Font.PLAIN, 20));
+		txtID.setCaretPosition(0); //poner cursor al principio
+		txtID.setLineWrap(true);
+		
+		JScrollPane scrollID = new JScrollPane();
+		scrollID.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		scrollID.setBounds(0, 0, 20, 150);
+		scrollID.setViewportView(txtID);
+
+		panelIDTitulo.add(scrollID);
+		
+		lblTitulo = new JLabel("T\u00EDtulo");
+		lblTitulo.setFont(new Font("Caladea", Font.PLAIN, 20));
+		panelIDTitulo.add(lblTitulo);
+		
+		JTextArea txtTitulo = new JTextArea();
+		txtTitulo.setWrapStyleWord(true);
+		txtTitulo.setRows(1);
+		txtTitulo.setColumns(30);
+		txtTitulo.setFont(new Font("Caladea", Font.PLAIN, 20));
+		txtTitulo.setCaretPosition(0); //poner cursor al principio
+		txtTitulo.setLineWrap(true);
+		
+		JScrollPane scrollTitulo = new JScrollPane();
+		scrollTitulo.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		scrollTitulo.setBounds(0, 0, 20, 150);
+		scrollTitulo.setViewportView(txtTitulo);
+
+		panelIDTitulo.add(scrollTitulo);
 	}
 
 }
