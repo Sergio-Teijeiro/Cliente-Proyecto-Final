@@ -155,7 +155,10 @@ public class PantallaBusqueda {
 		itemComics = new JMenuItem("Gestión cómics");
 		itemComics.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				frmBusqueda.dispose();
 
+				OperacionesComics o = new OperacionesComics(skCliente);
+				o.frmComics.setVisible(true);
 			}
 		});
 		itemComics.setFont(new Font("Caladea", Font.PLAIN, 16));
