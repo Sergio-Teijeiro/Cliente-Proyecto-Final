@@ -11,6 +11,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.net.Socket;
+import java.text.DateFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,12 +34,13 @@ import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 
 import Controlador.HiloCliente;
-import Modelo.Coleccion;
-import Modelo.Numero;
+import Modelo.*;
 
 import java.awt.FlowLayout;
 import javax.swing.JLabel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.JSeparator;
@@ -398,6 +401,60 @@ public class OperacionesComics {
 		panelBotones.add(btnBorrar);
 		
 		cargarComics(skCliente);
+		
+		ListSelectionModel listSelectionModel = tbComics.getSelectionModel();
+		listSelectionModel.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent e) {
+				ListSelectionModel lsm = (ListSelectionModel) e.getSource();
+				if (!lsm.isSelectionEmpty()) {
+
+					Numero numero = PantallaBusqueda.listaComics.get(tbComics.getSelectedRow());
+
+					String idConvertido = NumberFormat.getInstance().format(numero.getId());
+					txtID.setText(idConvertido);
+					txtID.setCaretPosition(0);
+					
+					txtTitulo.setText(numero.getTitulo());
+					txtTitulo.setCaretPosition(0);
+					
+					if (numero.getFechaAdquisicion() != null) {
+						String fecha = DateFormat.getDateInstance().format(numero.getFechaAdquisicion());
+						txtFecha.setText(fecha);
+					}
+					
+					if (numero.getTapa().equals("Blanda")) {
+						cmbTapas.setSelectedIndex(0);
+					} else {
+						cmbTapas.setSelectedIndex(1);
+					}
+
+					if (numero.getEstado() != null)
+					txtEstado.setText(numero.getEstado());
+					txtEstado.setCaretPosition(0);
+					
+					if (numero.getResenha() != null)
+						txtAreaResenha.setText(numero.getResenha());
+						txtAreaResenha.setCaretPosition(0);
+					
+					for (int i=0;i<modeloComboColecciones.getSize();i++) {
+						if (modeloComboColecciones.getElementAt(i).getId() == numero.getIdColeccion()) {
+							modeloComboColecciones.setSelectedItem(modeloComboColecciones.getElementAt(i));
+							break;
+						}
+					}
+					
+
+				} else {
+					txtID.setText("");
+					txtTitulo.setText("");
+					txtFecha.setText("");
+					cmbTapas.setSelectedIndex(0);
+					txtEstado.setText("");
+					txtAreaResenha.setText("");
+					cmbColecciones.setSelectedIndex(0);
+				}
+			}
+		});
 	}
 
 	private void cargarColecciones(Socket skCliente) {
