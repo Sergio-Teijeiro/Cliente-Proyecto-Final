@@ -443,6 +443,23 @@ public class OperacionesComics {
 							if (!txtAreaResenha.getText().isBlank()) {
 								resenha = txtAreaResenha.getText();
 							}
+							
+							if (formato) {
+								//Solicitud a servidor de insertar numero
+								String tapa = "";
+								if (cmbTapas.getSelectedIndex() == 0) {
+									tapa = "Blanda";
+								} else {
+									tapa = "Dura";
+								}
+								
+								Coleccion coleccion = (Coleccion) cmbColecciones.getSelectedItem();
+								
+								Numero numero = new Numero(0,txtTitulo.getText(),fecha,tapa,estado,resenha,null,coleccion.getId());
+								
+								HiloCliente gilo = new HiloCliente(skCliente, "altaNumero", numero,rutaImg);
+								
+							}
 						}
 					} catch (Exception e1) {
 						JLabel lblError = new JLabel(errorCampos);

@@ -35,6 +35,7 @@ public class HiloCliente extends Thread {
     Coleccion coleccion;
     JTable tbComics;
     DefaultComboBoxModel<Coleccion> modeloCombo;
+    String rutaImg;
     
     public HiloCliente(Socket socketCliente, String peticion, Object obj) {
         this.socketCliente = socketCliente;
@@ -102,6 +103,23 @@ public class HiloCliente extends Thread {
         }
     }
     
+    public HiloCliente(Socket socketCliente, String peticion, Object obj, String ruta) {
+        this.socketCliente = socketCliente;
+        this.peticion = peticion;
+        this.objeto = obj;
+        this.rutaImg = ruta;
+
+        try {
+            objeto_salida = new ObjectOutputStream(socketCliente.getOutputStream());
+        } catch (IOException ex) {
+            // Logger.getLogger(HiloCliente.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NullPointerException e) {
+        	JLabel lblError = new JLabel("Servidor desconectado");
+        	lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
+            JOptionPane.showMessageDialog(null, lblError, "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
     @Override
     public void run() {
         try {
@@ -117,8 +135,8 @@ public class HiloCliente extends Thread {
             // flujo_salida.flush();
 
             switch (peticion) {
-                case "alta":
-                    //objeto_salida.writeObject(objeto);
+                case "altaNumero":
+                    objeto_salida.writeObject(objeto);
                     //objeto_salida.flush();
 
                     mensaje = flujo_entrada.readUTF();
@@ -126,7 +144,7 @@ public class HiloCliente extends Thread {
                     if (mensaje.contains("existe")) {
                     	JLabel lblError = new JLabel(mensaje);
                     	lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
-                        JOptionPane.showMessageDialog(null, lblError, "Prueba", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, lblError, "Error", JOptionPane.ERROR_MESSAGE);
                     } else {
                     	JLabel lblMensaje = new JLabel(mensaje);
                     	lblMensaje.setFont(new Font("Caladea", Font.PLAIN, 16));
