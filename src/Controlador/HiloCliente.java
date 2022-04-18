@@ -35,7 +35,6 @@ public class HiloCliente extends Thread {
     Coleccion coleccion;
     JTable tbComics;
     DefaultComboBoxModel<Coleccion> modeloCombo;
-    String rutaImg;
     
     public HiloCliente(Socket socketCliente, String peticion, Object obj) {
         this.socketCliente = socketCliente;
@@ -91,23 +90,6 @@ public class HiloCliente extends Thread {
         this.socketCliente = socketCliente;
         this.peticion = peticion;
         this.modeloCombo = modeloCombo;
-
-        try {
-            objeto_salida = new ObjectOutputStream(socketCliente.getOutputStream());
-        } catch (IOException ex) {
-            // Logger.getLogger(HiloCliente.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NullPointerException e) {
-        	JLabel lblError = new JLabel("Servidor desconectado");
-        	lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
-            JOptionPane.showMessageDialog(null, lblError, "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-    
-    public HiloCliente(Socket socketCliente, String peticion, Object obj, String ruta) {
-        this.socketCliente = socketCliente;
-        this.peticion = peticion;
-        this.objeto = obj;
-        this.rutaImg = ruta;
 
         try {
             objeto_salida = new ObjectOutputStream(socketCliente.getOutputStream());
