@@ -9,7 +9,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.sql.Date;
@@ -17,8 +16,6 @@ import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -49,7 +46,6 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.JSeparator;
-import java.awt.Insets;
 
 public class OperacionesComics {
 
@@ -86,7 +82,7 @@ public class OperacionesComics {
 			formatoFecha = "La fecha debe tener el formato dd-MM-yyyy";
 	private String errorCampos = "Error con los campos", mensajeAyuda = "Comprueba la ayuda para ver la longitud máxima de cada campo";
 	
-	private String rutaImg = "";
+	private byte[] img = null;
 
 	/**
 	 * Launch the application.
@@ -453,11 +449,16 @@ public class OperacionesComics {
 									tapa = "Dura";
 								}
 								
+								//COMO RECOGER ARRAY DE BITES DE FICHERO
+								/*File file = new File("C:\\Users\\sergi\\Downloads\\imgProyecto\\eternals.jpg");
+				                BufferedImage Img = ImageIO.read(file);
+				                img = new byte[Img.getWidth()*Img.getHeight()];*/
+								
 								Coleccion coleccion = (Coleccion) cmbColecciones.getSelectedItem();
 								
-								Numero numero = new Numero(0,txtTitulo.getText(),fecha,tapa,estado,resenha,null,coleccion.getId());
+								Numero numero = new Numero(0,txtTitulo.getText(),fecha,tapa,estado,resenha,img,coleccion.getId());
 								
-								HiloCliente gilo = new HiloCliente(skCliente, "altaNumero", numero,rutaImg);
+								HiloCliente gilo = new HiloCliente(skCliente, "altaNumero", numero);
 								
 							}
 						}
