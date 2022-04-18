@@ -9,11 +9,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.sql.Date;
 import java.text.DateFormat;
 import java.text.NumberFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -77,7 +82,11 @@ public class OperacionesComics {
 	private JButton btnInsertar;
 	private JButton btnModificar;
 	private JButton btnBorrar;
-	private String mensajeInsertarNumero = "Debes insertar un título y seleccionar una colección";
+	private String mensajeInsertarNumero = "Debes insertar un título y seleccionar una colección", 
+			formatoFecha = "La fecha debe tener el formato dd-MM-yyyy";
+	private String errorCampos = "Error con los campos", mensajeAyuda = "Comprueba la ayuda para ver la longitud máxima de cada campo";
+	
+	private String rutaImg = "";
 
 	/**
 	 * Launch the application.
@@ -115,7 +124,9 @@ public class OperacionesComics {
 				ImageIcon icono = new ImageIcon(PantallaPrincipal.class.getResource("/img/app_icon.png"));
 				ImageIcon iconoEscala = new ImageIcon(
 						icono.getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_FAST));
-				int respuesta = JOptionPane.showOptionDialog(frmComics, mensajeSalir,
+				JLabel lblPregunta = new JLabel(mensajeSalir);
+				lblPregunta.setFont(new Font("Caladea", Font.PLAIN, 16));
+				int respuesta = JOptionPane.showOptionDialog(frmComics, lblPregunta,
 						cerrarPrograma, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, iconoEscala,
 						opciones, opciones[1]);
 
@@ -392,7 +403,54 @@ public class OperacionesComics {
 					lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
 					JOptionPane.showMessageDialog(frmComics,lblError,"Error",JOptionPane.ERROR_MESSAGE);
 				} else {
-					
+					try {
+						//Comprobar longitudes
+						if (txtTitulo.getText().length() > 200 || txtEstado.getText().length() > 50 || txtAreaResenha.getText().length() > 150) {
+							JLabel lblError = new JLabel(mensajeAyuda);
+							lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
+							JOptionPane.showMessageDialog(frmComics,
+									lblError, "Error",
+									JOptionPane.ERROR_MESSAGE);
+						} else {
+							// Comprobar que datos se mandan
+							Date fecha = null;
+							String estado = null, resenha = null;
+							boolean formato = true;
+							
+							if (!txtFecha.getText().isBlank()) {
+								try {
+									String patron = "dd-MM-yyyy";
+									
+									DateTimeFormatter formatter = DateTimeFormatter.ofPattern(patron);
+									LocalDate date = LocalDate.parse(txtFecha.getText().trim(),formatter);
+									fecha = Date.valueOf(date);
+									
+								} catch (Exception e1) {
+									formato = false;
+									JLabel lblError = new JLabel(formatoFecha);
+									lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
+									JOptionPane.showMessageDialog(frmComics,
+											lblError, "Error",
+											JOptionPane.ERROR_MESSAGE);
+									// e1.printStackTrace();
+								}
+							}
+							
+							if (!txtEstado.getText().isBlank()) {
+								estado = txtEstado.getText();
+							}
+							
+							if (!txtAreaResenha.getText().isBlank()) {
+								resenha = txtAreaResenha.getText();
+							}
+						}
+					} catch (Exception e1) {
+						JLabel lblError = new JLabel(errorCampos);
+						lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
+						JOptionPane.showMessageDialog(frmComics, lblError, "Error",
+								JOptionPane.ERROR_MESSAGE);
+						 //e1.printStackTrace();
+					}
 				}
 			}
 		});
