@@ -82,7 +82,9 @@ public class PantallaPrincipal {
 				ImageIcon icono = new ImageIcon(PantallaPrincipal.class.getResource("/img/app_icon.png"));
 				ImageIcon iconoEscala = new ImageIcon(
 						icono.getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_FAST));
-				int respuesta = JOptionPane.showOptionDialog(frmPrincipal, mensajeSalir,
+				JLabel lblPregunta = new JLabel(mensajeSalir);
+				lblPregunta.setFont(new Font("Caladea", Font.PLAIN, 16));
+				int respuesta = JOptionPane.showOptionDialog(frmPrincipal,lblPregunta ,
 						cerrarPrograma, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, iconoEscala,
 						opciones, opciones[1]);
 
@@ -152,7 +154,9 @@ public class PantallaPrincipal {
 
 		        } catch (Exception ex) {
 		            if (ex.getClass().getName().equals("java.net.ConnectException")) {
-		            	JOptionPane.showMessageDialog(frmPrincipal,"No se ha podido conectar con el servidor", "Error al conectar",
+		            	JLabel lblError = new JLabel("No se ha podido conectar con el servidor");
+		            	lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
+		            	JOptionPane.showMessageDialog(frmPrincipal,lblError, "Error al conectar",
 		            			JOptionPane.ERROR_MESSAGE);
 		            }
 		            //ex.printStackTrace();

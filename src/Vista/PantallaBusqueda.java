@@ -101,7 +101,9 @@ public class PantallaBusqueda {
 				ImageIcon icono = new ImageIcon(PantallaPrincipal.class.getResource("/img/app_icon.png"));
 				ImageIcon iconoEscala = new ImageIcon(
 						icono.getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_FAST));
-				int respuesta = JOptionPane.showOptionDialog(frmBusqueda, mensajeSalir,
+				JLabel lblPregunta = new JLabel(mensajeSalir);
+				lblPregunta.setFont(new Font("Caladea", Font.PLAIN, 16));
+				int respuesta = JOptionPane.showOptionDialog(frmBusqueda, lblPregunta,
 						cerrarPrograma, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, iconoEscala,
 						opciones, opciones[1]);
 
@@ -229,7 +231,9 @@ public class PantallaBusqueda {
 				
 				if (!txtColeccion.getText().isBlank()) {
 					if (txtColeccion.getText().length() > 200) {
-						JOptionPane.showMessageDialog(frmBusqueda, "Comprueba la ayuda para ver la longitud máxima de cada campo", "Error",
+						JLabel lblError = new JLabel("Comprueba la ayuda para ver la longitud máxima de cada campo");
+						lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
+						JOptionPane.showMessageDialog(frmBusqueda, lblError, "Error",
 								JOptionPane.ERROR_MESSAGE);
 					} else {
 						cargarComicsPorColeccion(skCliente,txtColeccion.getText());
@@ -276,7 +280,9 @@ public class PantallaBusqueda {
 				
 				if (!txtComic.getText().isBlank()) {
 					if (txtComic.getText().length() > 200) {
-						JOptionPane.showMessageDialog(frmBusqueda, "Comprueba la ayuda para ver la longitud máxima de cada campo", "Error",
+						JLabel lblError = new JLabel("Comprueba la ayuda para ver la longitud máxima de cada campo");
+						lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
+						JOptionPane.showMessageDialog(frmBusqueda, lblError, "Error",
 								JOptionPane.ERROR_MESSAGE);
 					} else {
 						cargarComicsPorTitulo(skCliente,txtComic.getText());

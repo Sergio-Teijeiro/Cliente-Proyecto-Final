@@ -1,5 +1,6 @@
 package Controlador;
 
+import java.awt.Font;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -45,7 +46,9 @@ public class HiloCliente extends Thread {
         } catch (IOException ex) {
             // Logger.getLogger(HiloCliente.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NullPointerException e) {
-            JOptionPane.showMessageDialog(null, "Servidor desconectado", "Error", JOptionPane.ERROR_MESSAGE);
+        	JLabel lblError = new JLabel("Servidor desconectado");
+        	lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
+            JOptionPane.showMessageDialog(null, lblError, "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
     
@@ -60,7 +63,9 @@ public class HiloCliente extends Thread {
         } catch (IOException ex) {
             // Logger.getLogger(HiloCliente.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NullPointerException e) {
-            JOptionPane.showMessageDialog(null, "Servidor desconectado", "Error", JOptionPane.ERROR_MESSAGE);
+        	JLabel lblError = new JLabel("Servidor desconectado");
+        	lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
+            JOptionPane.showMessageDialog(null, lblError, "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
     
@@ -75,7 +80,9 @@ public class HiloCliente extends Thread {
         } catch (IOException ex) {
             // Logger.getLogger(HiloCliente.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NullPointerException e) {
-            JOptionPane.showMessageDialog(null, "Servidor desconectado", "Error", JOptionPane.ERROR_MESSAGE);
+        	JLabel lblError = new JLabel("Servidor desconectado");
+        	lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
+            JOptionPane.showMessageDialog(null, lblError, "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
     
@@ -89,7 +96,9 @@ public class HiloCliente extends Thread {
         } catch (IOException ex) {
             // Logger.getLogger(HiloCliente.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NullPointerException e) {
-            JOptionPane.showMessageDialog(null, "Servidor desconectado", "Error", JOptionPane.ERROR_MESSAGE);
+        	JLabel lblError = new JLabel("Servidor desconectado");
+        	lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
+            JOptionPane.showMessageDialog(null, lblError, "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
     
@@ -115,9 +124,13 @@ public class HiloCliente extends Thread {
                     mensaje = flujo_entrada.readUTF();
 
                     if (mensaje.contains("existe")) {
-                        JOptionPane.showMessageDialog(null, mensaje, "Prueba", JOptionPane.ERROR_MESSAGE);
+                    	JLabel lblError = new JLabel(mensaje);
+                    	lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
+                        JOptionPane.showMessageDialog(null, lblError, "Prueba", JOptionPane.ERROR_MESSAGE);
                     } else {
-                        JOptionPane.showMessageDialog(null, mensaje, "Inserción completada", JOptionPane.INFORMATION_MESSAGE);
+                    	JLabel lblMensaje = new JLabel(mensaje);
+                    	lblMensaje.setFont(new Font("Caladea", Font.PLAIN, 16));
+                        JOptionPane.showMessageDialog(null, lblMensaje, "Inserción completada", JOptionPane.INFORMATION_MESSAGE);
                     }
                     break;
                 case "baja":

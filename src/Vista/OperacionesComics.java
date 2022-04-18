@@ -77,6 +77,7 @@ public class OperacionesComics {
 	private JButton btnInsertar;
 	private JButton btnModificar;
 	private JButton btnBorrar;
+	private String mensajeInsertarNumero = "Debes insertar un título y seleccionar una colección";
 
 	/**
 	 * Launch the application.
@@ -385,6 +386,14 @@ public class OperacionesComics {
 		btnInsertar.setPreferredSize(new Dimension(100,35));
 		btnInsertar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//INSERTAR UN NUMERO
+				if (txtTitulo.getText().isBlank() || cmbColecciones.getSelectedItem() == null) {
+					JLabel lblError = new JLabel(mensajeInsertarNumero);
+					lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
+					JOptionPane.showMessageDialog(frmComics,lblError,"Error",JOptionPane.ERROR_MESSAGE);
+				} else {
+					
+				}
 			}
 		});
 		btnInsertar.setFont(new Font("Caladea", Font.PLAIN, 20));
