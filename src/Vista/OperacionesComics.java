@@ -667,7 +667,7 @@ public class OperacionesComics {
 							
 							Coleccion coleccion = (Coleccion) cmbColecciones.getSelectedItem();
 							
-							Numero numero = new Numero(0,txtTitulo.getText(),null,tapa,"","",img,coleccion.getId());
+							Numero numero = new Numero(id,txtTitulo.getText(),null,tapa,"","",img,coleccion.getId());
 
 							HiloCliente hilo = new HiloCliente(skCliente, "bajaNumero", numero,tbComics);
 							hilo.start();							
