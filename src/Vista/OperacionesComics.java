@@ -16,6 +16,7 @@ import java.nio.file.Files;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.NumberFormat;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
@@ -83,7 +84,7 @@ public class OperacionesComics {
 	private JButton btnModificar;
 	private JButton btnBorrar;
 	private String mensajeInsertarNumero = "Debes insertar un título y seleccionar una colección", 
-			formatoFecha = "La fecha debe tener el formato dd-MM-yyyy";
+			formatoFecha = "La fecha debe tener el formato dd-MM-yyyy", fechaFutura = "La fecha no puede ser posterior a la actual";
 	private String errorCampos = "Error con los campos", mensajeAyuda = "Comprueba la ayuda para ver la longitud máxima de cada campo";
 	
 	private byte[] img = null;
@@ -444,6 +445,17 @@ public class OperacionesComics {
 									DateTimeFormatter formatter = DateTimeFormatter.ofPattern(patron);
 									LocalDate date = LocalDate.parse(txtFecha.getText().trim(),formatter);
 									fecha = Date.valueOf(date);
+									
+									boolean fechaFutura = fecha.after(Date.from(Instant.now()));
+									
+									if (fechaFutura) {
+										formato = false;
+										JLabel lblError = new JLabel(OperacionesComics.this.fechaFutura);
+										lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
+										JOptionPane.showMessageDialog(frmComics,
+												lblError, "Error",
+												JOptionPane.ERROR_MESSAGE);
+									}
 									
 								} catch (Exception e1) {
 									formato = false;
