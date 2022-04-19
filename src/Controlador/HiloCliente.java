@@ -130,7 +130,7 @@ public class HiloCliente extends Thread {
                     } else {
                     	JLabel lblMensaje = new JLabel(mensaje);
                     	lblMensaje.setFont(new Font("Caladea", Font.PLAIN, 16));
-                        JOptionPane.showMessageDialog(null, lblMensaje, "InserciÃ³n completada", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(null, lblMensaje, "Inserción completada", JOptionPane.INFORMATION_MESSAGE);
                     }
                     break;
                 case "baja":
