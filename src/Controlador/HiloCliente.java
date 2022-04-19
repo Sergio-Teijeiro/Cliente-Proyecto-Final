@@ -100,7 +100,7 @@ public class HiloCliente extends Thread {
         	lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
             JOptionPane.showMessageDialog(null, lblError, "Error", JOptionPane.ERROR_MESSAGE);
         }
-    }
+    }   
     
     @Override
     public void run() {
@@ -130,6 +130,15 @@ public class HiloCliente extends Thread {
                     } else {
                     	JLabel lblMensaje = new JLabel(mensaje);
                     	lblMensaje.setFont(new Font("Caladea", Font.PLAIN, 16));
+                    	
+                    	PantallaBusqueda.listaComics.clear();
+                    	
+                    	ArrayList<Numero> comics = (ArrayList<Numero>) objeto_entrada.readObject();
+                        
+                		PantallaBusqueda.listaComics = comics;
+                		
+                		tbComics.setModel(new TablaComics(comics,socketCliente));;
+                    	
                         JOptionPane.showMessageDialog(null, lblMensaje, "Inserción completada", JOptionPane.INFORMATION_MESSAGE);
                     }
                     break;
