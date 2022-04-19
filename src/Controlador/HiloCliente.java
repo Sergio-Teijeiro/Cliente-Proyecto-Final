@@ -144,7 +144,30 @@ public class HiloCliente extends Thread {
                     break;
                 case "baja":
                     break;
-                case "modificar":
+                case "modificarNumero":
+                    objeto_salida.writeObject(objeto);
+                    //objeto_salida.flush();
+
+                    mensaje = flujo_entrada.readUTF();
+
+                    if (mensaje.contains("existe")) {
+                    	JLabel lblError = new JLabel(mensaje);
+                    	lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
+                        JOptionPane.showMessageDialog(null, lblError, "Error", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                    	JLabel lblMensaje = new JLabel(mensaje);
+                    	lblMensaje.setFont(new Font("Caladea", Font.PLAIN, 16));
+                    	
+                    	PantallaBusqueda.listaComics.clear();
+                    	
+                    	ArrayList<Numero> comics = (ArrayList<Numero>) objeto_entrada.readObject();
+                        
+                		PantallaBusqueda.listaComics = comics;
+                		
+                		tbComics.setModel(new TablaComics(comics,socketCliente));;
+                    	
+                        JOptionPane.showMessageDialog(null, lblMensaje, "Modificación completada", JOptionPane.INFORMATION_MESSAGE);
+                    }                	
                     break;
                 case "cargarComics": ArrayList<Numero> comics = (ArrayList<Numero>) objeto_entrada.readObject();
                 

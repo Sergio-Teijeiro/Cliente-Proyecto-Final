@@ -86,6 +86,8 @@ public class OperacionesComics {
 	private String mensajeInsertarNumero = "Debes insertar un título y seleccionar una colección", 
 			formatoFecha = "La fecha debe tener el formato dd-MM-yyyy", fechaFutura = "La fecha no puede ser posterior a la actual";
 	private String errorCampos = "Error con los campos", mensajeAyuda = "Comprueba la ayuda para ver la longitud máxima de cada campo";
+	private String mensajeModificarNumero = "Debes insertar un ID y un título y seleccionar una colección",
+			mensajeID = "Debes insertar un id mayor o igual a 0";
 	
 	private byte[] img = null;
 
@@ -426,7 +428,7 @@ public class OperacionesComics {
 				} else {
 					try {
 						//Comprobar longitudes
-						if (txtTitulo.getText().length() > 200 || txtEstado.getText().length() > 50 || txtAreaResenha.getText().length() > 150) {
+						if (txtTitulo.getText().length() > 200 || txtEstado.getText().length() > 50 || txtAreaResenha.getText().length() > 1500) {
 							JLabel lblError = new JLabel(mensajeAyuda);
 							lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
 							JOptionPane.showMessageDialog(frmComics,
@@ -507,6 +509,105 @@ public class OperacionesComics {
 		panelBotones.add(btnInsertar);
 		
 		btnModificar = new JButton("Modificar");
+		btnModificar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//MODIFICAR UN NUMERO
+				if (txtID.getText().isBlank() || txtTitulo.getText().isBlank() || cmbColecciones.getSelectedItem() == null) {
+					JLabel lblError = new JLabel(mensajeModificarNumero);
+					lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
+					JOptionPane.showMessageDialog(frmComics,lblError,"Error",JOptionPane.ERROR_MESSAGE);
+				} else {
+					try {
+						//Comprobar longitudes
+						if (txtTitulo.getText().length() > 200 || txtEstado.getText().length() > 50 || txtAreaResenha.getText().length() > 1500) {
+							JLabel lblError = new JLabel(mensajeAyuda);
+							lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
+							JOptionPane.showMessageDialog(frmComics,
+									lblError, "Error",
+									JOptionPane.ERROR_MESSAGE);
+						} else {
+							// Comprobar que datos se mandan
+							Date fecha = null;
+							String estado = null, resenha = null;
+							Integer id;
+							boolean formato = true;
+							
+							if (!txtFecha.getText().isBlank()) {
+								try {
+									String patron = "dd-MM-yyyy";
+									
+									DateTimeFormatter formatter = DateTimeFormatter.ofPattern(patron);
+									LocalDate date = LocalDate.parse(txtFecha.getText().trim(),formatter);
+									fecha = Date.valueOf(date);
+									
+									boolean fechaFutura = fecha.after(Date.from(Instant.now()));
+									
+									if (fechaFutura) {
+										formato = false;
+										JLabel lblError = new JLabel(OperacionesComics.this.fechaFutura);
+										lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
+										JOptionPane.showMessageDialog(frmComics,
+												lblError, "Error",
+												JOptionPane.ERROR_MESSAGE);
+									}
+									
+								} catch (Exception e1) {
+									formato = false;
+									JLabel lblError = new JLabel(formatoFecha);
+									lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
+									JOptionPane.showMessageDialog(frmComics,
+											lblError, "Error",
+											JOptionPane.ERROR_MESSAGE);
+									// e1.printStackTrace();
+								}
+							}
+							
+							if (!txtEstado.getText().isBlank()) {
+								estado = txtEstado.getText();
+							}
+							
+							if (!txtAreaResenha.getText().isBlank()) {
+								resenha = txtAreaResenha.getText();
+							}
+							
+							if (formato) {
+								long aux = (long) NumberFormat.getNumberInstance().parse(txtID.getText().trim());
+								id = (int) aux;
+
+								if (id < 0) {
+									JOptionPane.showMessageDialog(frmComics,
+											mensajeID, "Error",
+											JOptionPane.ERROR_MESSAGE);
+								} else {
+									//Solicitud a servidor de modificar numero
+									String tapa = "";
+									if (cmbTapas.getSelectedIndex() == 0) {
+										tapa = "Blanda";
+									} else {
+										tapa = "Dura";
+									}
+									
+									Coleccion coleccion = (Coleccion) cmbColecciones.getSelectedItem();
+									
+									Numero numero = new Numero(id,txtTitulo.getText(),fecha,tapa,estado,resenha,img,coleccion.getId());
+									
+									HiloCliente hilo = new HiloCliente(skCliente, "modificarNumero", numero,tbComics);
+									hilo.start();
+									
+								}
+							}
+						}
+						
+					} catch (Exception e1) {
+						JLabel lblError = new JLabel(errorCampos);
+						lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
+						JOptionPane.showMessageDialog(frmComics, lblError, "Error",
+								JOptionPane.ERROR_MESSAGE);
+						 //e1.printStackTrace();
+					}
+				}
+			}
+		});
 		btnModificar.setPreferredSize(new Dimension(114,35));
 		btnModificar.setFont(new Font("Caladea", Font.PLAIN, 20));
 		panelBotones.add(btnModificar);
