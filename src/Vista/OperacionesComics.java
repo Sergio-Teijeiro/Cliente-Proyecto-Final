@@ -458,8 +458,8 @@ public class OperacionesComics {
 								
 								Numero numero = new Numero(0,txtTitulo.getText(),fecha,tapa,estado,resenha,img,coleccion.getId());
 								
-								HiloCliente gilo = new HiloCliente(skCliente, "altaNumero", numero);
-								
+								HiloCliente hilo = new HiloCliente(skCliente, "altaNumero", numero);
+								hilo.start();
 							}
 						}
 					} catch (Exception e1) {
