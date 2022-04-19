@@ -87,7 +87,8 @@ public class OperacionesComics {
 			formatoFecha = "La fecha debe tener el formato dd-MM-yyyy", fechaFutura = "La fecha no puede ser posterior a la actual";
 	private String errorCampos = "Error con los campos", mensajeAyuda = "Comprueba la ayuda para ver la longitud máxima de cada campo";
 	private String mensajeModificarNumero = "Debes insertar un ID y un título y seleccionar una colección",
-			mensajeID = "Debes insertar un id mayor o igual a 0";
+			mensajeID = "Debes insertar un id mayor o igual a 0", preguntaImg = "¿Deseas mantener la imagen que ya posee el número?";
+	private String tituloPreguntaImg = "Imagen no seleccionada";
 	
 	private byte[] img = null;
 
@@ -490,7 +491,7 @@ public class OperacionesComics {
 								Coleccion coleccion = (Coleccion) cmbColecciones.getSelectedItem();
 								
 								Numero numero = new Numero(0,txtTitulo.getText(),fecha,tapa,estado,resenha,img,coleccion.getId());
-								
+	
 								HiloCliente hilo = new HiloCliente(skCliente, "altaNumero", numero,tbComics);
 								hilo.start();
 							}
@@ -591,6 +592,22 @@ public class OperacionesComics {
 									
 									Numero numero = new Numero(id,txtTitulo.getText(),fecha,tapa,estado,resenha,img,coleccion.getId());
 									
+									if (img == null) {
+										//Preguntar si desea mantener la imagen anterior o eliminarla
+										ImageIcon icono = new ImageIcon(OperacionesComics.class.getResource("/img/app_icon.png"));
+										ImageIcon iconoEscala = new ImageIcon(
+												icono.getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_FAST));
+										int respuesta = JOptionPane.showOptionDialog(frmComics, preguntaImg,
+												tituloPreguntaImg, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, iconoEscala,
+												opciones, opciones[0]);
+										
+										if (respuesta == 0) { //si elige si, mantengo la imagen
+											Numero numAux = PantallaBusqueda.listaComics.get(tbComics.getSelectedRow());
+											
+											numero.setImg(numAux.getImg());
+										}
+									}
+									
 									HiloCliente hilo = new HiloCliente(skCliente, "modificarNumero", numero,tbComics);
 									hilo.start();
 									
@@ -637,6 +654,8 @@ public class OperacionesComics {
 					if (numero.getFechaAdquisicion() != null) {
 						String fecha = DateFormat.getDateInstance().format(numero.getFechaAdquisicion());
 						txtFecha.setText(fecha);
+					} else {
+						txtFecha.setText("");
 					}
 					
 					if (numero.getTapa().equals("Blanda")) {
@@ -645,13 +664,19 @@ public class OperacionesComics {
 						cmbTapas.setSelectedIndex(1);
 					}
 
-					if (numero.getEstado() != null)
-					txtEstado.setText(numero.getEstado());
-					txtEstado.setCaretPosition(0);
+					if (numero.getEstado() != null) {
+						txtEstado.setText(numero.getEstado());
+						txtEstado.setCaretPosition(0);
+					} else {
+						txtEstado.setText("");
+					}
 					
-					if (numero.getResenha() != null)
+					if (numero.getResenha() != null) {
 						txtAreaResenha.setText(numero.getResenha());
-						txtAreaResenha.setCaretPosition(0);
+						txtAreaResenha.setCaretPosition(0);						
+					} else {
+						txtAreaResenha.setText("");
+					}
 					
 					for (int i=0;i<modeloComboColecciones.getSize();i++) {
 						if (modeloComboColecciones.getElementAt(i).getId() == numero.getIdColeccion()) {
