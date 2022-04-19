@@ -449,17 +449,16 @@ public class OperacionesComics {
 									tapa = "Dura";
 								}
 								
-								//COMO RECOGER ARRAY DE BITES DE FICHERO
-								/*File file = new File("C:\\Users\\sergi\\Downloads\\imgProyecto\\eternals.jpg");
-				                BufferedImage Img = ImageIO.read(file);
-				                img = new byte[Img.getWidth()*Img.getHeight()];*/
-								
 								Coleccion coleccion = (Coleccion) cmbColecciones.getSelectedItem();
 								
 								Numero numero = new Numero(0,txtTitulo.getText(),fecha,tapa,estado,resenha,img,coleccion.getId());
 								
 								HiloCliente hilo = new HiloCliente(skCliente, "altaNumero", numero);
 								hilo.start();
+								
+								hilo.join();
+								
+								cargarComics(skCliente);
 							}
 						}
 					} catch (Exception e1) {
