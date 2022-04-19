@@ -9,8 +9,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.io.IOException;
 import java.net.Socket;
+import java.nio.file.Files;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.NumberFormat;
@@ -43,7 +45,9 @@ import javax.swing.JLabel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JButton;
 import javax.swing.JSeparator;
 
@@ -365,6 +369,26 @@ public class OperacionesComics {
 		panelImgColeccion.add(lblImg);
 		
 		btnEscogerImg = new JButton("Escoger");
+		btnEscogerImg.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//Escoger una imagen y guardar sus bytes
+				
+				String rutaImg = seleccionarImagen();
+				
+		        if (rutaImg == null) {
+		            JOptionPane.showMessageDialog(null, "No has seleccionado ninguna imagen", "Imagen no escogida", JOptionPane.WARNING_MESSAGE);
+		        } else {
+		        	File fichero = new File(rutaImg);
+		        	try {
+						img = Files.readAllBytes(fichero.toPath());
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+		            JOptionPane.showMessageDialog(null, "Se ha guardado la ruta de la imagen seleccionada", "Imagen guardada", JOptionPane.INFORMATION_MESSAGE);
+		        }
+			}
+		});
 		btnEscogerImg.setFont(new Font("Caladea", Font.PLAIN, 20));
 		panelImgColeccion.add(btnEscogerImg);
 		
@@ -453,12 +477,8 @@ public class OperacionesComics {
 								
 								Numero numero = new Numero(0,txtTitulo.getText(),fecha,tapa,estado,resenha,img,coleccion.getId());
 								
-								HiloCliente hilo = new HiloCliente(skCliente, "altaNumero", numero);
+								HiloCliente hilo = new HiloCliente(skCliente, "altaNumero", numero,tbComics);
 								hilo.start();
-								
-								hilo.join();
-								
-								cargarComics(skCliente);
 							}
 						}
 					} catch (Exception e1) {
@@ -541,6 +561,22 @@ public class OperacionesComics {
 		});
 	}
 
+	protected String seleccionarImagen() {
+        String ruta = null;
+
+        JFileChooser fc = escogerFichero();
+
+        int eleccion = fc.showDialog(null, "Escoger");
+
+        if (eleccion == JFileChooser.APPROVE_OPTION) {// si elige abrir el archivo
+            File f = fc.getSelectedFile(); // obtiene el archivo seleccionado
+            ruta = f.getAbsolutePath();
+        }
+
+        return ruta;		
+		
+	}
+
 	private void cargarColecciones(Socket skCliente) {
 		modeloComboColecciones.removeAllElements();
 		
@@ -576,4 +612,21 @@ public class OperacionesComics {
 		
 	}
 
+    private static JFileChooser escogerFichero() {
+
+        JFileChooser fc = new JFileChooser();
+        String escritorio = System.getProperty("user.home") + "/desktop";//carpeta donde se abre por defecto (escritorio del usuario)
+        File destino = new File(escritorio);
+
+        fc.setCurrentDirectory(destino);
+        fc.setDialogTitle("Elegir imagen de número");
+        fc.setMultiSelectionEnabled(false);
+
+        //el primer parametro es la descripcion de las extensiones aceptadas y el resto son las extensiones aceptadas
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter(".jpg, .jpeg, .png", "jpg", "jpeg", "png");
+
+        fc.setFileFilter(filtro);// aplica un filtro de extensiones
+
+        return fc;
+    }	
 }
