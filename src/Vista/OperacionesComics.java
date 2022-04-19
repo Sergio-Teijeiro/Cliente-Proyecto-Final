@@ -88,7 +88,7 @@ public class OperacionesComics {
 	private String errorCampos = "Error con los campos", mensajeAyuda = "Comprueba la ayuda para ver la longitud máxima de cada campo";
 	private String mensajeModificarNumero = "Debes insertar un ID y un título y seleccionar una colección",
 			mensajeID = "Debes insertar un id mayor o igual a 0", preguntaImg = "¿Deseas mantener la imagen que ya posee el número?";
-	private String tituloPreguntaImg = "Imagen no seleccionada";
+	private String tituloPreguntaImg = "Imagen no seleccionada", insertarID = "Debes insertar un ID", mensajeEntero = "Debes insertar un número entero (separado por puntos)";
 	
 	private byte[] img = null;
 
@@ -630,6 +630,59 @@ public class OperacionesComics {
 		panelBotones.add(btnModificar);
 		
 		btnBorrar = new JButton("Borrar");
+		btnBorrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//BORRAR UN NUMERO
+				if (txtID.getText().isBlank()) {
+					JLabel lblError = new JLabel(insertarID);
+					lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
+					JOptionPane.showMessageDialog(frmComics,lblError,"Error",JOptionPane.ERROR_MESSAGE);
+				} else {
+					Integer id = null;
+					boolean formato = true;
+					
+					try {
+						try {
+							long aux = (long) NumberFormat.getNumberInstance().parse(txtID.getText().trim());
+							id = (int) aux;
+						} catch (Exception e1) {
+							formato = false;
+							JOptionPane.showMessageDialog(frmComics, mensajeEntero,
+									"Error", JOptionPane.ERROR_MESSAGE);
+							// e1.printStackTrace();
+						}	
+						
+						if (formato)
+						if (id < 0) {
+							JOptionPane.showMessageDialog(frmComics,
+								mensajeID, "Error",JOptionPane.ERROR_MESSAGE);
+						} else {
+							//Solicitud a servidor de borrar numero
+							String tapa = "";
+							if (cmbTapas.getSelectedIndex() == 0) {
+								tapa = "Blanda";
+							} else {
+								tapa = "Dura";
+							}
+							
+							Coleccion coleccion = (Coleccion) cmbColecciones.getSelectedItem();
+							
+							Numero numero = new Numero(0,txtTitulo.getText(),null,tapa,"","",img,coleccion.getId());
+
+							HiloCliente hilo = new HiloCliente(skCliente, "bajaNumero", numero,tbComics);
+							hilo.start();							
+						}
+						
+					} catch (Exception e1) {
+						JLabel lblError = new JLabel(errorCampos);
+						lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
+						JOptionPane.showMessageDialog(frmComics, lblError, "Error",
+								JOptionPane.ERROR_MESSAGE);
+						 //e1.printStackTrace();
+					}
+				}
+			}
+		});
 		btnBorrar.setPreferredSize(new Dimension(90,35));
 		btnBorrar.setFont(new Font("Caladea", Font.PLAIN, 20));
 		panelBotones.add(btnBorrar);

@@ -142,7 +142,30 @@ public class HiloCliente extends Thread {
                         JOptionPane.showMessageDialog(null, lblMensaje, "Inserción completada", JOptionPane.INFORMATION_MESSAGE);
                     }
                     break;
-                case "baja":
+                case "bajaNumero":
+                    objeto_salida.writeObject(objeto);
+                    //objeto_salida.flush();
+
+                    mensaje = flujo_entrada.readUTF();
+
+                    if (mensaje.contains("existe")) {
+                    	JLabel lblError = new JLabel(mensaje);
+                    	lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
+                        JOptionPane.showMessageDialog(null, lblError, "Error", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                    	JLabel lblMensaje = new JLabel(mensaje);
+                    	lblMensaje.setFont(new Font("Caladea", Font.PLAIN, 16));
+                    	
+                    	PantallaBusqueda.listaComics.clear();
+                    	
+                    	ArrayList<Numero> comics = (ArrayList<Numero>) objeto_entrada.readObject();
+                        
+                		PantallaBusqueda.listaComics = comics;
+                		
+                		tbComics.setModel(new TablaComics(comics,socketCliente));;
+                    	
+                        JOptionPane.showMessageDialog(null, lblMensaje, "Borrado completado", JOptionPane.INFORMATION_MESSAGE);
+                    } 
                     break;
                 case "modificarNumero":
                     objeto_salida.writeObject(objeto);
