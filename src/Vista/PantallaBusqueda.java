@@ -175,8 +175,8 @@ public class PantallaBusqueda {
 			public void actionPerformed(ActionEvent e) {
 				frmBusqueda.dispose();
 
-				OperacionesComics o = new OperacionesComics(skCliente);
-				o.frmComics.setVisible(true);
+				PantallaColecciones p = new PantallaColecciones(skCliente);
+				p.frmColecciones.setVisible(true);
 			}
 		});
 		itemColecciones.setFont(new Font("Caladea", Font.PLAIN, 16));
