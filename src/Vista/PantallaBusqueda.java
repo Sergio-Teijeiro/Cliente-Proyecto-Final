@@ -173,7 +173,10 @@ public class PantallaBusqueda {
 		itemColecciones = new JMenuItem("Gestión colecciones");
 		itemColecciones.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				frmBusqueda.dispose();
 
+				PantallaBusqueda p = new PantallaBusqueda(skCliente);
+				p.frmBusqueda.setVisible(true);
 			}
 		});
 		itemColecciones.setFont(new Font("Caladea", Font.PLAIN, 16));
