@@ -494,6 +494,8 @@ public class OperacionesComics {
 	
 								HiloCliente hilo = new HiloCliente(skCliente, "altaNumero", numero,tbComics);
 								hilo.start();
+								
+								img = null;
 							}
 						}
 					} catch (Exception e1) {
@@ -611,6 +613,8 @@ public class OperacionesComics {
 									HiloCliente hilo = new HiloCliente(skCliente, "modificarNumero", numero,tbComics);
 									hilo.start();
 									
+									img = null;
+									
 								}
 							}
 						}
@@ -670,7 +674,9 @@ public class OperacionesComics {
 							Numero numero = new Numero(id,txtTitulo.getText(),null,tapa,"","",img,coleccion.getId());
 
 							HiloCliente hilo = new HiloCliente(skCliente, "bajaNumero", numero,tbComics);
-							hilo.start();							
+							hilo.start();
+							
+							img = null;
 						}
 						
 					} catch (Exception e1) {
