@@ -200,7 +200,10 @@ public class OperacionesComics {
 		itemColecciones = new JMenuItem("Gestión colecciones");
 		itemColecciones.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				frmComics.dispose();
 
+				PantallaColecciones p = new PantallaColecciones(skCliente);
+				p.frmColecciones.setVisible(true);
 			}
 		});
 		itemColecciones.setFont(new Font("Caladea", Font.PLAIN, 16));
