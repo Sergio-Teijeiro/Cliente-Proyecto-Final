@@ -9,13 +9,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.io.IOException;
 import java.net.Socket;
+import java.nio.file.Files;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -31,6 +34,7 @@ import javax.swing.ScrollPaneConstants;
 
 import Controlador.HiloCliente;
 import java.awt.FlowLayout;
+import javax.swing.border.EmptyBorder;
 
 public class PantallaColecciones {
 
@@ -42,7 +46,12 @@ public class PantallaColecciones {
 	private JMenuItem itemBusqueda,itemComics,itemColecciones,itemInformes;
 	private JTable tbColecciones;	
 	private JPanel panelID;
-	private JLabel lblID;
+	private JLabel lblID, lblNombre, lblImg;
+	private JPanel panelNombre;
+	private JPanel panelImg;
+	private JButton btnEscogerImg;
+	
+	private byte[] img = null;
 
 	/**
 	 * Launch the application.
@@ -203,6 +212,7 @@ public class PantallaColecciones {
 		panelPrincipal.add(panelID);
 		
 		lblID = new JLabel("ID");
+		lblID.setBorder(new EmptyBorder(0, 0, 0, 34));
 		lblID.setFont(new Font("Caladea", Font.PLAIN, 20));
 		panelID.add(lblID);
 		
@@ -220,6 +230,65 @@ public class PantallaColecciones {
 		scrollID.setViewportView(txtID);
 
 		panelID.add(scrollID);
+		
+		panelNombre = new JPanel();
+		FlowLayout flowLayout_1 = (FlowLayout) panelNombre.getLayout();
+		flowLayout_1.setHgap(25);
+		flowLayout_1.setAlignment(FlowLayout.LEFT);
+		panelPrincipal.add(panelNombre);
+		
+		lblNombre = new JLabel("T\u00EDtulo");
+		lblNombre.setFont(new Font("Caladea", Font.PLAIN, 20));
+		panelNombre.add(lblNombre);
+		
+		JTextArea txtNombre = new JTextArea();
+		txtNombre.setWrapStyleWord(true);
+		txtNombre.setRows(1);
+		txtNombre.setColumns(40);
+		txtNombre.setFont(new Font("Caladea", Font.PLAIN, 20));
+		txtNombre.setCaretPosition(0); //poner cursor al principio
+		txtNombre.setLineWrap(true);
+		
+		JScrollPane scrollNombre = new JScrollPane();
+		scrollNombre.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		scrollNombre.setBounds(0, 0, 20, 150);
+		scrollNombre.setViewportView(txtNombre);
+
+		panelNombre.add(scrollNombre);
+		
+		panelImg = new JPanel();
+		FlowLayout flowLayout_2 = (FlowLayout) panelImg.getLayout();
+		flowLayout_2.setHgap(25);
+		flowLayout_2.setAlignment(FlowLayout.LEFT);
+		panelPrincipal.add(panelImg);
+		
+		lblImg = new JLabel("Imagen");
+		lblImg.setFont(new Font("Caladea", Font.PLAIN, 20));
+		panelImg.add(lblImg);
+		
+		btnEscogerImg = new JButton("Escoger");
+		btnEscogerImg.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//Escoger una imagen y guardar sus bytes
+				
+				String rutaImg = seleccionarImagen();
+				
+		        if (rutaImg == null) {
+		            JOptionPane.showMessageDialog(null, "No has seleccionado ninguna imagen", "Imagen no escogida", JOptionPane.WARNING_MESSAGE);
+		        } else {
+		        	File fichero = new File(rutaImg);
+		        	try {
+						img = Files.readAllBytes(fichero.toPath());
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+		            JOptionPane.showMessageDialog(null, "Se ha guardado la ruta de la imagen seleccionada", "Imagen guardada", JOptionPane.INFORMATION_MESSAGE);
+		        }
+			}
+		});
+		btnEscogerImg.setFont(new Font("Caladea", Font.PLAIN, 20));
+		panelImg.add(btnEscogerImg);		
 	}
 
 }
