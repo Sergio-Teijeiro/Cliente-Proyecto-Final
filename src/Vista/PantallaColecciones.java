@@ -25,9 +25,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
+import javax.swing.ScrollPaneConstants;
 
 import Controlador.HiloCliente;
+import java.awt.FlowLayout;
 
 public class PantallaColecciones {
 
@@ -38,6 +41,8 @@ public class PantallaColecciones {
 	private JMenu menuComics, menuColecciones, menuInformes;
 	private JMenuItem itemBusqueda,itemComics,itemColecciones,itemInformes;
 	private JTable tbColecciones;	
+	private JPanel panelID;
+	private JLabel lblID;
 
 	/**
 	 * Launch the application.
@@ -190,6 +195,31 @@ public class PantallaColecciones {
 		JPanel panelPrincipal = new JPanel();
 		frmColecciones.getContentPane().add(panelPrincipal, BorderLayout.CENTER);
 		panelPrincipal.setLayout(new BoxLayout(panelPrincipal, BoxLayout.Y_AXIS));		
+		
+		panelID = new JPanel();
+		FlowLayout flowLayout = (FlowLayout) panelID.getLayout();
+		flowLayout.setHgap(25);
+		flowLayout.setAlignment(FlowLayout.LEFT);
+		panelPrincipal.add(panelID);
+		
+		lblID = new JLabel("ID");
+		lblID.setFont(new Font("Caladea", Font.PLAIN, 20));
+		panelID.add(lblID);
+		
+		JTextArea txtID = new JTextArea();
+		txtID.setWrapStyleWord(true);
+		txtID.setRows(1);
+		txtID.setColumns(40);
+		txtID.setFont(new Font("Caladea", Font.PLAIN, 20));
+		txtID.setCaretPosition(0); //poner cursor al principio
+		txtID.setLineWrap(true);
+		
+		JScrollPane scrollID = new JScrollPane();
+		scrollID.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		scrollID.setBounds(0, 0, 20, 150);
+		scrollID.setViewportView(txtID);
+
+		panelID.add(scrollID);
 	}
 
 }
