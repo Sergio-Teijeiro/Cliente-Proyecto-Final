@@ -19,6 +19,7 @@ import java.util.logging.Logger;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -35,6 +36,7 @@ import javax.swing.ScrollPaneConstants;
 import Controlador.HiloCliente;
 import java.awt.FlowLayout;
 import javax.swing.border.EmptyBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class PantallaColecciones {
 
@@ -290,5 +292,39 @@ public class PantallaColecciones {
 		btnEscogerImg.setFont(new Font("Caladea", Font.PLAIN, 20));
 		panelImg.add(btnEscogerImg);		
 	}
+	
+	protected String seleccionarImagen() {
+        String ruta = null;
+
+        JFileChooser fc = escogerFichero();
+
+        int eleccion = fc.showDialog(null, "Escoger");
+
+        if (eleccion == JFileChooser.APPROVE_OPTION) {// si elige abrir el archivo
+            File f = fc.getSelectedFile(); // obtiene el archivo seleccionado
+            ruta = f.getAbsolutePath();
+        }
+
+        return ruta;		
+		
+	}	
+	
+    private static JFileChooser escogerFichero() {
+
+        JFileChooser fc = new JFileChooser();
+        String escritorio = System.getProperty("user.home") + "/desktop";//carpeta donde se abre por defecto (escritorio del usuario)
+        File destino = new File(escritorio);
+
+        fc.setCurrentDirectory(destino);
+        fc.setDialogTitle("Elegir imagen de colección");
+        fc.setMultiSelectionEnabled(false);
+
+        //el primer parametro es la descripcion de las extensiones aceptadas y el resto son las extensiones aceptadas
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter(".jpg, .jpeg, .png", "jpg", "jpeg", "png");
+
+        fc.setFileFilter(filtro);// aplica un filtro de extensiones
+
+        return fc;
+    }
 
 }
