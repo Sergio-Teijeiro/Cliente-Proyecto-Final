@@ -37,6 +37,7 @@ import Controlador.HiloCliente;
 import java.awt.FlowLayout;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.JSeparator;
 
 public class PantallaColecciones {
 
@@ -50,10 +51,11 @@ public class PantallaColecciones {
 	private JPanel panelID;
 	private JLabel lblID, lblNombre, lblImg;
 	private JPanel panelNombre;
-	private JPanel panelImg;
-	private JButton btnEscogerImg;
+	private JPanel panelImg, panelBotones;
+	private JButton btnEscogerImg, btnInsertar, btnModificar, btnBorrar;
 	
 	private byte[] img = null;
+	private JSeparator separator;
 
 	/**
 	 * Launch the application.
@@ -291,6 +293,29 @@ public class PantallaColecciones {
 		});
 		btnEscogerImg.setFont(new Font("Caladea", Font.PLAIN, 20));
 		panelImg.add(btnEscogerImg);		
+		
+		separator = new JSeparator();
+		panelPrincipal.add(separator);
+		
+		panelBotones = new JPanel();
+		FlowLayout flowLayout_4 = (FlowLayout) panelBotones.getLayout();
+		flowLayout_4.setHgap(25);
+		panelPrincipal.add(panelBotones);
+		
+		btnInsertar = new JButton("Insertar");
+		btnInsertar.setPreferredSize(new Dimension(100,35));
+		btnInsertar.setFont(new Font("Caladea", Font.PLAIN, 20));
+		panelBotones.add(btnInsertar);
+		
+		btnModificar = new JButton("Modificar");
+		btnModificar.setPreferredSize(new Dimension(114,35));
+		btnModificar.setFont(new Font("Caladea", Font.PLAIN, 20));
+		panelBotones.add(btnModificar);
+		
+		btnBorrar = new JButton("Borrar");
+		btnBorrar.setPreferredSize(new Dimension(90,35));
+		btnBorrar.setFont(new Font("Caladea", Font.PLAIN, 20));
+		panelBotones.add(btnBorrar);
 	}
 	
 	protected String seleccionarImagen() {
