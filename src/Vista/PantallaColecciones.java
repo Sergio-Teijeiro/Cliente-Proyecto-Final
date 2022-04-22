@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.Socket;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -34,6 +35,9 @@ import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 
 import Controlador.HiloCliente;
+import Modelo.Coleccion;
+import Modelo.Numero;
+
 import java.awt.FlowLayout;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -56,6 +60,8 @@ public class PantallaColecciones {
 	
 	private byte[] img = null;
 	private JSeparator separator;
+	
+	public static ArrayList<Coleccion> listaColecciones = new ArrayList<>();
 
 	/**
 	 * Launch the application.
@@ -316,6 +322,8 @@ public class PantallaColecciones {
 		btnBorrar.setPreferredSize(new Dimension(90,35));
 		btnBorrar.setFont(new Font("Caladea", Font.PLAIN, 20));
 		panelBotones.add(btnBorrar);
+		
+		cargarColecciones(skCliente);
 	}
 	
 	protected String seleccionarImagen() {
@@ -352,4 +360,16 @@ public class PantallaColecciones {
         return fc;
     }
 
+	private void cargarColecciones(Socket skCliente) {
+		listaColecciones.clear();
+		
+		HiloCliente hilo = new HiloCliente(skCliente, "cargarColecciones", null,tbColecciones);
+		hilo.start();
+		
+		try {
+			hilo.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
 }
