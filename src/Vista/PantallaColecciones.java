@@ -13,6 +13,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.Socket;
 import java.nio.file.Files;
+import java.text.DateFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -40,6 +42,8 @@ import Modelo.Numero;
 
 import java.awt.FlowLayout;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.JSeparator;
 
@@ -324,6 +328,28 @@ public class PantallaColecciones {
 		panelBotones.add(btnBorrar);
 		
 		cargarColecciones(skCliente);
+		
+		ListSelectionModel listSelectionModel = tbColecciones.getSelectionModel();
+		listSelectionModel.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent e) {
+				ListSelectionModel lsm = (ListSelectionModel) e.getSource();
+				if (!lsm.isSelectionEmpty()) {
+
+					Coleccion coleccion = listaColecciones.get(tbColecciones.getSelectedRow());
+
+					String idConvertido = NumberFormat.getInstance().format(coleccion.getId());
+					txtID.setText(idConvertido);
+					txtID.setCaretPosition(0);
+					
+					txtNombre.setText(coleccion.getNombre());
+					txtNombre.setCaretPosition(0);
+					
+				} else {
+					txtID.setText("");
+					txtNombre.setText("");
+				}
+			}
+		});
 	}
 	
 	protected String seleccionarImagen() {
