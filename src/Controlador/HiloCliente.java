@@ -19,21 +19,22 @@ import javax.swing.JTextArea;
 
 import Modelo.Coleccion;
 import Modelo.Numero;
+import Modelo.TablaColecciones;
 import Modelo.TablaComics;
 import Vista.PantallaBusqueda;
+import Vista.PantallaColecciones;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class HiloCliente extends Thread {
-	
 	Socket socketCliente;
     String peticion;
     Object objeto;
     ObjectOutputStream objeto_salida;
     ObjectInputStream objeto_entrada;
     Coleccion coleccion;
-    JTable tbComics;
+    JTable tabla;
     DefaultComboBoxModel<Coleccion> modeloCombo;
     
     public HiloCliente(Socket socketCliente, String peticion, Object obj) {
@@ -44,7 +45,7 @@ public class HiloCliente extends Thread {
         try {
             objeto_salida = new ObjectOutputStream(socketCliente.getOutputStream());
         } catch (IOException ex) {
-            // Logger.getLogger(HiloCliente.class.getName()).log(Level.SEVERE, null, ex);
+        	//
         } catch (NullPointerException e) {
         	JLabel lblError = new JLabel("Servidor desconectado");
         	lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
@@ -69,11 +70,11 @@ public class HiloCliente extends Thread {
         }
     }
     
-    public HiloCliente(Socket socketCliente, String peticion, Object obj, JTable tbComic) {
+    public HiloCliente(Socket socketCliente, String peticion, Object obj, JTable Tabla) {
         this.socketCliente = socketCliente;
         this.peticion = peticion;
         this.objeto = obj;
-        tbComics = tbComic;
+        tabla = Tabla;
 
         try {
             objeto_salida = new ObjectOutputStream(socketCliente.getOutputStream());
@@ -137,7 +138,7 @@ public class HiloCliente extends Thread {
                         
                 		PantallaBusqueda.listaComics = comics;
                 		
-                		tbComics.setModel(new TablaComics(comics,socketCliente));;
+                		tabla.setModel(new TablaComics(comics,socketCliente));;
                     	
                         JOptionPane.showMessageDialog(null, lblMensaje, "Inserción completada", JOptionPane.INFORMATION_MESSAGE);
                     }
@@ -162,7 +163,7 @@ public class HiloCliente extends Thread {
                         
                 		PantallaBusqueda.listaComics = comics;
                 		
-                		tbComics.setModel(new TablaComics(comics,socketCliente));;
+                		tabla.setModel(new TablaComics(comics,socketCliente));;
                     	
                         JOptionPane.showMessageDialog(null, lblMensaje, "Borrado completado", JOptionPane.INFORMATION_MESSAGE);
                     } 
@@ -187,7 +188,7 @@ public class HiloCliente extends Thread {
                         
                 		PantallaBusqueda.listaComics = comics;
                 		
-                		tbComics.setModel(new TablaComics(comics,socketCliente));;
+                		tabla.setModel(new TablaComics(comics,socketCliente));;
                     	
                         JOptionPane.showMessageDialog(null, lblMensaje, "Modificación completada", JOptionPane.INFORMATION_MESSAGE);
                     }                	
@@ -196,7 +197,7 @@ public class HiloCliente extends Thread {
                 
                 		PantallaBusqueda.listaComics = comics;
                 		
-                		tbComics.setModel(new TablaComics(comics,socketCliente));;
+                		tabla.setModel(new TablaComics(comics,socketCliente));;
                     break;    
                 case "colByComic": objeto_salida.writeObject(objeto);
                 
@@ -213,7 +214,7 @@ public class HiloCliente extends Thread {
                 
         				PantallaBusqueda.listaComics = comicsColeccion;
         
-        				tbComics.setModel(new TablaComics(comicsColeccion,socketCliente));
+        				tabla.setModel(new TablaComics(comicsColeccion,socketCliente));
                 	break;
                 case "cargarComicsPorTitulo": String titulo = (String) objeto;
         		
@@ -223,14 +224,19 @@ public class HiloCliente extends Thread {
         
         				PantallaBusqueda.listaComics = comicsTitulo;
         				
-        				tbComics.setModel(new TablaComics(comicsTitulo,socketCliente));
+        				tabla.setModel(new TablaComics(comicsTitulo,socketCliente));
         			break;
                 case "cargarColecciones":  ArrayList<Coleccion> colecciones = (ArrayList<Coleccion>) objeto_entrada.readObject();
 
-                		for (Coleccion c : colecciones) {
-                			modeloCombo.addElement(c);
+                		if (modeloCombo != null) {
+                    		for (Coleccion c : colecciones) {
+                    			modeloCombo.addElement(c);
+                    		}
+                		} else {
+                			PantallaColecciones.listaColecciones = colecciones;
+                			
+                			tabla.setModel(new TablaColecciones(colecciones));
                 		}
-                		
                 	break;
                 default:
                     break;
@@ -244,10 +250,10 @@ public class HiloCliente extends Thread {
                     socketCliente.close();
                 }
             } catch (IOException ex1) {
-                Logger.getLogger(HiloCliente.class.getName()).log(Level.SEVERE, null, ex1);
+                //Logger.getLogger(HiloCliente.class.getName()).log(Level.SEVERE, null, ex1);
             }
 
-            Logger.getLogger(HiloCliente.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(HiloCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
