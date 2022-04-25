@@ -64,6 +64,8 @@ public class PantallaColecciones {
 	
 	private byte[] img = null;
 	private JSeparator separator;
+	private String mensajeInsertarColeccion = "Debes insertar un nombre", errorCampos = "Error con los campos";
+	private String mensajeAyuda = "Comprueba la ayuda para ver la longitud máxima de cada campo";
 	
 	public static ArrayList<Coleccion> listaColecciones = new ArrayList<>();
 
@@ -226,7 +228,7 @@ public class PantallaColecciones {
 		panelPrincipal.add(panelID);
 		
 		lblID = new JLabel("ID");
-		lblID.setBorder(new EmptyBorder(0, 0, 0, 34));
+		lblID.setBorder(new EmptyBorder(0, 0, 0, 50));
 		lblID.setFont(new Font("Caladea", Font.PLAIN, 20));
 		panelID.add(lblID);
 		
@@ -251,7 +253,7 @@ public class PantallaColecciones {
 		flowLayout_1.setAlignment(FlowLayout.LEFT);
 		panelPrincipal.add(panelNombre);
 		
-		lblNombre = new JLabel("T\u00EDtulo");
+		lblNombre = new JLabel("Nombre");
 		lblNombre.setFont(new Font("Caladea", Font.PLAIN, 20));
 		panelNombre.add(lblNombre);
 		
@@ -313,6 +315,41 @@ public class PantallaColecciones {
 		panelPrincipal.add(panelBotones);
 		
 		btnInsertar = new JButton("Insertar");
+		btnInsertar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//INSERTAR UNA COLECCION
+				if (txtNombre.getText().isBlank()) {
+					JLabel lblError = new JLabel(mensajeInsertarColeccion);
+					lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
+					JOptionPane.showMessageDialog(frmColecciones,lblError,"Error",JOptionPane.ERROR_MESSAGE);
+				} else {
+					try {
+						//Comprobar longitudes
+						if (txtNombre.getText().length() > 200) {
+							JLabel lblError = new JLabel(mensajeAyuda);
+							lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
+							JOptionPane.showMessageDialog(frmColecciones,
+									lblError, "Error",
+									JOptionPane.ERROR_MESSAGE);
+						} else {
+							//Solicitud a servidor de insertar coleccion
+							Coleccion coleccion = new Coleccion(0,txtNombre.getText(),img);
+							
+							HiloCliente hilo = new HiloCliente(skCliente, "altaColeccion", coleccion,tbColecciones);
+							hilo.start();
+							
+							img = null;
+						}
+					} catch (Exception e1) {
+						JLabel lblError = new JLabel(errorCampos);
+						lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
+						JOptionPane.showMessageDialog(frmColecciones, lblError, "Error",
+								JOptionPane.ERROR_MESSAGE);
+						 //e1.printStackTrace();
+					}
+				}
+			}
+		});
 		btnInsertar.setPreferredSize(new Dimension(100,35));
 		btnInsertar.setFont(new Font("Caladea", Font.PLAIN, 20));
 		panelBotones.add(btnInsertar);
