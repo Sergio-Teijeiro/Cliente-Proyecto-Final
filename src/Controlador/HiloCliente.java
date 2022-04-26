@@ -36,6 +36,7 @@ public class HiloCliente extends Thread {
     Coleccion coleccion;
     JTable tabla;
     DefaultComboBoxModel<Coleccion> modeloCombo;
+    public boolean existeColeccion = true;
     
     public HiloCliente(Socket socketCliente, String peticion, Object obj) {
         this.socketCliente = socketCliente;
@@ -157,15 +158,18 @@ public class HiloCliente extends Thread {
                     	JLabel lblMensaje = new JLabel(mensaje);
                     	lblMensaje.setFont(new Font("Caladea", Font.PLAIN, 16));
                     	
-                    	PantallaBusqueda.listaComics.clear();
-                    	
                     	ArrayList<Numero> comics = (ArrayList<Numero>) objeto_entrada.readObject();
-                        
-                		PantallaBusqueda.listaComics = comics;
-                		
-                		tabla.setModel(new TablaComics(comics,socketCliente));
                     	
-                        JOptionPane.showMessageDialog(null, lblMensaje, "Borrado completado", JOptionPane.INFORMATION_MESSAGE);
+                    	if (tabla.getModel().toString().contains("TablaComics")) {
+                        	PantallaBusqueda.listaComics.clear();
+
+                    		PantallaBusqueda.listaComics = comics;
+                    		
+                    		tabla.setModel(new TablaComics(comics,socketCliente));
+                        	
+                            JOptionPane.showMessageDialog(null, lblMensaje, "Borrado completado", JOptionPane.INFORMATION_MESSAGE);
+                    	}
+
                     } 
                     break;
                 case "modificarNumero":
@@ -272,7 +276,7 @@ public class HiloCliente extends Thread {
                     if (mensaje.contains("existe")) {
                     	JLabel lblError = new JLabel(mensaje);
                     	lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
-                        JOptionPane.showMessageDialog(null, lblError, "Error", JOptionPane.ERROR_MESSAGE);
+                    	JOptionPane.showMessageDialog(null, lblError, "Error", JOptionPane.ERROR_MESSAGE);
                     } else {
                     	JLabel lblMensaje = new JLabel(mensaje);
                     	lblMensaje.setFont(new Font("Caladea", Font.PLAIN, 16));
@@ -295,9 +299,13 @@ public class HiloCliente extends Thread {
                     mensaje = flujo_entrada.readUTF();
 
                     if (mensaje.contains("existe")) {
-                    	JLabel lblError = new JLabel(mensaje);
-                    	lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
-                        JOptionPane.showMessageDialog(null, lblError, "Error", JOptionPane.ERROR_MESSAGE);
+                    	existeColeccion = false;
+                    } else if (mensaje.contains("relacionados")) {
+		            	PantallaColecciones.numerosRelacionados.clear();
+		            	
+		            	comics = (ArrayList<Numero>) objeto_entrada.readObject();
+		                
+		            	PantallaColecciones.numerosRelacionados = comics;
                     } else {
                     	JLabel lblMensaje = new JLabel(mensaje);
                     	lblMensaje.setFont(new Font("Caladea", Font.PLAIN, 16));
@@ -309,8 +317,14 @@ public class HiloCliente extends Thread {
                     	PantallaColecciones.listaColecciones = colecciones;
                 		
                 		tabla.setModel(new TablaColecciones(colecciones));
-                    	
-                        JOptionPane.showMessageDialog(null, lblMensaje, "Borrado completado", JOptionPane.INFORMATION_MESSAGE);
+                		
+                		if (!PantallaColecciones.numerosRelacionados.isEmpty()) {
+                			PantallaColecciones.numerosRelacionados.clear();
+                			JOptionPane.showMessageDialog(null, lblMensaje, "Borrado completado", JOptionPane.INFORMATION_MESSAGE);
+                		} else {
+                			lblMensaje.setText(lblMensaje.getText() + " y sus números");
+                			JOptionPane.showMessageDialog(null,lblMensaje , "Borrado completado", JOptionPane.INFORMATION_MESSAGE);
+                		}
                     }
                 	break;
                 default:
