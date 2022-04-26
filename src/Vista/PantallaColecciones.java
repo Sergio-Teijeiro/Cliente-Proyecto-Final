@@ -13,9 +13,9 @@ import java.io.File;
 import java.io.IOException;
 import java.net.Socket;
 import java.nio.file.Files;
-import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -37,8 +37,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 
 import Controlador.HiloCliente;
-import Modelo.Coleccion;
-import Modelo.Numero;
+import Modelo.*;
 
 import java.awt.FlowLayout;
 import javax.swing.border.EmptyBorder;
@@ -69,8 +68,10 @@ public class PantallaColecciones {
 	private String mensajeModificarColeccion = "Debes insertar un ID y un nombre", mensajeID = "Debes insertar un id mayor o igual a 0";
 	private String preguntaImg = "¿Deseas mantener la imagen que ya posee el número?", tituloPreguntaImg = "Imagen no seleccionada";
 	private String insertarID = "Debes insertar un ID",mensajeEntero = "Debes insertar un número entero (separado por puntos)";
+	private String preguntaBorrar = "¿Deseas borrar la colección y sus números?", tituloBorrarColeccion = "Colección con números";
 	
 	public static ArrayList<Coleccion> listaColecciones = new ArrayList<>();
+	public static ArrayList<Numero> numerosRelacionados = new ArrayList<>();
 
 	/**
 	 * Launch the application.
@@ -450,14 +451,53 @@ public class PantallaColecciones {
 							JOptionPane.showMessageDialog(frmColecciones,
 								mensajeID, "Error",JOptionPane.ERROR_MESSAGE);
 						} else {
-							//Solicitud a servidor de borrar coleccion
-							
-							Coleccion coleccion = new Coleccion(id,txtNombre.getText(),img);
+								Coleccion coleccion = new Coleccion(id, txtNombre.getText(), img);
+								// Solicitud a servidor de borrar coleccion
 
-							HiloCliente hilo = new HiloCliente(skCliente, "bajaColeccion", coleccion,tbColecciones);
-							hilo.start();
-							
-							img = null;
+								HiloCliente hilo = new HiloCliente(skCliente, "bajaColeccion", coleccion,
+										tbColecciones);
+								hilo.start();
+
+								hilo.join();
+								
+								if (!hilo.existeColeccion) {
+			                    	JLabel lblError = new JLabel("No existe ninguna colección con ese ID");
+			                    	lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
+			                        JOptionPane.showMessageDialog(null, lblError, "Error", JOptionPane.ERROR_MESSAGE);
+								}
+								
+								img = null;
+
+								if (!numerosRelacionados.isEmpty()) {
+									// Si hay numeros relacionados, permito que el usuario escoja si borrar todo
+									JLabel lblMensaje = new JLabel(preguntaBorrar);
+									lblMensaje.setFont(new Font("Caladea", Font.PLAIN, 16));
+									ImageIcon icono = new ImageIcon(
+											PantallaPrincipal.class.getResource("/img/app_icon.png"));
+									ImageIcon iconoEscala = new ImageIcon(
+											icono.getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_FAST));
+									int respuesta = JOptionPane.showOptionDialog(frmColecciones, lblMensaje,
+											tituloBorrarColeccion, JOptionPane.YES_NO_OPTION,
+											JOptionPane.QUESTION_MESSAGE, iconoEscala, opciones, opciones[1]);
+
+									if (respuesta == 0) { // si elige si, borro primero cada numero y luego coleccion
+										for (Iterator<Numero> itr = numerosRelacionados.iterator(); itr.hasNext();) {
+											Numero n = itr.next();
+											HiloCliente hilo2 = new HiloCliente(skCliente, "bajaNumero", n,
+													tbColecciones);
+											hilo2.start();
+
+											hilo2.join();
+
+											itr.remove();
+										}
+
+										HiloCliente hilo3 = new HiloCliente(skCliente, "bajaColeccion", coleccion,
+												tbColecciones);
+										hilo3.start();
+
+									}
+								}
 						}
 						
 					} catch (Exception e1) {
@@ -465,7 +505,7 @@ public class PantallaColecciones {
 						lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
 						JOptionPane.showMessageDialog(frmColecciones, lblError, "Error",
 								JOptionPane.ERROR_MESSAGE);
-						 //e1.printStackTrace();
+						 e1.printStackTrace();
 					}					
 				}
 			}
