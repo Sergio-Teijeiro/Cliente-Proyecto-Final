@@ -66,6 +66,8 @@ public class PantallaColecciones {
 	private JSeparator separator;
 	private String mensajeInsertarColeccion = "Debes insertar un nombre", errorCampos = "Error con los campos";
 	private String mensajeAyuda = "Comprueba la ayuda para ver la longitud máxima de cada campo";
+	private String mensajeModificarColeccion = "Debes insertar un ID y un nombre", mensajeID = "Debes insertar un id mayor o igual a 0";
+	private String preguntaImg = "¿Deseas mantener la imagen que ya posee el número?", tituloPreguntaImg = "Imagen no seleccionada";
 	
 	public static ArrayList<Coleccion> listaColecciones = new ArrayList<>();
 
@@ -355,6 +357,66 @@ public class PantallaColecciones {
 		panelBotones.add(btnInsertar);
 		
 		btnModificar = new JButton("Modificar");
+		btnModificar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//MODIFICAR UNA COLECCION
+				if (txtID.getText().isBlank() || txtNombre.getText().isBlank()) {
+					JLabel lblError = new JLabel(mensajeModificarColeccion);
+					lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
+					JOptionPane.showMessageDialog(frmColecciones,lblError,"Error",JOptionPane.ERROR_MESSAGE);
+				} else {
+					try {
+						//Comprobar longitudes
+						if (txtNombre.getText().length() > 200) {
+							JLabel lblError = new JLabel(mensajeAyuda);
+							lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
+							JOptionPane.showMessageDialog(frmColecciones,
+									lblError, "Error",
+									JOptionPane.ERROR_MESSAGE);
+						} else {
+							long aux = (long) NumberFormat.getNumberInstance().parse(txtID.getText().trim());
+							Integer id = (int) aux;
+							
+							if (id < 0) {
+								JOptionPane.showMessageDialog(frmColecciones,
+										mensajeID, "Error",
+										JOptionPane.ERROR_MESSAGE);
+							} else {
+								//Solicitud a servidor de modificar coleccion
+								Coleccion coleccion = new Coleccion(id,txtNombre.getText(),img);
+								
+								if (img == null) {
+									//Preguntar si desea mantener la imagen anterior o eliminarla
+									ImageIcon icono = new ImageIcon(OperacionesComics.class.getResource("/img/app_icon.png"));
+									ImageIcon iconoEscala = new ImageIcon(
+											icono.getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_FAST));
+									int respuesta = JOptionPane.showOptionDialog(frmColecciones, preguntaImg,
+											tituloPreguntaImg, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, iconoEscala,
+											opciones, opciones[0]);
+									
+									if (respuesta == 0) { //si elige si, mantengo la imagen
+										Coleccion colAux = listaColecciones.get(tbColecciones.getSelectedRow());
+										
+										coleccion.setImg(colAux.getImg());
+									}
+								}
+								
+								HiloCliente hilo = new HiloCliente(skCliente, "modificarColeccion", coleccion,tbColecciones);
+								hilo.start();
+								
+								img = null;
+							}
+						}
+					} catch (Exception e1) {
+						JLabel lblError = new JLabel(errorCampos);
+						lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
+						JOptionPane.showMessageDialog(frmColecciones, lblError, "Error",
+								JOptionPane.ERROR_MESSAGE);
+						 //e1.printStackTrace();
+					}
+				}
+			}
+		});
 		btnModificar.setPreferredSize(new Dimension(114,35));
 		btnModificar.setFont(new Font("Caladea", Font.PLAIN, 20));
 		panelBotones.add(btnModificar);
