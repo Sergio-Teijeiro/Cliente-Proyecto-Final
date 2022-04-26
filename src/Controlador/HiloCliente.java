@@ -288,6 +288,31 @@ public class HiloCliente extends Thread {
                         JOptionPane.showMessageDialog(null, lblMensaje, "Modificación completada", JOptionPane.INFORMATION_MESSAGE);
                     }   
                 	break;
+                case "bajaColeccion":
+                    objeto_salida.writeObject(objeto);
+                    //objeto_salida.flush();
+
+                    mensaje = flujo_entrada.readUTF();
+
+                    if (mensaje.contains("existe")) {
+                    	JLabel lblError = new JLabel(mensaje);
+                    	lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
+                        JOptionPane.showMessageDialog(null, lblError, "Error", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                    	JLabel lblMensaje = new JLabel(mensaje);
+                    	lblMensaje.setFont(new Font("Caladea", Font.PLAIN, 16));
+                    	
+                    	PantallaColecciones.listaColecciones.clear();
+                    	
+                    	colecciones = (ArrayList<Coleccion>) objeto_entrada.readObject();
+                        
+                    	PantallaColecciones.listaColecciones = colecciones;
+                		
+                		tabla.setModel(new TablaColecciones(colecciones));
+                    	
+                        JOptionPane.showMessageDialog(null, lblMensaje, "Borrado completado", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                	break;
                 default:
                     break;
             }

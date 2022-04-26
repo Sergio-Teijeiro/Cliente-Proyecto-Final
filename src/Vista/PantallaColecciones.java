@@ -68,6 +68,7 @@ public class PantallaColecciones {
 	private String mensajeAyuda = "Comprueba la ayuda para ver la longitud máxima de cada campo";
 	private String mensajeModificarColeccion = "Debes insertar un ID y un nombre", mensajeID = "Debes insertar un id mayor o igual a 0";
 	private String preguntaImg = "¿Deseas mantener la imagen que ya posee el número?", tituloPreguntaImg = "Imagen no seleccionada";
+	private String insertarID = "Debes insertar un ID",mensajeEntero = "Debes insertar un número entero (separado por puntos)";
 	
 	public static ArrayList<Coleccion> listaColecciones = new ArrayList<>();
 
@@ -422,6 +423,53 @@ public class PantallaColecciones {
 		panelBotones.add(btnModificar);
 		
 		btnBorrar = new JButton("Borrar");
+		btnBorrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//BORRAR UNA COLECCION
+				if (txtID.getText().isBlank()) {
+					JLabel lblError = new JLabel(insertarID);
+					lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
+					JOptionPane.showMessageDialog(frmColecciones,lblError,"Error",JOptionPane.ERROR_MESSAGE);
+				} else {
+					Integer id = null;
+					boolean formato = true;
+					
+					try {
+						try {
+							long aux = (long) NumberFormat.getNumberInstance().parse(txtID.getText().trim());
+							id = (int) aux;
+						} catch (Exception e1) {
+							formato = false;
+							JOptionPane.showMessageDialog(frmColecciones, mensajeEntero,
+									"Error", JOptionPane.ERROR_MESSAGE);
+							// e1.printStackTrace();
+						}	
+						
+						if (formato)
+						if (id < 0) {
+							JOptionPane.showMessageDialog(frmColecciones,
+								mensajeID, "Error",JOptionPane.ERROR_MESSAGE);
+						} else {
+							//Solicitud a servidor de borrar coleccion
+							
+							Coleccion coleccion = new Coleccion(id,txtNombre.getText(),img);
+
+							HiloCliente hilo = new HiloCliente(skCliente, "bajaColeccion", coleccion,tbColecciones);
+							hilo.start();
+							
+							img = null;
+						}
+						
+					} catch (Exception e1) {
+						JLabel lblError = new JLabel(errorCampos);
+						lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
+						JOptionPane.showMessageDialog(frmColecciones, lblError, "Error",
+								JOptionPane.ERROR_MESSAGE);
+						 //e1.printStackTrace();
+					}					
+				}
+			}
+		});
 		btnBorrar.setPreferredSize(new Dimension(90,35));
 		btnBorrar.setFont(new Font("Caladea", Font.PLAIN, 20));
 		panelBotones.add(btnBorrar);
