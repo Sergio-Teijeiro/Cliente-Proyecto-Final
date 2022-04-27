@@ -72,6 +72,7 @@ public class PantallaColecciones {
 	
 	public static ArrayList<Coleccion> listaColecciones = new ArrayList<>();
 	public static ArrayList<Numero> numerosRelacionados = new ArrayList<>();
+	private JButton btnVerImg;
 
 	/**
 	 * Launch the application.
@@ -294,7 +295,9 @@ public class PantallaColecciones {
 				String rutaImg = seleccionarImagen();
 				
 		        if (rutaImg == null) {
-		            JOptionPane.showMessageDialog(null, "No has seleccionado ninguna imagen", "Imagen no escogida", JOptionPane.WARNING_MESSAGE);
+					JLabel lblMensaje = new JLabel("No has seleccionado ninguna imagen");
+					lblMensaje.setFont(new Font("Caladea", Font.PLAIN, 16));
+		            JOptionPane.showMessageDialog(null,lblMensaje , "Imagen no escogida", JOptionPane.WARNING_MESSAGE);
 		        } else {
 		        	File fichero = new File(rutaImg);
 		        	try {
@@ -303,12 +306,30 @@ public class PantallaColecciones {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-		            JOptionPane.showMessageDialog(null, "Se ha guardado la ruta de la imagen seleccionada", "Imagen guardada", JOptionPane.INFORMATION_MESSAGE);
+					JLabel lblMensaje = new JLabel("Se ha guardado la ruta de la imagen seleccionada");
+					lblMensaje.setFont(new Font("Caladea", Font.PLAIN, 16));
+		            JOptionPane.showMessageDialog(null,lblMensaje , "Imagen guardada", JOptionPane.INFORMATION_MESSAGE);
 		        }
 			}
 		});
 		btnEscogerImg.setFont(new Font("Caladea", Font.PLAIN, 20));
 		panelImg.add(btnEscogerImg);		
+		
+		btnVerImg = new JButton("Ver");
+		btnVerImg.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (img == null) {
+					JLabel lblMensaje = new JLabel("La colección no posee ninguna imagen");
+					lblMensaje.setFont(new Font("Caladea", Font.PLAIN, 16));
+					JOptionPane.showMessageDialog(null, lblMensaje, "Imagen no disponible", JOptionPane.ERROR_MESSAGE);
+				} else {
+					VerImgColeccion verImg = new VerImgColeccion(img);
+					verImg.setVisible(true);
+				}
+			}
+		});
+		btnVerImg.setFont(new Font("Caladea", Font.PLAIN, 20));
+		panelImg.add(btnVerImg);
 		
 		separator = new JSeparator();
 		panelPrincipal.add(separator);
@@ -505,7 +526,7 @@ public class PantallaColecciones {
 						lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
 						JOptionPane.showMessageDialog(frmColecciones, lblError, "Error",
 								JOptionPane.ERROR_MESSAGE);
-						 e1.printStackTrace();
+						 //e1.printStackTrace();
 					}					
 				}
 			}
@@ -530,10 +551,12 @@ public class PantallaColecciones {
 					
 					txtNombre.setText(coleccion.getNombre());
 					txtNombre.setCaretPosition(0);
+					img = coleccion.getImg();
 					
 				} else {
 					txtID.setText("");
 					txtNombre.setText("");
+					img = null;
 				}
 			}
 		});
