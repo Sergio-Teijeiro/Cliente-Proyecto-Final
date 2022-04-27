@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -43,8 +44,8 @@ public class VerImgColeccion extends JDialog {
 				Toolkit.getDefaultToolkit().getImage(PantallaPrincipal.class.getResource("/img/app_icon.png")));
 		setModalityType(ModalityType.APPLICATION_MODAL);
 		
-		JButton btnImgColeccion = new JButton();
-		btnImgColeccion.setBounds(new Rectangle(0, 0, 443, 680));
+		/*JButton btnImgColeccion = new JButton();
+		btnImgColeccion.setBounds(new Rectangle(0, 0, 443, 680));*/
 		
 		BufferedImage bufImg = null;
 		try {
@@ -52,17 +53,23 @@ public class VerImgColeccion extends JDialog {
 		} catch (IOException ex) {
 			Logger.getLogger(DetalleComic.class.getName()).log(Level.SEVERE, null, ex);
 		}
-
-		ImageIcon iconoEscala = new ImageIcon(bufImg.getScaledInstance(btnImgColeccion.getWidth(),
-				btnImgColeccion.getHeight(), java.awt.Image.SCALE_FAST));
 		
-		btnImgColeccion.setFocusPainted(false);
+		JLabel prueba = new JLabel();
+		prueba.setBounds(new Rectangle(0, 0, 443, 680));
+
+		ImageIcon iconoEscala = new ImageIcon(bufImg.getScaledInstance(prueba.getWidth(),
+				prueba.getHeight(), java.awt.Image.SCALE_FAST));
+		
+		prueba.setIcon(iconoEscala);
+		getContentPane().add(prueba, BorderLayout.CENTER);
+		
+		/*btnImgColeccion.setFocusPainted(false);
 		btnImgColeccion.setContentAreaFilled(false);
 		btnImgColeccion.setBorderPainted(false);
-
+		
 		btnImgColeccion.setIcon(iconoEscala);
 		
-		getContentPane().add(btnImgColeccion, BorderLayout.CENTER);
+		getContentPane().add(btnImgColeccion, BorderLayout.CENTER);*/
 
 	}
 
