@@ -204,21 +204,17 @@ public class PantallaPrincipal {
 		JPanel panelImagen = new JPanel();
 		panelPrincipal.add(panelImagen);
 
-		JButton btnImagen = new JButton("");
+		JLabel lblImagen = new JLabel();
 
-		btnImagen.setBounds(new Rectangle(0, 0, 800, 450));
+		lblImagen.setBounds(new Rectangle(0, 0, 800, 450));
 
 		ImageIcon icono2 = new ImageIcon(PantallaPrincipal.class.getResource("/img/avengers.jpg"));
-		ImageIcon iconoEscala2 = new ImageIcon(icono2.getImage().getScaledInstance(btnImagen.getWidth(),
-				btnImagen.getHeight(), java.awt.Image.SCALE_FAST));
+		ImageIcon iconoEscala2 = new ImageIcon(icono2.getImage().getScaledInstance(lblImagen.getWidth(),
+				lblImagen.getHeight(), java.awt.Image.SCALE_FAST));
 
-		btnImagen.setIcon(iconoEscala2);
+		lblImagen.setIcon(iconoEscala2);
 
-		btnImagen.setFocusPainted(false);
-		btnImagen.setContentAreaFilled(false);
-		btnImagen.setBorderPainted(false);
-
-		panelImagen.add(btnImagen);
+		panelImagen.add(lblImagen);
 	}
 
 }

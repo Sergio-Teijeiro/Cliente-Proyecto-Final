@@ -236,10 +236,9 @@ public class DetalleComic extends JDialog {
 		flowLayout4.setHgap(25);
 		panelDatos.add(panelImg);
 		
-		JButton btnImgNumero = new JButton();
+		JLabel lblImgNumero = new JLabel();
 
-		btnImgNumero.setBounds(new Rectangle(0, 0, 216, 332));
-		//btnImgNumero.setBounds(new Rectangle(0, 0, 400, 330));
+		lblImgNumero.setBounds(new Rectangle(0, 0, 216, 332));
 		
 		byte[] data = numero.getImg();
 		BufferedImage img = null;
@@ -249,21 +248,16 @@ public class DetalleComic extends JDialog {
 			Logger.getLogger(DetalleComic.class.getName()).log(Level.SEVERE, null, ex);
 		}
 
-		ImageIcon iconoEscala = new ImageIcon(img.getScaledInstance(btnImgNumero.getWidth(),
-				btnImgNumero.getHeight(), java.awt.Image.SCALE_FAST));
+		ImageIcon iconoEscala = new ImageIcon(img.getScaledInstance(lblImgNumero.getWidth(),
+				lblImgNumero.getHeight(), java.awt.Image.SCALE_FAST));
 
-		btnImgNumero.setIcon(iconoEscala);
+		lblImgNumero.setIcon(iconoEscala);
 
-		btnImgNumero.setFocusPainted(false);
-		btnImgNumero.setContentAreaFilled(false);
-		btnImgNumero.setBorderPainted(false);
-		panelImg.add(btnImgNumero);
+		panelImg.add(lblImgNumero);
 		
-		JButton btnImgColeccion = new JButton();
-		btnImgColeccion.setFocusPainted(false);
-		btnImgColeccion.setContentAreaFilled(false);
-		btnImgColeccion.setBounds(new Rectangle(0, 0, 216, 332));
-		btnImgColeccion.setBorderPainted(false);
+		JLabel lblImgColeccion = new JLabel();
+
+		lblImgColeccion.setBounds(new Rectangle(0, 0, 216, 332));
 		
 		Coleccion coleccion = new Coleccion();
 		
@@ -287,8 +281,8 @@ public class DetalleComic extends JDialog {
 			Logger.getLogger(DetalleComic.class.getName()).log(Level.SEVERE, null, ex);
 		}
 
-		ImageIcon iconoEscala2 = new ImageIcon(imgCol.getScaledInstance(btnImgColeccion.getWidth(),
-				btnImgColeccion.getHeight(), java.awt.Image.SCALE_FAST));
+		ImageIcon iconoEscala2 = new ImageIcon(imgCol.getScaledInstance(lblImgColeccion.getWidth(),
+				lblImgColeccion.getHeight(), java.awt.Image.SCALE_FAST));
 		
 		JPanel panelColeccion = new JPanel();
 		panelImg.add(panelColeccion);
@@ -299,14 +293,6 @@ public class DetalleComic extends JDialog {
 		
 		lblColeccion.setFont(fuente);
 		panelColeccion.add(lblColeccion);
-		
-		/*JTextField txtColeccion = new JTextField();
-		txtColeccion.setPreferredSize(new Dimension(20,40));
-		txtColeccion.setColumns(10);
-		txtColeccion.setText(coleccion.getNombre());
-		txtColeccion.setFont(new Font("Caladea", Font.PLAIN, 20));
-		txtColeccion.setCaretPosition(0); //poner cursor al principio
-		txtColeccion.setEditable(false);*/
 		
 		JTextArea txtAreaColeccion = new JTextArea();
 		txtAreaColeccion.setWrapStyleWord(true);
@@ -324,9 +310,9 @@ public class DetalleComic extends JDialog {
 
 		panelColeccion.add(scrollCol);
 
-		btnImgColeccion.setIcon(iconoEscala2);
+		lblImgColeccion.setIcon(iconoEscala2);
 		
-		panelImg.add(btnImgColeccion);
+		panelImg.add(lblImgColeccion);
 	}
 
 }
