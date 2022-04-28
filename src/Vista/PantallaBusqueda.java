@@ -189,7 +189,10 @@ public class PantallaBusqueda {
 		itemInformes = new JMenuItem("Crear informes");
 		itemInformes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				frmBusqueda.dispose();
 
+				PantallaInformes p = new PantallaInformes(skCliente);
+				p.frmInformes.setVisible(true);
 			}
 		});
 		itemInformes.setFont(new Font("Caladea", Font.PLAIN, 16));
