@@ -23,9 +23,12 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 import Controlador.HiloCliente;
+import Modelo.Coleccion;
+
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.BoxLayout;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 
@@ -49,6 +52,8 @@ public class PantallaInformes {
 	private JLabel lblColeccion2;
 	private JComboBox cmbColecciones2;
 	private JButton btnInformeComicsCol;
+	private DefaultComboBoxModel<Coleccion> modeloCombo = new DefaultComboBoxModel<Coleccion>();
+	private DefaultComboBoxModel<Coleccion> modeloCombo2 = new DefaultComboBoxModel<Coleccion>();
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -217,6 +222,10 @@ public class PantallaInformes {
 		panelInforme2.add(lblColeccion);
 		
 		cmbColecciones = new JComboBox();
+		
+		cmbColecciones.setModel(modeloCombo);
+		cmbColecciones.setFont(new Font("Caladea", Font.PLAIN, 18));
+		
 		panelInforme2.add(cmbColecciones);
 		
 		btnInformeColeccionesNombre = new JButton("Informe de colecciones por nombre");
@@ -246,6 +255,10 @@ public class PantallaInformes {
 		panelInforme4.add(lblColeccion2);
 		
 		cmbColecciones2 = new JComboBox();
+		
+		cmbColecciones2.setModel(modeloCombo2);
+		cmbColecciones2.setFont(new Font("Caladea", Font.PLAIN, 18));
+		
 		panelInforme4.add(cmbColecciones2);
 		
 		btnInformeComicsCol = new JButton("Informe de c\u00F3mics por colecci\u00F3n");
@@ -256,6 +269,37 @@ public class PantallaInformes {
 		FlowLayout flowLayout_4 = (FlowLayout) panel.getLayout();
 		flowLayout_4.setVgap(165);
 		panelPrincipal.add(panel);
+		
+		cargarColecciones(skCliente);
+	}
+
+	private void cargarColecciones(Socket skCliente) {
+		modeloCombo.removeAllElements();
+		modeloCombo2.removeAllElements();
+		
+		HiloCliente hilo = new HiloCliente(skCliente,"cargarColecciones",modeloCombo);
+		hilo.start();
+		
+		try {
+			hilo.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		for (int i=0;i<modeloCombo.getSize();i++) {
+			if (modeloCombo.getElementAt(i).getNombre().length() > 45) {
+				String nuevoNombre = modeloCombo.getElementAt(i).getNombre().substring(0, 41)+"...";
+				modeloCombo.getElementAt(i).setNombre(nuevoNombre);
+			}
+		}
+		
+		for (int i=0;i<modeloCombo.getSize();i++) {
+			Coleccion col = modeloCombo.getElementAt(i);
+			
+			modeloCombo2.addElement(col);
+		}
+		
 	}
 
 }
