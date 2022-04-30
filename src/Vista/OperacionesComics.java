@@ -112,6 +112,20 @@ public class OperacionesComics {
 	 * Create the application.
 	 */
 	public OperacionesComics(Socket skCliente) {
+		//reconectar con el servidor si se desconecto
+		if (skCliente.isClosed()) {
+			try {
+				skCliente = new Socket("192.168.56.101", 2000);
+			} catch (Exception ex) {
+	            if (ex.getClass().getName().equals("java.net.ConnectException")) {
+	            	JLabel lblError = new JLabel("No se ha podido conectar con el servidor");
+	            	lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
+	            	JOptionPane.showMessageDialog(frmComics,lblError, "Error al conectar",
+	            			JOptionPane.ERROR_MESSAGE);
+	            }
+			}
+		}
+		
 		initialize(skCliente);
 	}
 

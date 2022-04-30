@@ -15,6 +15,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -85,6 +86,20 @@ public class PantallaBusqueda {
 	 * @param skCliente 
 	 */
 	public PantallaBusqueda(Socket skCliente) {
+		//reconectar con el servidor si se desconecto
+		if (skCliente.isClosed()) {
+			try {
+				skCliente = new Socket("192.168.56.101", 2000);
+			} catch (Exception ex) {
+	            if (ex.getClass().getName().equals("java.net.ConnectException")) {
+	            	JLabel lblError = new JLabel("No se ha podido conectar con el servidor");
+	            	lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
+	            	JOptionPane.showMessageDialog(frmBusqueda,lblError, "Error al conectar",
+	            			JOptionPane.ERROR_MESSAGE);
+	            }
+			}
+		}
+		
 		initialize(skCliente);
 	}
 
@@ -321,12 +336,15 @@ public class PantallaBusqueda {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
-					Numero numero = listaComics.get(tbComics.getSelectedRow());
-					
-					if (numero != null) {
-						DetalleComic detalle = new DetalleComic(numero,skCliente);
-						detalle.setVisible(true);
+					if (!listaComics.isEmpty()) {
+						Numero numero = listaComics.get(tbComics.getSelectedRow());
+						
+						if (numero != null) {
+							DetalleComic detalle = new DetalleComic(numero,skCliente);
+							detalle.setVisible(true);
+						}
 					}
+
 				}
 			}
 		});
