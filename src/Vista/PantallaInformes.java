@@ -2,6 +2,7 @@ package Vista;
 
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -22,6 +23,11 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 import Controlador.HiloCliente;
+import javax.swing.JPanel;
+import java.awt.BorderLayout;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 
 public class PantallaInformes {
 
@@ -31,6 +37,18 @@ public class PantallaInformes {
 	private String tituloPantalla = "Creación de informes";
 	private JMenu menuComics, menuColecciones, menuInformes;
 	private JMenuItem itemBusqueda,itemComics,itemColecciones,itemInformes;
+	private JPanel panelPrincipal;
+	private JButton btnInformeColecciones;
+	private JPanel panelInforme2;
+	private JLabel lblColeccion;
+	private JComboBox cmbColecciones;
+	private JButton btnInformeColeccionesNombre;
+	private JPanel panelInforme3;
+	private JButton btnInformeComics;
+	private JPanel panelInforme4;
+	private JLabel lblColeccion2;
+	private JComboBox cmbColecciones2;
+	private JButton btnInformeComicsCol;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -171,6 +189,73 @@ public class PantallaInformes {
 		itemInformes = new JMenuItem("Crear informes");
 		itemInformes.setFont(new Font("Caladea", Font.PLAIN, 16));
 		menuInformes.add(itemInformes);
+		
+		panelPrincipal = new JPanel();
+		frmInformes.getContentPane().add(panelPrincipal, BorderLayout.CENTER);
+		panelPrincipal.setLayout(new BoxLayout(panelPrincipal, BoxLayout.Y_AXIS));
+		
+		JPanel panelInforme1 = new JPanel();
+		FlowLayout flowLayout = (FlowLayout) panelInforme1.getLayout();
+		flowLayout.setVgap(25);
+		flowLayout.setHgap(25);
+		flowLayout.setAlignment(FlowLayout.LEFT);
+		panelPrincipal.add(panelInforme1);
+		
+		btnInformeColecciones = new JButton("Informe de todas las colecciones");
+		btnInformeColecciones.setFont(new Font("Caladea", Font.PLAIN, 20));
+		panelInforme1.add(btnInformeColecciones);
+		
+		panelInforme2 = new JPanel();
+		FlowLayout flowLayout_1 = (FlowLayout) panelInforme2.getLayout();
+		flowLayout_1.setVgap(25);
+		flowLayout_1.setHgap(25);
+		flowLayout_1.setAlignment(FlowLayout.LEFT);
+		panelPrincipal.add(panelInforme2);
+		
+		lblColeccion = new JLabel("Colecci\u00F3n");
+		lblColeccion.setFont(new Font("Caladea", Font.PLAIN, 20));
+		panelInforme2.add(lblColeccion);
+		
+		cmbColecciones = new JComboBox();
+		panelInforme2.add(cmbColecciones);
+		
+		btnInformeColeccionesNombre = new JButton("Informe de colecciones por nombre");
+		btnInformeColeccionesNombre.setFont(new Font("Caladea", Font.PLAIN, 20));
+		panelInforme2.add(btnInformeColeccionesNombre);
+		
+		panelInforme3 = new JPanel();
+		FlowLayout flowLayout_2 = (FlowLayout) panelInforme3.getLayout();
+		flowLayout_2.setVgap(25);
+		flowLayout_2.setHgap(25);
+		flowLayout_2.setAlignment(FlowLayout.LEFT);
+		panelPrincipal.add(panelInforme3);
+		
+		btnInformeComics = new JButton("Informe de todos los c\u00F3mics");
+		btnInformeComics.setFont(new Font("Caladea", Font.PLAIN, 20));
+		panelInforme3.add(btnInformeComics);
+		
+		panelInforme4 = new JPanel();
+		FlowLayout flowLayout_3 = (FlowLayout) panelInforme4.getLayout();
+		flowLayout_3.setVgap(25);
+		flowLayout_3.setHgap(25);
+		flowLayout_3.setAlignment(FlowLayout.LEFT);
+		panelPrincipal.add(panelInforme4);
+		
+		lblColeccion2 = new JLabel("Colecci\u00F3n");
+		lblColeccion2.setFont(new Font("Caladea", Font.PLAIN, 20));
+		panelInforme4.add(lblColeccion2);
+		
+		cmbColecciones2 = new JComboBox();
+		panelInforme4.add(cmbColecciones2);
+		
+		btnInformeComicsCol = new JButton("Informe de c\u00F3mics por colecci\u00F3n");
+		btnInformeComicsCol.setFont(new Font("Caladea", Font.PLAIN, 20));
+		panelInforme4.add(btnInformeComicsCol);
+		
+		JPanel panel = new JPanel();
+		FlowLayout flowLayout_4 = (FlowLayout) panel.getLayout();
+		flowLayout_4.setVgap(165);
+		panelPrincipal.add(panel);
 	}
 
 }
