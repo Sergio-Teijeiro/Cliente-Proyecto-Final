@@ -307,9 +307,6 @@ public class HiloCliente extends Thread {
 		                
 		            	PantallaColecciones.numerosRelacionados = comics;
                     } else {
-                    	JLabel lblMensaje = new JLabel(mensaje);
-                    	lblMensaje.setFont(new Font("Caladea", Font.PLAIN, 16));
-                    	
                     	PantallaColecciones.listaColecciones.clear();
                     	
                     	colecciones = (ArrayList<Coleccion>) objeto_entrada.readObject();
@@ -317,15 +314,28 @@ public class HiloCliente extends Thread {
                     	PantallaColecciones.listaColecciones = colecciones;
                 		
                 		tabla.setModel(new TablaColecciones(colecciones));
-                		
-                		if (!PantallaColecciones.numerosRelacionados.isEmpty()) {
-                			PantallaColecciones.numerosRelacionados.clear();
-                			JOptionPane.showMessageDialog(null, lblMensaje, "Borrado completado", JOptionPane.INFORMATION_MESSAGE);
-                		} else {
-                			lblMensaje.setText(lblMensaje.getText() + " y sus números");
-                			JOptionPane.showMessageDialog(null,lblMensaje , "Borrado completado", JOptionPane.INFORMATION_MESSAGE);
-                		}
+
+                		PantallaColecciones.numerosRelacionados.clear();
                     }
+                	break;
+                case "bajaColeccionYNumeros":
+                	objeto_salida.writeObject(objeto);
+                	objeto_salida.writeObject(PantallaColecciones.numerosRelacionados);
+                	
+                	mensaje = flujo_entrada.readUTF();
+                	
+                	JLabel lblMensaje = new JLabel(mensaje);
+                	lblMensaje.setFont(new Font("Caladea", Font.PLAIN, 16));
+                	
+                	PantallaColecciones.listaColecciones.clear();
+                	
+                	colecciones = (ArrayList<Coleccion>) objeto_entrada.readObject();
+                    
+                	PantallaColecciones.listaColecciones = colecciones;
+            		
+            		tabla.setModel(new TablaColecciones(colecciones));
+            		
+            		JOptionPane.showMessageDialog(null,lblMensaje , "Borrado completado", JOptionPane.INFORMATION_MESSAGE);
                 	break;
                 default:
                     break;

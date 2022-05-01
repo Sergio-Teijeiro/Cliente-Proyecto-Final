@@ -15,7 +15,6 @@ import java.net.Socket;
 import java.nio.file.Files;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -502,38 +501,30 @@ public class PantallaColecciones {
 			                    	JLabel lblError = new JLabel("No existe ninguna colección con ese ID");
 			                    	lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
 			                        JOptionPane.showMessageDialog(null, lblError, "Error", JOptionPane.ERROR_MESSAGE);
-								}
-								
-								img = null;
+								} else {
+									img = null;
 
-								if (!numerosRelacionados.isEmpty()) {
-									// Si hay numeros relacionados, permito que el usuario escoja si borrar todo
-									JLabel lblMensaje = new JLabel(preguntaBorrar);
-									lblMensaje.setFont(new Font("Caladea", Font.PLAIN, 16));
-									ImageIcon icono = new ImageIcon(
-											PantallaPrincipal.class.getResource("/img/app_icon.png"));
-									ImageIcon iconoEscala = new ImageIcon(
-											icono.getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_FAST));
-									int respuesta = JOptionPane.showOptionDialog(frmColecciones, lblMensaje,
-											tituloBorrarColeccion, JOptionPane.YES_NO_OPTION,
-											JOptionPane.QUESTION_MESSAGE, iconoEscala, opciones, opciones[1]);
-
-									if (respuesta == 0) { // si elige si, borro primero cada numero y luego coleccion
-										for (Iterator<Numero> itr = numerosRelacionados.iterator(); itr.hasNext();) {
-											Numero n = itr.next();
-											HiloCliente hilo2 = new HiloCliente(skCliente, "bajaNumero", n,
+									if (!numerosRelacionados.isEmpty()) {
+										// Si hay numeros relacionados, permito que el usuario escoja si borrar todo
+										JLabel lblMensaje = new JLabel(preguntaBorrar);
+										lblMensaje.setFont(new Font("Caladea", Font.PLAIN, 16));
+										ImageIcon icono = new ImageIcon(
+												PantallaPrincipal.class.getResource("/img/app_icon.png"));
+										ImageIcon iconoEscala = new ImageIcon(
+												icono.getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_FAST));
+										int respuesta = JOptionPane.showOptionDialog(frmColecciones, lblMensaje,
+												tituloBorrarColeccion, JOptionPane.YES_NO_OPTION,
+												JOptionPane.QUESTION_MESSAGE, iconoEscala, opciones, opciones[1]);
+										
+										if (respuesta == 0) { // si elige si, mando al servidor coleccion y numeros relacionados y borra primero cada numero y luego col
+											HiloCliente hilo3 = new HiloCliente(skCliente, "bajaColeccionYNumeros", coleccion,
 													tbColecciones);
-											hilo2.start();
-
-											hilo2.join();
-
-											itr.remove();
+											hilo3.start();
 										}
-
-										HiloCliente hilo3 = new HiloCliente(skCliente, "bajaColeccion", coleccion,
-												tbColecciones);
-										hilo3.start();
-
+									} else {
+				                    	JLabel lblMensaje = new JLabel("Se ha eliminado correctamente la colección "+coleccion.getNombre());
+				                    	lblMensaje.setFont(new Font("Caladea", Font.PLAIN, 16));
+										JOptionPane.showMessageDialog(null, lblMensaje, "Borrado completado", JOptionPane.INFORMATION_MESSAGE);
 									}
 								}
 						}
