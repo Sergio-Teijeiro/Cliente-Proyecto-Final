@@ -337,6 +337,8 @@ public class HiloCliente extends Thread {
             		
             		JOptionPane.showMessageDialog(null,lblMensaje , "Borrado completado", JOptionPane.INFORMATION_MESSAGE);
                 	break;
+                case "informeColecciones":
+                	break;
                 default:
                     break;
             }

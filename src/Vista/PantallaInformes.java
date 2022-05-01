@@ -207,6 +207,19 @@ public class PantallaInformes {
 		panelPrincipal.add(panelInforme1);
 		
 		btnInformeColecciones = new JButton("Informe de todas las colecciones");
+		btnInformeColecciones.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				HiloCliente hilo = new HiloCliente(skCliente, "informeColecciones", null);
+				hilo.start();
+				
+				try {
+					hilo.join();
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
 		btnInformeColecciones.setFont(new Font("Caladea", Font.PLAIN, 20));
 		panelInforme1.add(btnInformeColecciones);
 		
