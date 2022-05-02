@@ -7,5 +7,20 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="src/libs/JTattoo-1.6.13.jar"/>
+	<classpathentry kind="lib" path="src/libs/libsJasper/commons-beanutils-1.9.0.jar"/>
+	<classpathentry kind="lib" path="src/libs/libsJasper/commons-codec-1.5.jar"/>
+	<classpathentry kind="lib" path="src/libs/libsJasper/commons-collections-3.2.1.jar"/>
+	<classpathentry kind="lib" path="src/libs/libsJasper/commons-collections4-4.4.jar"/>
+	<classpathentry kind="lib" path="src/libs/libsJasper/commons-digester-2.1.jar"/>
+	<classpathentry kind="lib" path="src/libs/libsJasper/commons-javaflow-20160505.jar"/>
+	<classpathentry kind="lib" path="src/libs/libsJasper/itext-2.1.7.js4.jar"/>
+	<classpathentry kind="lib" path="src/libs/libsJasper/jackson-annotations-2.1.4.jar"/>
+	<classpathentry kind="lib" path="src/libs/libsJasper/jackson-core-2.1.4.jar"/>
+	<classpathentry kind="lib" path="src/libs/libsJasper/jackson-databind-2.1.4.jar"/>
+	<classpathentry kind="lib" path="src/libs/libsJasper/jasperreports-6.18.1.jar"/>
+	<classpathentry kind="lib" path="src/libs/libsJasper/jasperreports-fonts-6.18.1.jar"/>
+	<classpathentry kind="lib" path="src/libs/libsJasper/jasperreports-javaflow-6.18.1.jar"/>
+	<classpathentry kind="lib" path="src/libs/libsJasper/livingdoc-confluence5-plugin-1.1.2.jar"/>
+	<classpathentry kind="lib" path="src/libs/libsJasper/tools-1.6.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

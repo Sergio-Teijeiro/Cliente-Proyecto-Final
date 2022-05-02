@@ -23,6 +23,9 @@ import Modelo.TablaColecciones;
 import Modelo.TablaComics;
 import Vista.PantallaBusqueda;
 import Vista.PantallaColecciones;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -337,7 +340,11 @@ public class HiloCliente extends Thread {
             		
             		JOptionPane.showMessageDialog(null,lblMensaje , "Borrado completado", JOptionPane.INFORMATION_MESSAGE);
                 	break;
-                case "informeColecciones":
+                case "informeColecciones": JasperPrint informe = (JasperPrint) objeto_entrada.readObject();
+                
+                	JasperViewer.viewReport(informe, false);
+
+                	JasperExportManager.exportReportToPdfFile(informe, "./src/informes/informeColecciones.pdf");
                 	break;
                 default:
                     break;
