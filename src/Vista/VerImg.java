@@ -17,13 +17,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.BorderLayout;
 
-public class VerImgColeccion extends JDialog {
+public class VerImg extends JDialog {
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VerImgColeccion dialog = new VerImgColeccion(null);
+					VerImg dialog = new VerImg(null);
 					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 					dialog.setVisible(true);
 				} catch (Exception e) {
@@ -33,7 +33,7 @@ public class VerImgColeccion extends JDialog {
 		});
 	}
 	
-	public VerImgColeccion(byte[] img) {
+	public VerImg(byte[] img) {
 		setResizable(false);
 		
 		setBounds(0, 0, 443, 680);
@@ -51,14 +51,14 @@ public class VerImgColeccion extends JDialog {
 			Logger.getLogger(DetalleComic.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		
-		JLabel lblImgColeccion = new JLabel();
-		lblImgColeccion.setBounds(new Rectangle(0, 0, 443, 680));
+		JLabel lblImg = new JLabel();
+		lblImg.setBounds(new Rectangle(0, 0, 443, 680));
 
-		ImageIcon iconoEscala = new ImageIcon(bufImg.getScaledInstance(lblImgColeccion.getWidth(),
-				lblImgColeccion.getHeight(), java.awt.Image.SCALE_FAST));
+		ImageIcon iconoEscala = new ImageIcon(bufImg.getScaledInstance(lblImg.getWidth(),
+				lblImg.getHeight(), java.awt.Image.SCALE_FAST));
 		
-		lblImgColeccion.setIcon(iconoEscala);
-		getContentPane().add(lblImgColeccion, BorderLayout.CENTER);
+		lblImg.setIcon(iconoEscala);
+		getContentPane().add(lblImg, BorderLayout.CENTER);
 
 	}
 

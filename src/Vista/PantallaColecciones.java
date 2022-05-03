@@ -346,7 +346,7 @@ public class PantallaColecciones {
 					lblMensaje.setFont(new Font("Caladea", Font.PLAIN, 16));
 					JOptionPane.showMessageDialog(null, lblMensaje, "Imagen no disponible", JOptionPane.ERROR_MESSAGE);
 				} else {
-					VerImgColeccion verImg = new VerImgColeccion(img);
+					VerImg verImg = new VerImg(img);
 					verImg.setVisible(true);
 				}
 			}

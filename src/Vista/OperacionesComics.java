@@ -83,7 +83,7 @@ public class OperacionesComics {
 	private JPanel panelBotones;
 	private JButton btnInsertar;
 	private JButton btnModificar;
-	private JButton btnBorrar;
+	private JButton btnBorrar, btnVerImg;
 	private String mensajeInsertarNumero = "Debes insertar un título y seleccionar una colección", 
 			formatoFecha = "La fecha debe tener el formato dd-MM-yyyy", fechaFutura = "La fecha no puede ser posterior a la actual";
 	private String errorCampos = "Error con los campos", mensajeAyuda = "Comprueba la ayuda para ver la longitud máxima de cada campo";
@@ -407,7 +407,9 @@ public class OperacionesComics {
 				String rutaImg = seleccionarImagen();
 				
 		        if (rutaImg == null) {
-		            JOptionPane.showMessageDialog(null, "No has seleccionado ninguna imagen", "Imagen no escogida", JOptionPane.WARNING_MESSAGE);
+					JLabel lblMensaje = new JLabel("No has seleccionado ninguna imagen");
+					lblMensaje.setFont(new Font("Caladea", Font.PLAIN, 16));
+		            JOptionPane.showMessageDialog(null,lblMensaje , "Imagen no escogida", JOptionPane.WARNING_MESSAGE);
 		        } else {
 		        	File fichero = new File(rutaImg);
 		        	try {
@@ -416,12 +418,31 @@ public class OperacionesComics {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-		            JOptionPane.showMessageDialog(null, "Se ha guardado la ruta de la imagen seleccionada", "Imagen guardada", JOptionPane.INFORMATION_MESSAGE);
+		        	
+					JLabel lblMensaje = new JLabel("Se ha guardado la ruta de la imagen seleccionada");
+					lblMensaje.setFont(new Font("Caladea", Font.PLAIN, 16));
+		            JOptionPane.showMessageDialog(null,lblMensaje , "Imagen guardada", JOptionPane.INFORMATION_MESSAGE);
 		        }
 			}
 		});
+		
 		btnEscogerImg.setFont(new Font("Caladea", Font.PLAIN, 20));
 		panelImgColeccion.add(btnEscogerImg);
+		
+		btnVerImg = new JButton("Ver");
+		btnVerImg.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (img == null) {
+					JLabel lblMensaje = new JLabel("El cómic no posee ninguna imagen");
+					lblMensaje.setFont(new Font("Caladea", Font.PLAIN, 16));
+					JOptionPane.showMessageDialog(null, lblMensaje, "Imagen no disponible", JOptionPane.ERROR_MESSAGE);
+				} else {
+					VerImg verImg = new VerImg(img);
+					verImg.setVisible(true);				}
+			}
+		});
+		btnVerImg.setFont(new Font("Caladea", Font.PLAIN, 20));
+		panelImgColeccion.add(btnVerImg);		
 		
 		lblColeccion = new JLabel("Colecci\u00F3n");
 		lblColeccion.setFont(new Font("Caladea", Font.PLAIN, 20));
@@ -771,6 +792,7 @@ public class OperacionesComics {
 						}
 					}
 					
+					img = numero.getImg();
 
 				} else {
 					txtID.setText("");
@@ -780,6 +802,7 @@ public class OperacionesComics {
 					txtEstado.setText("");
 					txtAreaResenha.setText("");
 					cmbColecciones.setSelectedIndex(0);
+					img = null;
 				}
 			}
 		});
@@ -814,8 +837,8 @@ public class OperacionesComics {
 		}
 		
 		for (int i=0;i<modeloComboColecciones.getSize();i++) {
-			if (modeloComboColecciones.getElementAt(i).getNombre().length() > 55) {
-				String nuevoNombre = modeloComboColecciones.getElementAt(i).getNombre().substring(0, 51)+"...";
+			if (modeloComboColecciones.getElementAt(i).getNombre().length() > 50) {
+				String nuevoNombre = modeloComboColecciones.getElementAt(i).getNombre().substring(0, 46)+"...";
 				modeloComboColecciones.getElementAt(i).setNombre(nuevoNombre);
 			}
 		}
