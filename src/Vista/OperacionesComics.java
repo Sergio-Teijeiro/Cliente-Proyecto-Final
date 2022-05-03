@@ -37,6 +37,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.UIManager;
 
 import Controlador.HiloCliente;
 import Modelo.*;
@@ -119,7 +120,7 @@ public class OperacionesComics {
 			} catch (Exception ex) {
 	            if (ex.getClass().getName().equals("java.net.ConnectException")) {
 	            	JLabel lblError = new JLabel("No se ha podido conectar con el servidor");
-	            	lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
+	            	lblError.setFont(new Font("Caladea", Font.PLAIN, 20));
 	            	JOptionPane.showMessageDialog(frmComics,lblError, "Error al conectar",
 	            			JOptionPane.ERROR_MESSAGE);
 	            }
@@ -143,7 +144,7 @@ public class OperacionesComics {
 				ImageIcon iconoEscala = new ImageIcon(
 						icono.getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_FAST));
 				JLabel lblPregunta = new JLabel(mensajeSalir);
-				lblPregunta.setFont(new Font("Caladea", Font.PLAIN, 16));
+				lblPregunta.setFont(new Font("Caladea", Font.PLAIN, 20));
 				int respuesta = JOptionPane.showOptionDialog(frmComics, lblPregunta,
 						cerrarPrograma, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, iconoEscala,
 						opciones, opciones[1]);
@@ -248,6 +249,12 @@ public class OperacionesComics {
 		tbComics.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tbComics.setBounds(60, 23, 506, 209);
 		tbComics.getTableHeader().setReorderingAllowed(false); // impedir mover columnas
+		
+		Font headerFont = new Font("Caladea", Font.BOLD, 22);
+		UIManager.put("TableHeader.font", headerFont);
+		
+		tbComics.setFont(new Font("Caladea", Font.PLAIN, 20));
+		tbComics.setRowHeight(tbComics.getRowHeight()+5); 
 
 		JPanel panelTabla = new JPanel();
 		frmComics.getContentPane().add(panelTabla, BorderLayout.SOUTH);

@@ -83,7 +83,7 @@ public class PantallaPrincipal {
 				ImageIcon iconoEscala = new ImageIcon(
 						icono.getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_FAST));
 				JLabel lblPregunta = new JLabel(mensajeSalir);
-				lblPregunta.setFont(new Font("Caladea", Font.PLAIN, 16));
+				lblPregunta.setFont(new Font("Caladea", Font.PLAIN, 20));
 				int respuesta = JOptionPane.showOptionDialog(frmPrincipal,lblPregunta ,
 						cerrarPrograma, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, iconoEscala,
 						opciones, opciones[1]);

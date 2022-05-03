@@ -34,6 +34,7 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.UIManager;
 
 import Controlador.HiloCliente;
 import Modelo.*;
@@ -100,7 +101,7 @@ public class PantallaColecciones {
 			} catch (Exception ex) {
 	            if (ex.getClass().getName().equals("java.net.ConnectException")) {
 	            	JLabel lblError = new JLabel("No se ha podido conectar con el servidor");
-	            	lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
+	            	lblError.setFont(new Font("Caladea", Font.PLAIN, 20));
 	            	JOptionPane.showMessageDialog(frmColecciones,lblError, "Error al conectar",
 	            			JOptionPane.ERROR_MESSAGE);
 	            }
@@ -123,7 +124,7 @@ public class PantallaColecciones {
 				ImageIcon iconoEscala = new ImageIcon(
 						icono.getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_FAST));
 				JLabel lblPregunta = new JLabel(mensajeSalir);
-				lblPregunta.setFont(new Font("Caladea", Font.PLAIN, 16));
+				lblPregunta.setFont(new Font("Caladea", Font.PLAIN, 20));
 				int respuesta = JOptionPane.showOptionDialog(frmColecciones, lblPregunta,
 						cerrarPrograma, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, iconoEscala,
 						opciones, opciones[1]);
@@ -228,6 +229,12 @@ public class PantallaColecciones {
 		tbColecciones.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tbColecciones.setBounds(60, 23, 506, 209);
 		tbColecciones.getTableHeader().setReorderingAllowed(false); // impedir mover columnas
+		
+		Font headerFont = new Font("Caladea", Font.BOLD, 22);
+		UIManager.put("TableHeader.font", headerFont);
+		
+		tbColecciones.setFont(new Font("Caladea", Font.PLAIN, 20));
+		tbColecciones.setRowHeight(tbColecciones.getRowHeight()+5); 
 
 		JPanel panelTabla = new JPanel();
 		frmColecciones.getContentPane().add(panelTabla, BorderLayout.SOUTH);

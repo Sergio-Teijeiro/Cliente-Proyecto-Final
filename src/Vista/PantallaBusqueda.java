@@ -32,6 +32,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.JTableHeader;
 
 import Controlador.HiloCliente;
 import Fuentes.Fuentes;
@@ -41,6 +42,7 @@ import Modelo.TablaComics;
 
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.UIManager;
 import javax.swing.JButton;
 
 public class PantallaBusqueda {
@@ -93,7 +95,7 @@ public class PantallaBusqueda {
 			} catch (Exception ex) {
 	            if (ex.getClass().getName().equals("java.net.ConnectException")) {
 	            	JLabel lblError = new JLabel("No se ha podido conectar con el servidor");
-	            	lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
+	            	lblError.setFont(new Font("Caladea", Font.PLAIN, 20));
 	            	JOptionPane.showMessageDialog(frmBusqueda,lblError, "Error al conectar",
 	            			JOptionPane.ERROR_MESSAGE);
 	            }
@@ -117,7 +119,7 @@ public class PantallaBusqueda {
 				ImageIcon iconoEscala = new ImageIcon(
 						icono.getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_FAST));
 				JLabel lblPregunta = new JLabel(mensajeSalir);
-				lblPregunta.setFont(new Font("Caladea", Font.PLAIN, 16));
+				lblPregunta.setFont(new Font("Caladea", Font.PLAIN, 20));
 				int respuesta = JOptionPane.showOptionDialog(frmBusqueda, lblPregunta,
 						cerrarPrograma, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, iconoEscala,
 						opciones, opciones[1]);
@@ -242,6 +244,7 @@ public class PantallaBusqueda {
 		panelBusquedaCol.add(lblColeccion);
 		
 		txtColeccion = new JTextField();
+		txtColeccion.setFont(new Font("Caladea", Font.PLAIN, 20));
 		panelBusquedaCol.add(txtColeccion);
 		txtColeccion.setColumns(30);
 		
@@ -291,6 +294,7 @@ public class PantallaBusqueda {
 		panelBusquedaComic.add(lblComic);
 		
 		txtComic = new JTextField();
+		txtComic.setFont(new Font("Caladea", Font.PLAIN, 20));
 		txtComic.setColumns(30);
 		panelBusquedaComic.add(txtComic);
 		
@@ -352,6 +356,12 @@ public class PantallaBusqueda {
 		tbComics.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tbComics.setBounds(60,23,506,209);
 		tbComics.getTableHeader().setReorderingAllowed(false); //impedir mover columnas
+		
+		Font headerFont = new Font("Caladea", Font.BOLD, 22);
+		UIManager.put("TableHeader.font", headerFont);
+		
+		tbComics.setFont(new Font("Caladea", Font.PLAIN, 20));
+		tbComics.setRowHeight(tbComics.getRowHeight()+5); 
 		
 		JPanel panelTabla = new JPanel();
 		frmBusqueda.getContentPane().add(panelTabla, BorderLayout.SOUTH);
