@@ -11,6 +11,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -54,6 +55,8 @@ public class PantallaInformes {
 	private JButton btnInformeComicsCol;
 	private DefaultComboBoxModel<Coleccion> modeloCombo = new DefaultComboBoxModel<Coleccion>();
 	private DefaultComboBoxModel<Coleccion> modeloCombo2 = new DefaultComboBoxModel<Coleccion>();
+	
+	private ArrayList<String> nombresCols = new ArrayList<String>();
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -242,6 +245,31 @@ public class PantallaInformes {
 		panelInforme2.add(cmbColecciones);
 		
 		btnInformeColeccionesNombre = new JButton("Informe de colecciones por nombre");
+		btnInformeColeccionesNombre.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (cmbColecciones.getSelectedItem() == null) {
+	            	JLabel lblError = new JLabel("Debes seleccionar una colección");
+	            	lblError.setFont(new Font("Caladea", Font.PLAIN, 20));
+	            	JOptionPane.showMessageDialog(frmInformes,lblError, "Error",
+	            			JOptionPane.ERROR_MESSAGE);
+				} else {
+					
+					Coleccion coleccion = (Coleccion) cmbColecciones.getSelectedItem();
+					
+					coleccion.setNombre(nombresCols.get(cmbColecciones.getSelectedIndex()));
+					
+					HiloCliente hilo = new HiloCliente(skCliente, "informeColPorNombre", coleccion);
+					hilo.start();
+					
+					try {
+						hilo.join();
+					} catch (InterruptedException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+			}
+		});
 		btnInformeColeccionesNombre.setFont(new Font("Caladea", Font.PLAIN, 20));
 		panelInforme2.add(btnInformeColeccionesNombre);
 		
@@ -289,6 +317,7 @@ public class PantallaInformes {
 	private void cargarColecciones(Socket skCliente) {
 		modeloCombo.removeAllElements();
 		modeloCombo2.removeAllElements();
+		nombresCols.clear();
 		
 		HiloCliente hilo = new HiloCliente(skCliente,"cargarColecciones",modeloCombo);
 		hilo.start();
@@ -301,6 +330,8 @@ public class PantallaInformes {
 		}
 		
 		for (int i=0;i<modeloCombo.getSize();i++) {
+			nombresCols.add(modeloCombo.getElementAt(i).getNombre());
+			
 			if (modeloCombo.getElementAt(i).getNombre().length() > 45) {
 				String nuevoNombre = modeloCombo.getElementAt(i).getNombre().substring(0, 41)+"...";
 				modeloCombo.getElementAt(i).setNombre(nuevoNombre);
