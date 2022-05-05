@@ -240,18 +240,20 @@ public class DetalleComic extends JDialog {
 
 		lblImgNumero.setBounds(new Rectangle(0, 0, 216, 332));
 		
-		byte[] data = numero.getImg();
-		BufferedImage img = null;
-		try {
-			img = ImageIO.read(new ByteArrayInputStream(data));
-		} catch (IOException ex) {
-			Logger.getLogger(DetalleComic.class.getName()).log(Level.SEVERE, null, ex);
+		if (numero.getImg() != null) {
+			byte[] data = numero.getImg();
+			BufferedImage img = null;
+			try {
+				img = ImageIO.read(new ByteArrayInputStream(data));
+			} catch (IOException ex) {
+				Logger.getLogger(DetalleComic.class.getName()).log(Level.SEVERE, null, ex);
+			}
+
+			ImageIcon iconoEscala = new ImageIcon(img.getScaledInstance(lblImgNumero.getWidth(),
+					lblImgNumero.getHeight(), java.awt.Image.SCALE_FAST));
+
+			lblImgNumero.setIcon(iconoEscala);
 		}
-
-		ImageIcon iconoEscala = new ImageIcon(img.getScaledInstance(lblImgNumero.getWidth(),
-				lblImgNumero.getHeight(), java.awt.Image.SCALE_FAST));
-
-		lblImgNumero.setIcon(iconoEscala);
 
 		panelImg.add(lblImgNumero);
 		
@@ -273,16 +275,20 @@ public class DetalleComic extends JDialog {
 		
 		coleccion = TablaComics.coleccion;
 		
-		byte[] dataCol = coleccion.getImg();
-		BufferedImage imgCol = null;
-		try {
-			imgCol = ImageIO.read(new ByteArrayInputStream(dataCol));
-		} catch (IOException ex) {
-			Logger.getLogger(DetalleComic.class.getName()).log(Level.SEVERE, null, ex);
-		}
+		if (coleccion.getImg() != null) {
+			byte[] dataCol = coleccion.getImg();
+			BufferedImage imgCol = null;
+			try {
+				imgCol = ImageIO.read(new ByteArrayInputStream(dataCol));
+			} catch (IOException ex) {
+				Logger.getLogger(DetalleComic.class.getName()).log(Level.SEVERE, null, ex);
+			}
 
-		ImageIcon iconoEscala2 = new ImageIcon(imgCol.getScaledInstance(lblImgColeccion.getWidth(),
-				lblImgColeccion.getHeight(), java.awt.Image.SCALE_FAST));
+			ImageIcon iconoEscala2 = new ImageIcon(imgCol.getScaledInstance(lblImgColeccion.getWidth(),
+					lblImgColeccion.getHeight(), java.awt.Image.SCALE_FAST));
+			
+			lblImgColeccion.setIcon(iconoEscala2);
+		}
 		
 		JPanel panelColeccion = new JPanel();
 		panelImg.add(panelColeccion);
@@ -310,8 +316,6 @@ public class DetalleComic extends JDialog {
 
 		panelColeccion.add(scrollCol);
 
-		lblImgColeccion.setIcon(iconoEscala2);
-		
 		panelImg.add(lblImgColeccion);
 	}
 
