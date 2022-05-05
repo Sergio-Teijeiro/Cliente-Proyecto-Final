@@ -15,7 +15,6 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
 
 import Modelo.Coleccion;
 import Modelo.Numero;
@@ -341,11 +340,21 @@ public class HiloCliente extends Thread {
             		JOptionPane.showMessageDialog(null,lblMensaje , "Borrado completado", JOptionPane.INFORMATION_MESSAGE);
                 	break;
                 case "informeColecciones": JasperPrint informe = (JasperPrint) objeto_entrada.readObject();
-                
+
                 	JasperViewer.viewReport(informe, false);
 
                 	JasperExportManager.exportReportToPdfFile(informe, "./src/informes/informeColecciones.pdf");
                 	break;
+                case "informeColPorNombre": Coleccion col = (Coleccion) objeto;
+                
+                	objeto_salida.writeObject(col); //mando la coleccion
+                	
+                	informe = (JasperPrint) objeto_entrada.readObject();
+
+            		JasperViewer.viewReport(informe, false);
+            		
+            		JasperExportManager.exportReportToPdfFile(informe, "./src/informes/informeCol.pdf");
+            	break;
                 default:
                     break;
             }
