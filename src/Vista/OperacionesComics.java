@@ -438,7 +438,8 @@ public class OperacionesComics {
 					JOptionPane.showMessageDialog(null, lblMensaje, "Imagen no disponible", JOptionPane.ERROR_MESSAGE);
 				} else {
 					VerImg verImg = new VerImg(img);
-					verImg.setVisible(true);				}
+					verImg.setVisible(true);
+				}
 			}
 		});
 		btnVerImg.setFont(new Font("Caladea", Font.PLAIN, 20));
