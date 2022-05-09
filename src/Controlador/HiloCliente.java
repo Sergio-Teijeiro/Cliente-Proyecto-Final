@@ -353,8 +353,18 @@ public class HiloCliente extends Thread {
 
             		JasperViewer.viewReport(informe, false);
             		
-            		JasperExportManager.exportReportToPdfFile(informe, "./src/informes/informeCol.pdf");
-            	break;
+            		JasperExportManager.exportReportToPdfFile(informe, "./src/informes/informeColNombre.pdf");
+            		break;
+                case "informeComics": col = (Coleccion) objeto;
+                
+	            	objeto_salida.writeObject(col); //mando la coleccion
+	            	
+	            	informe = (JasperPrint) objeto_entrada.readObject();
+	
+	        		JasperViewer.viewReport(informe, false);
+	        		
+	        		JasperExportManager.exportReportToPdfFile(informe, "./src/informes/informeComics.pdf");                
+                	break;
                 default:
                     break;
             }

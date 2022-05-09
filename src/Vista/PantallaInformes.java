@@ -281,6 +281,19 @@ public class PantallaInformes {
 		panelPrincipal.add(panelInforme3);
 		
 		btnInformeComics = new JButton("Informe de todos los c\u00F3mics");
+		btnInformeComics.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				HiloCliente hilo = new HiloCliente(skCliente, "informeComics", null);
+				hilo.start();
+				
+				try {
+					hilo.join();
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
 		btnInformeComics.setFont(new Font("Caladea", Font.PLAIN, 20));
 		panelInforme3.add(btnInformeComics);
 		
