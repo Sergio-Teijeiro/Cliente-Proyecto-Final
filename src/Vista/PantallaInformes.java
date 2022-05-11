@@ -55,8 +55,6 @@ public class PantallaInformes {
 	private JButton btnInformeComicsCol;
 	private DefaultComboBoxModel<Coleccion> modeloCombo = new DefaultComboBoxModel<Coleccion>();
 	private DefaultComboBoxModel<Coleccion> modeloCombo2 = new DefaultComboBoxModel<Coleccion>();
-	
-	private ArrayList<String> nombresCols = new ArrayList<String>();
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -256,8 +254,6 @@ public class PantallaInformes {
 					
 					Coleccion coleccion = (Coleccion) cmbColecciones.getSelectedItem();
 					
-					coleccion.setNombre(nombresCols.get(cmbColecciones.getSelectedIndex()));
-					
 					HiloCliente hilo = new HiloCliente(skCliente, "informeColPorNombre", coleccion);
 					hilo.start();
 					
@@ -282,7 +278,7 @@ public class PantallaInformes {
 		
 		btnInformeComics = new JButton("Informe de todos los c\u00F3mics");
 		btnInformeComics.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) {			
 				HiloCliente hilo = new HiloCliente(skCliente, "informeComics", null);
 				hilo.start();
 				
@@ -325,12 +321,14 @@ public class PantallaInformes {
 		panelPrincipal.add(panel);
 		
 		cargarColecciones(skCliente);
+		
+		cmbColecciones.setPrototypeDisplayValue("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+		cmbColecciones2.setPrototypeDisplayValue("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
 	}
 
 	private void cargarColecciones(Socket skCliente) {
 		modeloCombo.removeAllElements();
 		modeloCombo2.removeAllElements();
-		nombresCols.clear();
 		
 		HiloCliente hilo = new HiloCliente(skCliente,"cargarColecciones",modeloCombo);
 		hilo.start();
@@ -340,15 +338,6 @@ public class PantallaInformes {
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		
-		for (int i=0;i<modeloCombo.getSize();i++) {
-			nombresCols.add(modeloCombo.getElementAt(i).getNombre());
-			
-			if (modeloCombo.getElementAt(i).getNombre().length() > 45) {
-				String nuevoNombre = modeloCombo.getElementAt(i).getNombre().substring(0, 41)+"...";
-				modeloCombo.getElementAt(i).setNombre(nuevoNombre);
-			}
 		}
 		
 		for (int i=0;i<modeloCombo.getSize();i++) {
