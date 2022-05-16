@@ -312,6 +312,27 @@ public class PantallaInformes {
 		panelInforme4.add(cmbColecciones2);
 		
 		btnInformeComicsCol = new JButton("Informe de c\u00F3mics por colecci\u00F3n");
+		btnInformeComicsCol.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (cmbColecciones2.getSelectedItem() == null) {
+					JLabel lblError = new JLabel("Debes seleccionar una colección");
+					lblError.setFont(new Font("Caladea", Font.PLAIN, 20));
+					JOptionPane.showMessageDialog(frmInformes, lblError, "Error", JOptionPane.ERROR_MESSAGE);
+				} else {
+					Coleccion coleccion = (Coleccion) cmbColecciones.getSelectedItem();
+
+					HiloCliente hilo = new HiloCliente(skCliente, "informeComicsPorCol", coleccion);
+					hilo.start();
+
+					try {
+						hilo.join();
+					} catch (InterruptedException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+			}
+		});
 		btnInformeComicsCol.setFont(new Font("Caladea", Font.PLAIN, 20));
 		panelInforme4.add(btnInformeComicsCol);
 		
