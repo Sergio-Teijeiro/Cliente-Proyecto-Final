@@ -319,7 +319,7 @@ public class PantallaInformes {
 					lblError.setFont(new Font("Caladea", Font.PLAIN, 20));
 					JOptionPane.showMessageDialog(frmInformes, lblError, "Error", JOptionPane.ERROR_MESSAGE);
 				} else {
-					Coleccion coleccion = (Coleccion) cmbColecciones.getSelectedItem();
+					Coleccion coleccion = (Coleccion) cmbColecciones2.getSelectedItem();
 
 					HiloCliente hilo = new HiloCliente(skCliente, "informeComicsPorCol", coleccion);
 					hilo.start();
