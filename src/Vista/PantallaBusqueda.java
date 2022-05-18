@@ -63,6 +63,7 @@ public class PantallaBusqueda {
 	private JTextField txtComic;
 	private JButton btnBuscarPorTitulo;
 	private JTable tbComics;
+	private String rutaAyuda = "busqueda";
 	
 	
 	public static ArrayList<Numero> listaComics = new ArrayList<>();
@@ -373,7 +374,11 @@ public class PantallaBusqueda {
 		panelTabla.add(cabeceraTabla, BorderLayout.CENTER);
 		
 		cargarComics(skCliente);
-
+		
+		PantallaPrincipal.helpBroker.enableHelpKey(txtColeccion, rutaAyuda, PantallaPrincipal.helpSet);
+		PantallaPrincipal.helpBroker.enableHelpKey(txtComic, rutaAyuda, PantallaPrincipal.helpSet);
+		PantallaPrincipal.helpBroker.enableHelpKey(btnBuscarPorCol, rutaAyuda, PantallaPrincipal.helpSet);
+		PantallaPrincipal.helpBroker.enableHelpKey(btnBuscarPorTitulo, rutaAyuda, PantallaPrincipal.helpSet);
 	}
 
 	protected void cargarComicsPorTitulo(Socket skCliente, String titulo) {
