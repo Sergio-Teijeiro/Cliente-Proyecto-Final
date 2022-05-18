@@ -73,6 +73,7 @@ public class PantallaColecciones {
 	public static ArrayList<Coleccion> listaColecciones = new ArrayList<>();
 	public static ArrayList<Numero> numerosRelacionados = new ArrayList<>();
 	private JButton btnVerImg;
+	private String rutaAyuda = "colecciones";
 
 	/**
 	 * Launch the application.
@@ -575,6 +576,9 @@ public class PantallaColecciones {
 				}
 			}
 		});
+	
+		PantallaPrincipal.helpBroker.enableHelpKey(txtID, rutaAyuda, PantallaPrincipal.helpSet);
+		PantallaPrincipal.helpBroker.enableHelpKey(txtNombre, rutaAyuda, PantallaPrincipal.helpSet);
 	}
 	
 	protected String seleccionarImagen() {
