@@ -13,8 +13,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.net.Socket;
+import java.net.URL;
 import java.util.Properties;
 
+import javax.help.HelpBroker;
+import javax.help.HelpSet;
+import javax.help.HelpSetException;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -29,7 +33,6 @@ import javax.swing.UIManager;
 
 import com.jtattoo.plaf.fast.FastLookAndFeel;
 
-import Controlador.HiloCliente;
 import Fuentes.Fuentes;
 import javax.swing.border.EmptyBorder;
 
@@ -43,6 +46,9 @@ public class PantallaPrincipal {
 	private JButton btnConectar, btnInfo;
 	private JLabel lblTitulo;
 	Socket skCliente;
+	
+	public static HelpSet helpSet;
+	public static HelpBroker helpBroker;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -73,6 +79,15 @@ public class PantallaPrincipal {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		URL helpSetURL = this.getClass().getResource("/ayuda/help.hs");
+		
+		try {
+			helpSet = new HelpSet(null,helpSetURL);
+			helpBroker = helpSet.createHelpBroker();
+		} catch (HelpSetException e3) {
+			e3.printStackTrace();
+		}
+		
 		frmPrincipal = new JFrame();
 		
 		frmPrincipal.addWindowListener(new WindowAdapter() {
@@ -186,6 +201,11 @@ public class PantallaPrincipal {
 		panelTitulo.add(lblTitulo);
 		
 		btnInfo = new JButton("");
+		btnInfo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 		btnInfo.setToolTipText("Ayuda");
 		btnInfo.setMaximumSize(new Dimension(40, 40));
 		btnInfo.setBounds(5, 5, 20, 20);
@@ -215,6 +235,9 @@ public class PantallaPrincipal {
 		lblImagen.setIcon(iconoEscala2);
 
 		panelImagen.add(lblImagen);
+		
+		helpBroker.enableHelpOnButton(btnInfo, "menu", helpSet);
+		helpBroker.enableHelpKey(btnConectar, "menu", helpSet);
 	}
 
 }
