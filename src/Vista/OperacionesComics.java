@@ -92,6 +92,7 @@ public class OperacionesComics {
 	private String tituloPreguntaImg = "Imagen no seleccionada", insertarID = "Debes insertar un ID", mensajeEntero = "Debes insertar un número entero (separado por puntos)";
 	
 	private byte[] img = null;
+	private String rutaAyuda = "comics";
 
 	/**
 	 * Launch the application.
@@ -807,6 +808,14 @@ public class OperacionesComics {
 				}
 			}
 		});
+	
+		PantallaPrincipal.helpBroker.enableHelpKey(txtID, rutaAyuda, PantallaPrincipal.helpSet);
+		PantallaPrincipal.helpBroker.enableHelpKey(txtTitulo, rutaAyuda, PantallaPrincipal.helpSet);
+		PantallaPrincipal.helpBroker.enableHelpKey(txtFecha, rutaAyuda, PantallaPrincipal.helpSet);
+		PantallaPrincipal.helpBroker.enableHelpKey(txtEstado, rutaAyuda, PantallaPrincipal.helpSet);
+		PantallaPrincipal.helpBroker.enableHelpKey(txtAreaResenha, rutaAyuda, PantallaPrincipal.helpSet);
+		
+		cmbColecciones.setPrototypeDisplayValue("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
 	}
 
 	protected String seleccionarImagen() {
@@ -835,13 +844,6 @@ public class OperacionesComics {
 			hilo.join();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
-		}
-		
-		for (int i=0;i<modeloComboColecciones.getSize();i++) {
-			if (modeloComboColecciones.getElementAt(i).getNombre().length() > 50) {
-				String nuevoNombre = modeloComboColecciones.getElementAt(i).getNombre().substring(0, 46)+"...";
-				modeloComboColecciones.getElementAt(i).setNombre(nuevoNombre);
-			}
 		}
 	}
 	
