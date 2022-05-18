@@ -55,6 +55,7 @@ public class PantallaInformes {
 	private JButton btnInformeComicsCol;
 	private DefaultComboBoxModel<Coleccion> modeloCombo = new DefaultComboBoxModel<Coleccion>();
 	private DefaultComboBoxModel<Coleccion> modeloCombo2 = new DefaultComboBoxModel<Coleccion>();
+	private String rutaAyuda = "informes";
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -345,6 +346,11 @@ public class PantallaInformes {
 		
 		cmbColecciones.setPrototypeDisplayValue("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
 		cmbColecciones2.setPrototypeDisplayValue("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+		
+		PantallaPrincipal.helpBroker.enableHelpKey(btnInformeColecciones, rutaAyuda, PantallaPrincipal.helpSet);
+		PantallaPrincipal.helpBroker.enableHelpKey(btnInformeColeccionesNombre, rutaAyuda, PantallaPrincipal.helpSet);
+		PantallaPrincipal.helpBroker.enableHelpKey(btnInformeComics, rutaAyuda, PantallaPrincipal.helpSet);
+		PantallaPrincipal.helpBroker.enableHelpKey(btnInformeComicsCol, rutaAyuda, PantallaPrincipal.helpSet);
 	}
 
 	private void cargarColecciones(Socket skCliente) {
