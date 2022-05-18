@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding='ISO-8859-1' ?>
+<map version="1.0">
+	<mapID target="menuGallego" url="paginas/MenuGallego.html" />
+	<mapID target="busquedaGallego" url="paginas/busquedaGallego.html" />
+	<mapID target="comicsGallego" url="paginas/comicsGallego.html" />
+	<mapID target="coleccionesGallego" url="paginas/coleccionesGallego.html" />
+	<mapID target="informesGallego" url="paginas/InformesGallego.html" />
+	<mapID target="imgFavoritos" url="img/favourite.png" />
+	<mapID target="logo" url="../img/app_icon.png" />
+</map>

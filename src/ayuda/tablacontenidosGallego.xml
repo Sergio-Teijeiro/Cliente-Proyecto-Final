@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<toc version="1.0">
+	<tocitem text="Menú" target="menuGallego" />
+	<tocitem text="Cómics">
+		<tocitem text="Búsqueda de cómics" target="busquedaGallego">
+		</tocitem>
+		<tocitem text="Xestión de cómics" target="comicGallego">
+		</tocitem>		
+	</tocitem>
+	<tocitem text="Coleccións" target="coleccionesGallego"/>
+	<tocitem text="Informes" target="informesGallego"/>
+</toc>

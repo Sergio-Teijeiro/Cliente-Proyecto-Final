@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding='ISO-8859-1' ?>
+<index version="1.0">
+	<indexitem text="Menú" target="menuGallego"/>
+	<indexitem text="Xestión de cómics" target="comicsGallego"/>
+	<indexitem text="Xestión de coleccións" target="coleccionesGallego"/>
+</index>
