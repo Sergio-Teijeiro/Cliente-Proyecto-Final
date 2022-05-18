@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding='ISO-8859-1' ?>
+<map version="1.0">
+	<mapID target="menu" url="paginas/Menu.html" />
+	<mapID target="busqueda" url="paginas/busqueda.html" />
+	<mapID target="comics" url="paginas/comics.html" />
+	<mapID target="colecciones" url="paginas/colecciones.html" />
+	<mapID target="informes" url="paginas/Informes.html" />
+	<mapID target="imgFavoritos" url="img/favourite.png" />
+	<mapID target="logo" url="../img/app_icon.png" />
+</map>

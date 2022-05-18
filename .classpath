@@ -22,5 +22,6 @@
 	<classpathentry kind="lib" path="src/libs/libsJasper/jasperreports-javaflow-6.18.1.jar"/>
 	<classpathentry kind="lib" path="src/libs/libsJasper/livingdoc-confluence5-plugin-1.1.2.jar"/>
 	<classpathentry kind="lib" path="src/libs/libsJasper/tools-1.6.0.jar"/>
+	<classpathentry kind="lib" path="src/libs/javahelp-2.0.05.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

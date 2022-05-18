@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<toc version="1.0">
+	<tocitem text="Menú" target="menu" />
+	<tocitem text="Cómics">
+		<tocitem text="Búsqueda de cómics" target="busqueda">
+		</tocitem>
+		<tocitem text="Gestión de cómics" target="comics">
+		</tocitem>		
+	</tocitem>
+	<tocitem text="Colecciones" target="colecciones"/>
+	<tocitem text="Informes" target="informes"/>
+</toc>

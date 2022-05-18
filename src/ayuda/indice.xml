@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding='ISO-8859-1' ?>
+<index version="1.0">
+	<indexitem text="Menú" target="menu"/>
+	<indexitem text="Gestión de cómics" target="comics"/>
+	<indexitem text="Gestión de colecciones" target="colecciones"/>
+</index>
