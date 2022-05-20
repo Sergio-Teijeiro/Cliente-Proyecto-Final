@@ -4,7 +4,7 @@
 	<tocitem text="Cómics">
 		<tocitem text="Búsqueda de cómics" target="busquedaGallego">
 		</tocitem>
-		<tocitem text="Xestión de cómics" target="comicGallego">
+		<tocitem text="Xestión de cómics" target="comicsGallego">
 		</tocitem>		
 	</tocitem>
 	<tocitem text="Coleccións" target="coleccionesGallego"/>

@@ -14,6 +14,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.net.Socket;
 import java.net.URL;
+import java.util.Locale;
 import java.util.Properties;
 
 import javax.help.HelpBroker;
@@ -80,6 +81,7 @@ public class PantallaPrincipal {
 	 */
 	private void initialize() {
 		URL helpSetURL = this.getClass().getResource("/ayuda/help.hs");
+		URL helpSetURLGallego = this.getClass().getResource("/ayuda/helpGallego.hs");
 		
 		try {
 			helpSet = new HelpSet(null,helpSetURL);
@@ -131,7 +133,18 @@ public class PantallaPrincipal {
 		itemEspanhol = new JMenuItem("Espa\u00F1ol");
 		itemEspanhol.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				//Cambiar Locale espanhol
+				Locale.setDefault(new Locale("es","ES"));
+				try {
+					helpSet = new HelpSet(null,helpSetURL);
+				} catch (HelpSetException e1) {
+					//e1.printStackTrace();
+				}
+				helpBroker = helpSet.createHelpBroker();
+				helpBroker.enableHelpOnButton(btnInfo, "menu", helpSet);
+				helpBroker.enableHelpKey(btnConectar, "menu", helpSet);
+				
+				//traducir();
 			}
 		});
 		itemEspanhol.setFont(new Font("Caladea", Font.PLAIN, 16));
@@ -140,7 +153,18 @@ public class PantallaPrincipal {
 		itemGallego = new JMenuItem("Gallego");
 		itemGallego.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				//Cambiar Locale gallego
+				Locale.setDefault(new Locale("es","GL"));
+				try {
+					helpSet = new HelpSet(null,helpSetURLGallego);
+				} catch (HelpSetException e1) {
+					//e1.printStackTrace();
+				}
+				helpBroker = helpSet.createHelpBroker();	
+				helpBroker.enableHelpOnButton(btnInfo, "menuGallego", helpSet);
+				helpBroker.enableHelpKey(btnConectar, "menuGallego", helpSet);
+				
+				//traducir();
 			}
 		});
 		itemGallego.setFont(new Font("Caladea", Font.PLAIN, 16));
