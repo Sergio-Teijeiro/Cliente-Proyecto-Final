@@ -56,6 +56,9 @@ public class PantallaInformes {
 	private DefaultComboBoxModel<Coleccion> modeloCombo = new DefaultComboBoxModel<Coleccion>();
 	private DefaultComboBoxModel<Coleccion> modeloCombo2 = new DefaultComboBoxModel<Coleccion>();
 	private String rutaAyuda = "informes";
+	private int offset = 0;
+	
+	public static int contadorInformesComics = 0;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -279,16 +282,37 @@ public class PantallaInformes {
 		
 		btnInformeComics = new JButton("Informe de todos los c\u00F3mics");
 		btnInformeComics.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {			
-				HiloCliente hilo = new HiloCliente(skCliente, "informeComics", null);
-				hilo.start();
+			public void actionPerformed(ActionEvent e) {
+				contadorInformesComics = 0;
 				
+				/*consultar al servidor numero de comics*/
+				HiloCliente hilo = new HiloCliente(skCliente, "getNumeroComics", null);
+				hilo.start();
+
 				try {
 					hilo.join();
 				} catch (InterruptedException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+				
+				while (offset < PantallaBusqueda.numComics) {
+					contadorInformesComics++;
+					
+					HiloCliente hilo2 = new HiloCliente(skCliente, "informeComics", offset);
+					hilo2.start();
+					
+					try {
+						hilo2.join();
+					} catch (InterruptedException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
+					offset += 1000;
+				}
+				
+
 			}
 		});
 		btnInformeComics.setFont(new Font("Caladea", Font.PLAIN, 20));

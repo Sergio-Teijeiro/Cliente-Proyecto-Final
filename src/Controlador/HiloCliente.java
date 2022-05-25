@@ -22,6 +22,7 @@ import Modelo.TablaColecciones;
 import Modelo.TablaComics;
 import Vista.PantallaBusqueda;
 import Vista.PantallaColecciones;
+import Vista.PantallaInformes;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.view.JasperViewer;
@@ -381,11 +382,14 @@ public class HiloCliente extends Thread {
             		
             		JasperExportManager.exportReportToPdfFile(informe, "./src/informes/informeColNombre.pdf");
             		break;
-                case "informeComics": informe = (JasperPrint) objeto_entrada.readObject();
+                case "informeComics": offset = (int) objeto;
+                
+        			objeto_salida.writeObject(offset);
+                	informe = (JasperPrint) objeto_entrada.readObject();
 	
 	        		JasperViewer.viewReport(informe, false);
 	        		
-	        		JasperExportManager.exportReportToPdfFile(informe, "./src/informes/informeComics.pdf");                
+	        		JasperExportManager.exportReportToPdfFile(informe, "./src/informes/informeComics"+PantallaInformes.contadorInformesComics+".pdf");                
                 	break;
                 case "informeComicsPorCol": col = (Coleccion) objeto;
                 
