@@ -16,6 +16,7 @@ import java.net.Socket;
 import java.net.URL;
 import java.util.Locale;
 import java.util.Properties;
+import java.util.ResourceBundle;
 
 import javax.help.HelpBroker;
 import javax.help.HelpSet;
@@ -47,6 +48,9 @@ public class PantallaPrincipal {
 	private JButton btnConectar, btnInfo;
 	private JLabel lblTitulo;
 	Socket skCliente;
+	
+	private String gallego = "Gallego", tooltipAyuda = "Ayuda";
+	private JLabel lblPregunta = new JLabel(mensajeSalir);
 	
 	public static HelpSet helpSet;
 	public static HelpBroker helpBroker;
@@ -99,7 +103,6 @@ public class PantallaPrincipal {
 				ImageIcon icono = new ImageIcon(PantallaPrincipal.class.getResource("/img/app_icon.png"));
 				ImageIcon iconoEscala = new ImageIcon(
 						icono.getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_FAST));
-				JLabel lblPregunta = new JLabel(mensajeSalir);
 				lblPregunta.setFont(new Font("Caladea", Font.PLAIN, 20));
 				int respuesta = JOptionPane.showOptionDialog(frmPrincipal,lblPregunta ,
 						cerrarPrograma, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, iconoEscala,
@@ -144,17 +147,17 @@ public class PantallaPrincipal {
 				helpBroker.enableHelpOnButton(btnInfo, "menu", helpSet);
 				helpBroker.enableHelpKey(btnConectar, "menu", helpSet);
 				
-				//traducir();
+				traducir();
 			}
 		});
 		itemEspanhol.setFont(new Font("Caladea", Font.PLAIN, 16));
 		menuIdioma.add(itemEspanhol);
 		
-		itemGallego = new JMenuItem("Gallego");
+		itemGallego = new JMenuItem(gallego);
 		itemGallego.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Cambiar Locale gallego
-				Locale.setDefault(new Locale("es","GL"));
+				Locale.setDefault(new Locale("gl","ES"));
 				try {
 					helpSet = new HelpSet(null,helpSetURLGallego);
 				} catch (HelpSetException e1) {
@@ -164,7 +167,7 @@ public class PantallaPrincipal {
 				helpBroker.enableHelpOnButton(btnInfo, "menuGallego", helpSet);
 				helpBroker.enableHelpKey(btnConectar, "menuGallego", helpSet);
 				
-				//traducir();
+				traducir();
 			}
 		});
 		itemGallego.setFont(new Font("Caladea", Font.PLAIN, 16));
@@ -230,7 +233,7 @@ public class PantallaPrincipal {
 				
 			}
 		});
-		btnInfo.setToolTipText("Ayuda");
+		btnInfo.setToolTipText(tooltipAyuda);
 		btnInfo.setMaximumSize(new Dimension(40, 40));
 		btnInfo.setBounds(5, 5, 20, 20);
 		btnInfo.setFocusPainted(false);
@@ -262,6 +265,21 @@ public class PantallaPrincipal {
 		
 		helpBroker.enableHelpOnButton(btnInfo, "menu", helpSet);
 		helpBroker.enableHelpKey(btnConectar, "menu", helpSet);
+	}
+
+	private void traducir() {
+		ResourceBundle rb = ResourceBundle.getBundle("traduccion");
+		
+		gallego = rb.getString("gallego");
+		mensajeSalir = rb.getString("mensajeSalir");
+		opciones[0] = rb.getString("si");
+		opciones[1] = rb.getString("no");
+		cerrarPrograma = rb.getString("cerrarPrograma");
+		tooltipAyuda = rb.getString("tooltipAyuda");
+		
+		itemGallego.setText(gallego);
+		lblPregunta.setText(mensajeSalir);
+		btnInfo.setToolTipText(tooltipAyuda);
 	}
 
 }

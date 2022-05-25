@@ -230,7 +230,7 @@ public class HiloCliente extends Thread {
                 
                 		PantallaBusqueda.listaComics = comics;
                 		
-                		tabla.setModel(new TablaComics(comics,socketCliente));;
+                		tabla.setModel(new TablaComics(comics,socketCliente));
                     break;    
                 case "colByComic": objeto_salida.writeObject(objeto);
                 

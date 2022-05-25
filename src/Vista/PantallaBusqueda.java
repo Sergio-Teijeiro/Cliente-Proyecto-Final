@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -50,7 +51,7 @@ public class PantallaBusqueda {
 
 	JFrame frmBusqueda;
 	private String[] opciones = { "Sí", "No" };
-	private String mensajeSalir = "¿Deseas salir de la aplicación?", cerrarPrograma = "Cerrar programa";
+	private String mensajeSalir = "¿Deseas salir de la aplicación?", cerrarPrograma = "Cerrar programa", errorConexion = "No se ha podido conectar con el servidor";
 	private String tituloPantalla = "Catálogo de cómics";
 	private JMenu menuComics, menuColecciones, menuInformes;
 	private JMenuItem itemBusqueda,itemComics,itemColecciones,itemInformes;
@@ -67,13 +68,21 @@ public class PantallaBusqueda {
 	private String rutaAyuda = "busqueda";
 	private int offset = 0;
 	private boolean buscando = false;
-	
+	private JLabel lblPregunta = new JLabel(mensajeSalir);
+	JLabel lblError = new JLabel(errorConexion);
+	JLabel lblErrorAyuda = new JLabel("");
+	JLabel lblNoAnteriores = new JLabel("");
+	JLabel lblNoPosteriores = new JLabel("");
 	
 	public static ArrayList<Numero> listaComics = new ArrayList<>();
 	public static int numComics;
 	private JPanel panelBotones;
 	private JButton btnIzquierda;
 	private JButton btnDerecha;
+	private String errorConectar = "Error al conectar", gestionComics = "Gestión cómics", colecciones = "Colecciones", gestionColecciones = "Gestión colecciones";
+	private String mensajeAyuda = "Comprueba la ayuda para ver la longitud máxima de cada campo", error = "Error", tooltipRegistrosAnteriores = "Mostrar 100 registros anteriores";
+	private String noRegistrosAntes = "No hay registros anteriores", primerosRegistros = "Primeros registros", tooltipRegistrosPosteriores = "Mostrar 100 registros posteriores";
+	private String noRegistrosDespues = "No hay registros posteriores", ultimosRegistros = "Últimos registros";
 
 	/**
 	 * Launch the application.
@@ -102,9 +111,9 @@ public class PantallaBusqueda {
 				skCliente = new Socket("192.168.56.101", 2000);
 			} catch (Exception ex) {
 	            if (ex.getClass().getName().equals("java.net.ConnectException")) {
-	            	JLabel lblError = new JLabel("No se ha podido conectar con el servidor");
+	            	
 	            	lblError.setFont(new Font("Caladea", Font.PLAIN, 20));
-	            	JOptionPane.showMessageDialog(frmBusqueda,lblError, "Error al conectar",
+	            	JOptionPane.showMessageDialog(frmBusqueda,lblError, errorConectar,
 	            			JOptionPane.ERROR_MESSAGE);
 	            }
 			}
@@ -126,7 +135,6 @@ public class PantallaBusqueda {
 				ImageIcon icono = new ImageIcon(PantallaPrincipal.class.getResource("/img/app_icon.png"));
 				ImageIcon iconoEscala = new ImageIcon(
 						icono.getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_FAST));
-				JLabel lblPregunta = new JLabel(mensajeSalir);
 				lblPregunta.setFont(new Font("Caladea", Font.PLAIN, 20));
 				int respuesta = JOptionPane.showOptionDialog(frmBusqueda, lblPregunta,
 						cerrarPrograma, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, iconoEscala,
@@ -179,7 +187,7 @@ public class PantallaBusqueda {
 		itemBusqueda.setFont(new Font("Caladea", Font.PLAIN, 16));
 		menuComics.add(itemBusqueda);
 		
-		itemComics = new JMenuItem("Gestión cómics");
+		itemComics = new JMenuItem(gestionComics);
 		itemComics.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frmBusqueda.dispose();
@@ -191,11 +199,11 @@ public class PantallaBusqueda {
 		itemComics.setFont(new Font("Caladea", Font.PLAIN, 16));
 		menuComics.add(itemComics);
 		
-		menuColecciones = new JMenu("Colecciones");
+		menuColecciones = new JMenu(colecciones);
 		menuColecciones.setFont(new Font("Caladea", Font.PLAIN, 16));
 		menuBar.add(menuColecciones);
 		
-		itemColecciones = new JMenuItem("Gestión colecciones");
+		itemColecciones = new JMenuItem(gestionColecciones);
 		itemColecciones.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frmBusqueda.dispose();
@@ -265,9 +273,8 @@ public class PantallaBusqueda {
 				
 				if (!txtColeccion.getText().isBlank()) {
 					if (txtColeccion.getText().length() > 200) {
-						JLabel lblError = new JLabel("Comprueba la ayuda para ver la longitud máxima de cada campo");
-						lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
-						JOptionPane.showMessageDialog(frmBusqueda, lblError, "Error",
+						lblErrorAyuda.setFont(new Font("Caladea", Font.PLAIN, 16));
+						JOptionPane.showMessageDialog(frmBusqueda, lblErrorAyuda, error,
 								JOptionPane.ERROR_MESSAGE);
 					} else {
 						cargarComicsPorColeccion(skCliente,txtColeccion.getText());
@@ -319,9 +326,8 @@ public class PantallaBusqueda {
 				
 				if (!txtComic.getText().isBlank()) {
 					if (txtComic.getText().length() > 200) {
-						JLabel lblError = new JLabel("Comprueba la ayuda para ver la longitud máxima de cada campo");
-						lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
-						JOptionPane.showMessageDialog(frmBusqueda, lblError, "Error",
+						lblErrorAyuda.setFont(new Font("Caladea", Font.PLAIN, 16));
+						JOptionPane.showMessageDialog(frmBusqueda, lblErrorAyuda, error,
 								JOptionPane.ERROR_MESSAGE);
 					} else {
 						cargarComicsPorTitulo(skCliente,txtComic.getText());
@@ -396,13 +402,12 @@ public class PantallaBusqueda {
 		panelTabla.add(panelBotones);
 		
 		btnIzquierda = new JButton("<");
-		btnIzquierda.setToolTipText("Mostrar 100 registros anteriores");
+		btnIzquierda.setToolTipText(tooltipRegistrosAnteriores);
 		btnIzquierda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (offset - 100 < 0 || buscando) {
-					JLabel lblError = new JLabel("No hay registros anteriores");
-					lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
-					JOptionPane.showMessageDialog(frmBusqueda, lblError, "Primeros registros",
+					lblNoAnteriores.setFont(new Font("Caladea", Font.PLAIN, 16));
+					JOptionPane.showMessageDialog(frmBusqueda, lblNoAnteriores, primerosRegistros,
 							JOptionPane.INFORMATION_MESSAGE);
 				} else {
 					offset -= 100;
@@ -414,13 +419,13 @@ public class PantallaBusqueda {
 		panelBotones.add(btnIzquierda);
 		
 		btnDerecha = new JButton(">");
-		btnDerecha.setToolTipText("Mostrar 100 registros posteriores");
+		btnDerecha.setToolTipText(tooltipRegistrosPosteriores);
 		btnDerecha.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JLabel lblError = new JLabel("No hay registros posteriores");
-				lblError.setFont(new Font("Caladea", Font.PLAIN, 16));				
+				
+				lblNoPosteriores.setFont(new Font("Caladea", Font.PLAIN, 16));				
 				if (buscando) {
-					JOptionPane.showMessageDialog(frmBusqueda, lblError, "Últimos registros",
+					JOptionPane.showMessageDialog(frmBusqueda, lblNoPosteriores, ultimosRegistros,
 							JOptionPane.INFORMATION_MESSAGE);					
 				} else {
 					/*consultar al servidor numero de comics en tabla*/
@@ -435,7 +440,7 @@ public class PantallaBusqueda {
 					}
 					
 					if (offset + 100 > numComics) {
-						JOptionPane.showMessageDialog(frmBusqueda, lblError, "Últimos registros",
+						JOptionPane.showMessageDialog(frmBusqueda, lblError, ultimosRegistros,
 								JOptionPane.INFORMATION_MESSAGE);
 					} else {
 						offset += 100;
@@ -454,6 +459,8 @@ public class PantallaBusqueda {
 		PantallaPrincipal.helpBroker.enableHelpKey(txtComic, rutaAyuda, PantallaPrincipal.helpSet);
 		PantallaPrincipal.helpBroker.enableHelpKey(btnBuscarPorCol, rutaAyuda, PantallaPrincipal.helpSet);
 		PantallaPrincipal.helpBroker.enableHelpKey(btnBuscarPorTitulo, rutaAyuda, PantallaPrincipal.helpSet);
+		
+		traducir();
 	}
 
 	protected void cargarComicsPorTitulo(Socket skCliente, String titulo) {
@@ -501,4 +508,37 @@ public class PantallaBusqueda {
 		
 	}
 
+	private void traducir() {
+		ResourceBundle rb = ResourceBundle.getBundle("traduccion");
+		
+		mensajeSalir = rb.getString("mensajeSalir");
+		opciones[0] = rb.getString("si");
+		opciones[1] = rb.getString("no");
+		cerrarPrograma = rb.getString("cerrarPrograma");
+		errorConexion = rb.getString("errorConexion");
+		errorConectar = rb.getString("errorConectar");
+		gestionComics = rb.getString("gestionComics");
+		colecciones = rb.getString("colecciones");
+		gestionColecciones = rb.getString("gestionColecciones");
+		mensajeAyuda = rb.getString("mensajeAyuda");
+		error = rb.getString("error");
+		tooltipRegistrosAnteriores = rb.getString("tooltipRegistrosAnteriores");
+		noRegistrosAntes = rb.getString("noRegistrosAntes");
+		primerosRegistros = rb.getString("primerosRegistros");
+		tooltipRegistrosPosteriores = rb.getString("tooltipRegistrosPosteriores");
+		noRegistrosDespues = rb.getString("noRegistrosDespues");
+		ultimosRegistros = rb.getString("ultimosRegistros");
+		
+		lblPregunta.setText(mensajeSalir);
+		lblError.setText(errorConexion);
+		itemComics.setText(gestionComics);
+		menuColecciones.setText(colecciones);
+		itemColecciones.setText(gestionColecciones);
+		lblErrorAyuda.setText(mensajeAyuda);
+		btnIzquierda.setToolTipText(tooltipRegistrosAnteriores);
+		lblNoAnteriores.setText(noRegistrosAntes);
+		btnDerecha.setToolTipText(tooltipRegistrosPosteriores);
+		lblNoPosteriores.setText(noRegistrosDespues);
+		
+	}
 }
