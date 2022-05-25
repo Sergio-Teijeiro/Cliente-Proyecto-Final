@@ -44,6 +44,7 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.UIManager;
 import javax.swing.JButton;
+import java.awt.Insets;
 
 public class PantallaBusqueda {
 
@@ -64,9 +65,15 @@ public class PantallaBusqueda {
 	private JButton btnBuscarPorTitulo;
 	private JTable tbComics;
 	private String rutaAyuda = "busqueda";
+	private int offset = 0;
+	private boolean buscando = false;
 	
 	
 	public static ArrayList<Numero> listaComics = new ArrayList<>();
+	public static int numComics;
+	private JPanel panelBotones;
+	private JButton btnIzquierda;
+	private JButton btnDerecha;
 
 	/**
 	 * Launch the application.
@@ -223,7 +230,7 @@ public class PantallaBusqueda {
 		JPanel panelTitulo = new JPanel();
 		FlowLayout flowLayout_1 = (FlowLayout) panelTitulo.getLayout();
 		flowLayout_1.setHgap(35);
-		flowLayout_1.setVgap(35);
+		flowLayout_1.setVgap(20);
 		panelPrincipal.add(panelTitulo);
 
 		lblTitulo = new JLabel("CATÁLOGO DE CÓMICS");
@@ -253,6 +260,8 @@ public class PantallaBusqueda {
 		btnBuscarPorCol.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Buscar los comics de la coleccion especificada
+				txtComic.setText("");
+				buscando = true;
 				
 				if (!txtColeccion.getText().isBlank()) {
 					if (txtColeccion.getText().length() > 200) {
@@ -264,6 +273,8 @@ public class PantallaBusqueda {
 						cargarComicsPorColeccion(skCliente,txtColeccion.getText());
 					}
 				} else {
+					buscando = false;
+					offset = 0;
 					cargarComics(skCliente);
 				}
 			}
@@ -303,6 +314,8 @@ public class PantallaBusqueda {
 		btnBuscarPorTitulo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Buscar los comics del titulo especificado
+				txtColeccion.setText("");
+				buscando = true;
 				
 				if (!txtComic.getText().isBlank()) {
 					if (txtComic.getText().length() > 200) {
@@ -314,6 +327,8 @@ public class PantallaBusqueda {
 						cargarComicsPorTitulo(skCliente,txtComic.getText());
 					}
 				} else {
+					buscando = false;
+					offset = 0;
 					cargarComics(skCliente);
 				}
 			}
@@ -366,12 +381,72 @@ public class PantallaBusqueda {
 		
 		JPanel panelTabla = new JPanel();
 		frmBusqueda.getContentPane().add(panelTabla, BorderLayout.SOUTH);
-		panelTabla.setLayout(new BorderLayout(0, 0));
+		panelTabla.setLayout(new BoxLayout(panelTabla, BoxLayout.Y_AXIS));
 		
 		tbComics.setFillsViewportHeight(true);
 		cabeceraTabla.setViewportView(tbComics);
 		
-		panelTabla.add(cabeceraTabla, BorderLayout.CENTER);
+		panelTabla.add(cabeceraTabla);
+		
+		panelBotones = new JPanel();
+		FlowLayout fl_panelBotones = (FlowLayout) panelBotones.getLayout();
+		fl_panelBotones.setHgap(300);
+		fl_panelBotones.setVgap(10);
+		panelBotones.setBorder(new EmptyBorder(5, 0, 0, 0));
+		panelTabla.add(panelBotones);
+		
+		btnIzquierda = new JButton("<");
+		btnIzquierda.setToolTipText("Mostrar 100 registros anteriores");
+		btnIzquierda.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (offset - 100 < 0 || buscando) {
+					JLabel lblError = new JLabel("No hay registros anteriores");
+					lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
+					JOptionPane.showMessageDialog(frmBusqueda, lblError, "Primeros registros",
+							JOptionPane.INFORMATION_MESSAGE);
+				} else {
+					offset -= 100;
+					cargarComics(skCliente);		
+				}
+			}
+		});
+		btnIzquierda.setFont(new Font("Caladea", Font.BOLD, 20));
+		panelBotones.add(btnIzquierda);
+		
+		btnDerecha = new JButton(">");
+		btnDerecha.setToolTipText("Mostrar 100 registros posteriores");
+		btnDerecha.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JLabel lblError = new JLabel("No hay registros posteriores");
+				lblError.setFont(new Font("Caladea", Font.PLAIN, 16));				
+				if (buscando) {
+					JOptionPane.showMessageDialog(frmBusqueda, lblError, "Últimos registros",
+							JOptionPane.INFORMATION_MESSAGE);					
+				} else {
+					/*consultar al servidor numero de comics en tabla*/
+					HiloCliente hilo = new HiloCliente (skCliente, "getNumeroComics", null);
+					hilo.start();
+					
+					try {
+						hilo.join();
+					} catch (InterruptedException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
+					if (offset + 100 > numComics) {
+						JOptionPane.showMessageDialog(frmBusqueda, lblError, "Últimos registros",
+								JOptionPane.INFORMATION_MESSAGE);
+					} else {
+						offset += 100;
+						cargarComics(skCliente);		
+					}						
+				}
+			
+			}
+		});
+		btnDerecha.setFont(new Font("Caladea", Font.BOLD, 20));
+		panelBotones.add(btnDerecha);
 		
 		cargarComics(skCliente);
 		
@@ -414,7 +489,7 @@ public class PantallaBusqueda {
 	private void cargarComics(Socket skCliente) {
 		listaComics.clear();
 		
-		HiloCliente hilo = new HiloCliente(skCliente,"cargarComics",null,tbComics);
+		HiloCliente hilo = new HiloCliente(skCliente,"cargarComics",offset,tbComics);
 		hilo.start();
 		
 		try {

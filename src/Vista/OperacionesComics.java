@@ -93,6 +93,10 @@ public class OperacionesComics {
 	
 	private byte[] img = null;
 	private String rutaAyuda = "comics";
+	private JPanel panelBotones_1;
+	private JButton btnIzquierda;
+	private JButton btnDerecha;
+	private int offset = 0;
 
 	/**
 	 * Launch the application.
@@ -259,12 +263,68 @@ public class OperacionesComics {
 
 		JPanel panelTabla = new JPanel();
 		frmComics.getContentPane().add(panelTabla, BorderLayout.SOUTH);
-		panelTabla.setLayout(new BorderLayout(0, 0));
+		panelTabla.setLayout(new BoxLayout(panelTabla, BoxLayout.Y_AXIS));
 
 		tbComics.setFillsViewportHeight(true);
 		cabeceraTabla.setViewportView(tbComics);
 
-		panelTabla.add(cabeceraTabla, BorderLayout.CENTER);
+		panelTabla.add(cabeceraTabla);
+		
+		panelBotones_1 = new JPanel();
+		FlowLayout fl_panelBotones = (FlowLayout) panelBotones_1.getLayout();
+		fl_panelBotones.setHgap(300);
+		fl_panelBotones.setVgap(10);
+		panelBotones_1.setBorder(new EmptyBorder(5, 0, 0, 0));
+		panelTabla.add(panelBotones_1);
+		
+		btnIzquierda = new JButton("<");
+		btnIzquierda.setToolTipText("Mostrar 100 registros anteriores");
+		btnIzquierda.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (offset - 100 < 0) {
+					JLabel lblError = new JLabel("No hay registros anteriores");
+					lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
+					JOptionPane.showMessageDialog(frmComics, lblError, "Primeros registros",
+							JOptionPane.INFORMATION_MESSAGE);
+				} else {
+					offset -= 100;
+					cargarComics(skCliente);		
+				}
+			}
+		});
+		btnIzquierda.setFont(new Font("Caladea", Font.BOLD, 20));
+		panelBotones_1.add(btnIzquierda);
+		
+		btnDerecha = new JButton(">");
+		btnDerecha.setToolTipText("Mostrar 100 registros posteriores");
+		btnDerecha.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JLabel lblError = new JLabel("No hay registros posteriores");
+				lblError.setFont(new Font("Caladea", Font.PLAIN, 16));				
+
+				/*consultar al servidor numero de comics en tabla*/
+				HiloCliente hilo = new HiloCliente(skCliente, "getNumeroComics", null);
+				hilo.start();
+
+				try {
+					hilo.join();
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+				if (offset + 100 > PantallaBusqueda.numComics) {
+					JOptionPane.showMessageDialog(frmComics, lblError, "Últimos registros",
+							JOptionPane.INFORMATION_MESSAGE);
+				} else {
+					offset += 100;
+					cargarComics(skCliente);
+				}				
+							
+			}
+		});
+		btnDerecha.setFont(new Font("Caladea", Font.BOLD, 20));
+		panelBotones_1.add(btnDerecha);
 
 		JPanel panelPrincipal = new JPanel();
 		frmComics.getContentPane().add(panelPrincipal, BorderLayout.CENTER);
@@ -541,8 +601,8 @@ public class OperacionesComics {
 								Coleccion coleccion = (Coleccion) cmbColecciones.getSelectedItem();
 								
 								Numero numero = new Numero(0,txtTitulo.getText(),fecha,tapa,estado,resenha,img,coleccion.getId());
-	
-								HiloCliente hilo = new HiloCliente(skCliente, "altaNumero", numero,tbComics);
+								
+								HiloCliente hilo = new HiloCliente(skCliente, "altaNumero", numero,tbComics,offset);
 								hilo.start();
 								
 								img = null;
@@ -660,7 +720,7 @@ public class OperacionesComics {
 										}
 									}
 									
-									HiloCliente hilo = new HiloCliente(skCliente, "modificarNumero", numero,tbComics);
+									HiloCliente hilo = new HiloCliente(skCliente, "modificarNumero", numero,tbComics,offset);
 									hilo.start();
 									
 									img = null;
@@ -723,7 +783,7 @@ public class OperacionesComics {
 							
 							Numero numero = new Numero(id,txtTitulo.getText(),null,tapa,"","",img,coleccion.getId());
 
-							HiloCliente hilo = new HiloCliente(skCliente, "bajaNumero", numero,tbComics);
+							HiloCliente hilo = new HiloCliente(skCliente, "bajaNumero", numero,tbComics,offset);
 							hilo.start();
 							
 							img = null;
@@ -850,7 +910,7 @@ public class OperacionesComics {
 	private void cargarComics(Socket skCliente) {
 		PantallaBusqueda.listaComics.clear();
 		
-		HiloCliente hilo = new HiloCliente(skCliente,"cargarComics",null,tbComics);
+		HiloCliente hilo = new HiloCliente(skCliente,"cargarComics",offset,tbComics);
 		hilo.start();
 		
 		try {

@@ -39,6 +39,7 @@ public class HiloCliente extends Thread {
     JTable tabla;
     DefaultComboBoxModel<Coleccion> modeloCombo;
     public boolean existeColeccion = true;
+    int offset;
     
     public HiloCliente(Socket socketCliente, String peticion, Object obj) {
         this.socketCliente = socketCliente;
@@ -106,7 +107,25 @@ public class HiloCliente extends Thread {
         }
     }   
     
-    @Override
+    public HiloCliente(Socket skCliente, String peticion, Numero numero, JTable tabla, int offset) {
+        this.socketCliente = skCliente;
+        this.peticion = peticion;
+        this.objeto = numero;
+        this.tabla = tabla;
+        this.offset = offset;
+
+        try {
+            objeto_salida = new ObjectOutputStream(socketCliente.getOutputStream());
+        } catch (IOException ex) {
+            // Logger.getLogger(HiloCliente.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NullPointerException e) {
+        	JLabel lblError = new JLabel("Servidor desconectado");
+        	lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
+            JOptionPane.showMessageDialog(null, lblError, "Error", JOptionPane.ERROR_MESSAGE);
+        }
+	}
+
+	@Override
     public void run() {
         try {
         	
@@ -122,6 +141,7 @@ public class HiloCliente extends Thread {
 
             switch (peticion) {
                 case "altaNumero":
+        			objeto_salida.writeObject(offset);
                     objeto_salida.writeObject(objeto);
                     //objeto_salida.flush();
 
@@ -147,6 +167,7 @@ public class HiloCliente extends Thread {
                     }
                     break;
                 case "bajaNumero":
+        			objeto_salida.writeObject(offset);
                     objeto_salida.writeObject(objeto);
                     //objeto_salida.flush();
 
@@ -175,6 +196,7 @@ public class HiloCliente extends Thread {
                     } 
                     break;
                 case "modificarNumero":
+        			objeto_salida.writeObject(offset);
                     objeto_salida.writeObject(objeto);
                     //objeto_salida.flush();
 
@@ -199,7 +221,11 @@ public class HiloCliente extends Thread {
                         JOptionPane.showMessageDialog(null, lblMensaje, "Modificación completada", JOptionPane.INFORMATION_MESSAGE);
                     }                	
                     break;
-                case "cargarComics": ArrayList<Numero> comics = (ArrayList<Numero>) objeto_entrada.readObject();
+                case "cargarComics": offset = (int) objeto;
+                
+                		objeto_salida.writeObject(offset);
+                	
+                		ArrayList<Numero> comics = (ArrayList<Numero>) objeto_entrada.readObject();
                 
                 		PantallaBusqueda.listaComics = comics;
                 		
@@ -370,6 +396,8 @@ public class HiloCliente extends Thread {
 	        		JasperViewer.viewReport(informe, false);
 	        		
 	        		JasperExportManager.exportReportToPdfFile(informe, "./src/informes/informeComicsCol.pdf");
+                	break;
+                case "getNumeroComics": PantallaBusqueda.numComics = (int) objeto_entrada.readObject();
                 	break;
                 default:
                     break;
