@@ -19,6 +19,7 @@ import java.text.NumberFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -57,7 +58,7 @@ public class OperacionesComics {
 
 	JFrame frmComics;
 	private String[] opciones = { "Sí", "No" };
-	private String mensajeSalir = "¿Deseas salir de la aplicación?", cerrarPrograma = "Cerrar programa";
+	private String mensajeSalir = "¿Deseas salir de la aplicación?", cerrarPrograma = "Cerrar programa", errorConexion = "No se ha podido conectar con el servidor";
 	private String tituloPantalla = "Gestión de cómics";
 	private JMenu menuComics, menuColecciones, menuInformes;
 	private JMenuItem itemBusqueda,itemComics,itemColecciones,itemInformes;
@@ -89,7 +90,7 @@ public class OperacionesComics {
 	private String errorCampos = "Error con los campos", mensajeAyuda = "Comprueba la ayuda para ver la longitud máxima de cada campo";
 	private String mensajeModificarNumero = "Debes insertar un ID y un título y seleccionar una colección",
 			mensajeID = "Debes insertar un id mayor o igual a 0", preguntaImg = "¿Deseas mantener la imagen que ya posee el número?";
-	private String tituloPreguntaImg = "Imagen no seleccionada", insertarID = "Debes insertar un ID", mensajeEntero = "Debes insertar un número entero (separado por puntos)";
+	private String insertarID = "Debes insertar un ID", mensajeEntero = "Debes insertar un número entero (separado por puntos)";
 	
 	private byte[] img = null;
 	private String rutaAyuda = "comics";
@@ -97,6 +98,27 @@ public class OperacionesComics {
 	private JButton btnIzquierda;
 	private JButton btnDerecha;
 	private int offset = 0;
+	private String errorConectar = "Error al conectar", gestionComics = "Gestión cómics", colecciones = "Colecciones", gestionColecciones = "Gestión colecciones";
+	private String error = "Error", tooltipRegistrosAnteriores = "Mostrar 100 registros anteriores";
+	private String noRegistrosAntes = "No hay registros anteriores", primerosRegistros = "Primeros registros", tooltipRegistrosPosteriores = "Mostrar 100 registros posteriores";
+	private String noRegistrosDespues = "No hay registros posteriores", ultimosRegistros = "Últimos registros", fechaAdquisicion = "Fecha adquisici\u00F3n";
+	private JLabel lblPregunta = new JLabel(mensajeSalir);
+	JLabel lblError = new JLabel(errorConexion);
+	JLabel lblErrorAyuda = new JLabel("");
+	JLabel lblNoAnteriores = new JLabel("");
+	JLabel lblNoPosteriores = new JLabel("");
+	private String blanda = "Blanda", resenha = "Rese\u00F1a", lblImagenValor = "Imagen", btnEscogerValor = "Escoger", imgNoEscogida = "No has seleccionado ninguna imagen", imgNoEscogidaTitulo = "Imagen no escogida";
+	JLabel lblImgNoEscogida = new JLabel(imgNoEscogida);
+	private String lblImgGuardadaValor = "Se ha guardado la ruta de la imagen seleccionada", imgGuardada = "Imagen guardada", lblComicSinImgValor = "El cómic no posee ninguna imagen", noImg = "Imagen no disponible";
+	JLabel lblImgGuardada = new JLabel(lblImgGuardadaValor);
+	JLabel lblComicSinImg = new JLabel(lblComicSinImgValor);
+	private String tituloEscogerImg = "Elegir imagen de número";
+	JLabel lblInsertarNumero = new JLabel(mensajeInsertarNumero);
+	private JLabel lblFechaFutura = new JLabel(fechaFutura);
+	JLabel lblFormatoFecha = new JLabel(formatoFecha);
+	JLabel lblErrorCampos = new JLabel(errorCampos);
+	JLabel lblModificarNumero = new JLabel(mensajeModificarNumero);
+	JLabel lblBorrarNumero = new JLabel(insertarID);
 
 	/**
 	 * Launch the application.
@@ -124,9 +146,8 @@ public class OperacionesComics {
 				skCliente = new Socket("192.168.56.101", 2000);
 			} catch (Exception ex) {
 	            if (ex.getClass().getName().equals("java.net.ConnectException")) {
-	            	JLabel lblError = new JLabel("No se ha podido conectar con el servidor");
 	            	lblError.setFont(new Font("Caladea", Font.PLAIN, 20));
-	            	JOptionPane.showMessageDialog(frmComics,lblError, "Error al conectar",
+	            	JOptionPane.showMessageDialog(frmComics,lblError, errorConectar,
 	            			JOptionPane.ERROR_MESSAGE);
 	            }
 			}
@@ -148,7 +169,6 @@ public class OperacionesComics {
 				ImageIcon icono = new ImageIcon(PantallaPrincipal.class.getResource("/img/app_icon.png"));
 				ImageIcon iconoEscala = new ImageIcon(
 						icono.getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_FAST));
-				JLabel lblPregunta = new JLabel(mensajeSalir);
 				lblPregunta.setFont(new Font("Caladea", Font.PLAIN, 20));
 				int respuesta = JOptionPane.showOptionDialog(frmComics, lblPregunta,
 						cerrarPrograma, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, iconoEscala,
@@ -209,7 +229,7 @@ public class OperacionesComics {
 		itemBusqueda.setFont(new Font("Caladea", Font.PLAIN, 16));
 		menuComics.add(itemBusqueda);
 		
-		itemComics = new JMenuItem("Gestión cómics");
+		itemComics = new JMenuItem(gestionComics);
 		itemComics.setFont(new Font("Caladea", Font.PLAIN, 16));
 		menuComics.add(itemComics);
 		
@@ -217,7 +237,7 @@ public class OperacionesComics {
 		menuColecciones.setFont(new Font("Caladea", Font.PLAIN, 16));
 		menuBar.add(menuColecciones);
 		
-		itemColecciones = new JMenuItem("Gestión colecciones");
+		itemColecciones = new JMenuItem(gestionColecciones);
 		itemColecciones.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frmComics.dispose();
@@ -278,13 +298,12 @@ public class OperacionesComics {
 		panelTabla.add(panelBotones_1);
 		
 		btnIzquierda = new JButton("<");
-		btnIzquierda.setToolTipText("Mostrar 100 registros anteriores");
+		btnIzquierda.setToolTipText(tooltipRegistrosAnteriores);
 		btnIzquierda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (offset - 100 < 0) {
-					JLabel lblError = new JLabel("No hay registros anteriores");
-					lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
-					JOptionPane.showMessageDialog(frmComics, lblError, "Primeros registros",
+					lblNoAnteriores.setFont(new Font("Caladea", Font.PLAIN, 16));
+					JOptionPane.showMessageDialog(frmComics, lblNoAnteriores, primerosRegistros,
 							JOptionPane.INFORMATION_MESSAGE);
 				} else {
 					offset -= 100;
@@ -296,13 +315,12 @@ public class OperacionesComics {
 		panelBotones_1.add(btnIzquierda);
 		
 		btnDerecha = new JButton(">");
-		btnDerecha.setToolTipText("Mostrar 100 registros posteriores");
+		btnDerecha.setToolTipText(tooltipRegistrosPosteriores);
 		btnDerecha.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JLabel lblError = new JLabel("No hay registros posteriores");
-				lblError.setFont(new Font("Caladea", Font.PLAIN, 16));				
+				lblNoPosteriores.setFont(new Font("Caladea", Font.PLAIN, 16));				
 
-				/*consultar al servidor numero de comics en tabla*/
+				/*consultar al servidor numero de comics*/
 				HiloCliente hilo = new HiloCliente(skCliente, "getNumeroComics", null);
 				hilo.start();
 
@@ -314,7 +332,7 @@ public class OperacionesComics {
 				}
 
 				if (offset + 100 > PantallaBusqueda.numComics) {
-					JOptionPane.showMessageDialog(frmComics, lblError, "Últimos registros",
+					JOptionPane.showMessageDialog(frmComics, lblNoPosteriores, ultimosRegistros,
 							JOptionPane.INFORMATION_MESSAGE);
 				} else {
 					offset += 100;
@@ -380,7 +398,7 @@ public class OperacionesComics {
 		flowLayout_1.setHgap(25);
 		panelPrincipal.add(panelFechaTapa);
 		
-		lblFecha = new JLabel("Fecha adquisici\u00F3n");
+		lblFecha = new JLabel(fechaAdquisicion);
 		lblFecha.setBorder(new EmptyBorder(0, 0, 0, 5));
 		lblFecha.setFont(new Font("Caladea", Font.PLAIN, 20));
 		panelFechaTapa.add(lblFecha);
@@ -400,9 +418,6 @@ public class OperacionesComics {
 		cmbTapas.setFont(new Font("Caladea", Font.PLAIN, 20));
 		
 		cmbTapas.setModel(modeloComboTapas);
-		
-		modeloComboTapas.addElement("Blanda");
-		modeloComboTapas.addElement("Dura");
 		
 		panelFechaTapa.add(cmbTapas);
 		
@@ -432,7 +447,7 @@ public class OperacionesComics {
 
 		panelEstadoResenha.add(scrollEstado);
 		
-		lblResenha = new JLabel("Rese\u00F1a");
+		lblResenha = new JLabel(resenha);
 		lblResenha.setFont(new Font("Caladea", Font.PLAIN, 20));
 		panelEstadoResenha.add(lblResenha);
 		
@@ -456,11 +471,11 @@ public class OperacionesComics {
 		flowLayout_3.setAlignment(FlowLayout.LEFT);
 		panelPrincipal.add(panelImgColeccion);
 		
-		lblImg = new JLabel("Imagen");
+		lblImg = new JLabel(lblImagenValor);
 		lblImg.setFont(new Font("Caladea", Font.PLAIN, 20));
 		panelImgColeccion.add(lblImg);
 		
-		btnEscogerImg = new JButton("Escoger");
+		btnEscogerImg = new JButton(btnEscogerValor);
 		btnEscogerImg.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Escoger una imagen y guardar sus bytes
@@ -468,9 +483,9 @@ public class OperacionesComics {
 				String rutaImg = seleccionarImagen();
 				
 		        if (rutaImg == null) {
-					JLabel lblMensaje = new JLabel("No has seleccionado ninguna imagen");
-					lblMensaje.setFont(new Font("Caladea", Font.PLAIN, 16));
-		            JOptionPane.showMessageDialog(null,lblMensaje , "Imagen no escogida", JOptionPane.WARNING_MESSAGE);
+					
+					lblImgNoEscogida.setFont(new Font("Caladea", Font.PLAIN, 16));
+		            JOptionPane.showMessageDialog(null,lblImgNoEscogida , imgNoEscogidaTitulo, JOptionPane.WARNING_MESSAGE);
 		        } else {
 		        	File fichero = new File(rutaImg);
 		        	try {
@@ -480,9 +495,8 @@ public class OperacionesComics {
 						e1.printStackTrace();
 					}
 		        	
-					JLabel lblMensaje = new JLabel("Se ha guardado la ruta de la imagen seleccionada");
-					lblMensaje.setFont(new Font("Caladea", Font.PLAIN, 16));
-		            JOptionPane.showMessageDialog(null,lblMensaje , "Imagen guardada", JOptionPane.INFORMATION_MESSAGE);
+					lblImgGuardada.setFont(new Font("Caladea", Font.PLAIN, 16));
+		            JOptionPane.showMessageDialog(null,lblImgGuardada , imgGuardada, JOptionPane.INFORMATION_MESSAGE);
 		        }
 			}
 		});
@@ -494,9 +508,9 @@ public class OperacionesComics {
 		btnVerImg.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (img == null) {
-					JLabel lblMensaje = new JLabel("El cómic no posee ninguna imagen");
-					lblMensaje.setFont(new Font("Caladea", Font.PLAIN, 16));
-					JOptionPane.showMessageDialog(null, lblMensaje, "Imagen no disponible", JOptionPane.ERROR_MESSAGE);
+					
+					lblComicSinImg.setFont(new Font("Caladea", Font.PLAIN, 16));
+					JOptionPane.showMessageDialog(null, lblComicSinImg, noImg, JOptionPane.ERROR_MESSAGE);
 				} else {
 					VerImg verImg = new VerImg(img);
 					verImg.setVisible(true);
@@ -533,17 +547,15 @@ public class OperacionesComics {
 			public void actionPerformed(ActionEvent e) {
 				//INSERTAR UN NUMERO
 				if (txtTitulo.getText().isBlank() || cmbColecciones.getSelectedItem() == null) {
-					JLabel lblError = new JLabel(mensajeInsertarNumero);
-					lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
-					JOptionPane.showMessageDialog(frmComics,lblError,"Error",JOptionPane.ERROR_MESSAGE);
+					lblInsertarNumero.setFont(new Font("Caladea", Font.PLAIN, 16));
+					JOptionPane.showMessageDialog(frmComics,lblInsertarNumero,error,JOptionPane.ERROR_MESSAGE);
 				} else {
 					try {
 						//Comprobar longitudes
 						if (txtTitulo.getText().length() > 200 || txtEstado.getText().length() > 50 || txtAreaResenha.getText().length() > 1500) {
-							JLabel lblError = new JLabel(mensajeAyuda);
-							lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
+							lblErrorAyuda.setFont(new Font("Caladea", Font.PLAIN, 16));
 							JOptionPane.showMessageDialog(frmComics,
-									lblError, "Error",
+									lblErrorAyuda, error,
 									JOptionPane.ERROR_MESSAGE);
 						} else {
 							// Comprobar que datos se mandan
@@ -559,23 +571,21 @@ public class OperacionesComics {
 									LocalDate date = LocalDate.parse(txtFecha.getText().trim(),formatter);
 									fecha = Date.valueOf(date);
 									
-									boolean fechaFutura = fecha.after(Date.from(Instant.now()));
+									boolean esFechaFutura = fecha.after(Date.from(Instant.now()));
 									
-									if (fechaFutura) {
+									if (esFechaFutura) {
 										formato = false;
-										JLabel lblError = new JLabel(OperacionesComics.this.fechaFutura);
-										lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
+										lblFechaFutura.setFont(new Font("Caladea", Font.PLAIN, 16));
 										JOptionPane.showMessageDialog(frmComics,
-												lblError, "Error",
+												lblFechaFutura, error,
 												JOptionPane.ERROR_MESSAGE);
 									}
 									
 								} catch (Exception e1) {
 									formato = false;
-									JLabel lblError = new JLabel(formatoFecha);
-									lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
+									lblFormatoFecha.setFont(new Font("Caladea", Font.PLAIN, 16));
 									JOptionPane.showMessageDialog(frmComics,
-											lblError, "Error",
+											lblFormatoFecha, error,
 											JOptionPane.ERROR_MESSAGE);
 									// e1.printStackTrace();
 								}
@@ -609,9 +619,9 @@ public class OperacionesComics {
 							}
 						}
 					} catch (Exception e1) {
-						JLabel lblError = new JLabel(errorCampos);
-						lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
-						JOptionPane.showMessageDialog(frmComics, lblError, "Error",
+						
+						lblErrorCampos.setFont(new Font("Caladea", Font.PLAIN, 16));
+						JOptionPane.showMessageDialog(frmComics, lblErrorCampos, error,
 								JOptionPane.ERROR_MESSAGE);
 						 //e1.printStackTrace();
 					}
@@ -626,17 +636,16 @@ public class OperacionesComics {
 			public void actionPerformed(ActionEvent e) {
 				//MODIFICAR UN NUMERO
 				if (txtID.getText().isBlank() || txtTitulo.getText().isBlank() || cmbColecciones.getSelectedItem() == null) {
-					JLabel lblError = new JLabel(mensajeModificarNumero);
-					lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
-					JOptionPane.showMessageDialog(frmComics,lblError,"Error",JOptionPane.ERROR_MESSAGE);
+					
+					lblModificarNumero.setFont(new Font("Caladea", Font.PLAIN, 16));
+					JOptionPane.showMessageDialog(frmComics,lblModificarNumero,error,JOptionPane.ERROR_MESSAGE);
 				} else {
 					try {
 						//Comprobar longitudes
 						if (txtTitulo.getText().length() > 200 || txtEstado.getText().length() > 50 || txtAreaResenha.getText().length() > 1500) {
-							JLabel lblError = new JLabel(mensajeAyuda);
-							lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
+							lblErrorAyuda.setFont(new Font("Caladea", Font.PLAIN, 16));
 							JOptionPane.showMessageDialog(frmComics,
-									lblError, "Error",
+									lblErrorAyuda, error,
 									JOptionPane.ERROR_MESSAGE);
 						} else {
 							// Comprobar que datos se mandan
@@ -653,23 +662,21 @@ public class OperacionesComics {
 									LocalDate date = LocalDate.parse(txtFecha.getText().trim(),formatter);
 									fecha = Date.valueOf(date);
 									
-									boolean fechaFutura = fecha.after(Date.from(Instant.now()));
+									boolean esFechaFutura = fecha.after(Date.from(Instant.now()));
 									
-									if (fechaFutura) {
+									if (esFechaFutura) {
 										formato = false;
-										JLabel lblError = new JLabel(OperacionesComics.this.fechaFutura);
-										lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
+										lblFechaFutura.setFont(new Font("Caladea", Font.PLAIN, 16));
 										JOptionPane.showMessageDialog(frmComics,
-												lblError, "Error",
+												lblFechaFutura, error,
 												JOptionPane.ERROR_MESSAGE);
 									}
 									
 								} catch (Exception e1) {
 									formato = false;
-									JLabel lblError = new JLabel(formatoFecha);
-									lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
+									lblFormatoFecha.setFont(new Font("Caladea", Font.PLAIN, 16));
 									JOptionPane.showMessageDialog(frmComics,
-											lblError, "Error",
+											lblFormatoFecha, error,
 											JOptionPane.ERROR_MESSAGE);
 									// e1.printStackTrace();
 								}
@@ -689,7 +696,7 @@ public class OperacionesComics {
 
 								if (id < 0) {
 									JOptionPane.showMessageDialog(frmComics,
-											mensajeID, "Error",
+											mensajeID, error,
 											JOptionPane.ERROR_MESSAGE);
 								} else {
 									//Solicitud a servidor de modificar numero
@@ -710,7 +717,7 @@ public class OperacionesComics {
 										ImageIcon iconoEscala = new ImageIcon(
 												icono.getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_FAST));
 										int respuesta = JOptionPane.showOptionDialog(frmComics, preguntaImg,
-												tituloPreguntaImg, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, iconoEscala,
+												imgNoEscogidaTitulo, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, iconoEscala,
 												opciones, opciones[0]);
 										
 										if (respuesta == 0) { //si elige si, mantengo la imagen
@@ -730,9 +737,8 @@ public class OperacionesComics {
 						}
 						
 					} catch (Exception e1) {
-						JLabel lblError = new JLabel(errorCampos);
-						lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
-						JOptionPane.showMessageDialog(frmComics, lblError, "Error",
+						lblErrorCampos.setFont(new Font("Caladea", Font.PLAIN, 16));
+						JOptionPane.showMessageDialog(frmComics, lblErrorCampos, error,
 								JOptionPane.ERROR_MESSAGE);
 						 //e1.printStackTrace();
 					}
@@ -748,9 +754,8 @@ public class OperacionesComics {
 			public void actionPerformed(ActionEvent e) {
 				//BORRAR UN NUMERO
 				if (txtID.getText().isBlank()) {
-					JLabel lblError = new JLabel(insertarID);
-					lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
-					JOptionPane.showMessageDialog(frmComics,lblError,"Error",JOptionPane.ERROR_MESSAGE);
+					lblBorrarNumero.setFont(new Font("Caladea", Font.PLAIN, 16));
+					JOptionPane.showMessageDialog(frmComics,lblBorrarNumero,error,JOptionPane.ERROR_MESSAGE);
 				} else {
 					Integer id = null;
 					boolean formato = true;
@@ -762,14 +767,14 @@ public class OperacionesComics {
 						} catch (Exception e1) {
 							formato = false;
 							JOptionPane.showMessageDialog(frmComics, mensajeEntero,
-									"Error", JOptionPane.ERROR_MESSAGE);
+									error, JOptionPane.ERROR_MESSAGE);
 							// e1.printStackTrace();
 						}	
 						
 						if (formato)
 						if (id < 0) {
 							JOptionPane.showMessageDialog(frmComics,
-								mensajeID, "Error",JOptionPane.ERROR_MESSAGE);
+								mensajeID, error,JOptionPane.ERROR_MESSAGE);
 						} else {
 							//Solicitud a servidor de borrar numero
 							String tapa = "";
@@ -790,9 +795,8 @@ public class OperacionesComics {
 						}
 						
 					} catch (Exception e1) {
-						JLabel lblError = new JLabel(errorCampos);
-						lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
-						JOptionPane.showMessageDialog(frmComics, lblError, "Error",
+						lblErrorCampos.setFont(new Font("Caladea", Font.PLAIN, 16));
+						JOptionPane.showMessageDialog(frmComics, lblErrorCampos, error,
 								JOptionPane.ERROR_MESSAGE);
 						 //e1.printStackTrace();
 					}
@@ -876,14 +880,86 @@ public class OperacionesComics {
 		PantallaPrincipal.helpBroker.enableHelpKey(txtAreaResenha, rutaAyuda, PantallaPrincipal.helpSet);
 		
 		cmbColecciones.setPrototypeDisplayValue("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+		
+		traducir();
+	}
+
+	private void traducir() {
+		ResourceBundle rb = ResourceBundle.getBundle("traduccion");
+		
+		mensajeSalir = rb.getString("mensajeSalir");
+		opciones[0] = rb.getString("si");
+		opciones[1] = rb.getString("no");
+		cerrarPrograma = rb.getString("cerrarPrograma");
+		errorConexion = rb.getString("errorConexion");
+		errorConectar = rb.getString("errorConectar");
+		gestionComics = rb.getString("gestionComics");
+		colecciones = rb.getString("colecciones");
+		gestionColecciones = rb.getString("gestionColecciones");
+		mensajeAyuda = rb.getString("mensajeAyuda");
+		error = rb.getString("error");
+		tooltipRegistrosAnteriores = rb.getString("tooltipRegistrosAnteriores");
+		noRegistrosAntes = rb.getString("noRegistrosAntes");
+		primerosRegistros = rb.getString("primerosRegistros");
+		tooltipRegistrosPosteriores = rb.getString("tooltipRegistrosPosteriores");
+		noRegistrosDespues = rb.getString("noRegistrosDespues");
+		ultimosRegistros = rb.getString("ultimosRegistros");
+		tituloPantalla = rb.getString("tituloPantallaComics");
+		fechaAdquisicion = rb.getString("fechaAdquisicion");
+		blanda = rb.getString("blanda");
+		resenha = rb.getString("resenha");
+		lblImagenValor = rb.getString("lblImagenValor");
+		btnEscogerValor = rb.getString("btnEscogerValor");
+		imgNoEscogida = rb.getString("imgNoEscogida");
+		imgNoEscogidaTitulo = rb.getString("imgNoEscogidaTitulo");
+		lblImgGuardadaValor = rb.getString("lblImgGuardadaValor");
+		imgGuardada = rb.getString("imgGuardada");
+		lblComicSinImgValor = rb.getString("lblComicSinImgValor");
+		noImg = rb.getString("noImg");
+		tituloEscogerImg = rb.getString("tituloEscogerImg");
+		mensajeInsertarNumero = rb.getString("mensajeInsertarNumero");
+		fechaFutura = rb.getString("fechaFutura");
+		formatoFecha = rb.getString("formatoFecha");
+		errorCampos = rb.getString("errorCampos");
+		mensajeModificarNumero = rb.getString("mensajeModificarNumero");
+		mensajeID = rb.getString("mensajeID");
+		preguntaImg = rb.getString("preguntaImg");
+		mensajeEntero = rb.getString("mensajeEntero");
+		
+		lblPregunta.setText(mensajeSalir);
+		lblError.setText(errorConexion);
+		itemComics.setText(gestionComics);
+		menuColecciones.setText(colecciones);
+		itemColecciones.setText(gestionColecciones);
+		lblErrorAyuda.setText(mensajeAyuda);
+		btnIzquierda.setToolTipText(tooltipRegistrosAnteriores);
+		lblNoAnteriores.setText(noRegistrosAntes);
+		btnDerecha.setToolTipText(tooltipRegistrosPosteriores);
+		lblNoPosteriores.setText(noRegistrosDespues);
+		frmComics.setTitle(tituloPantalla);
+		lblFecha.setText(fechaAdquisicion);
+		modeloComboTapas.addElement(blanda);
+		modeloComboTapas.addElement("Dura");
+		lblResenha.setText(resenha);
+		lblImg.setText(lblImagenValor);
+		btnEscogerImg.setText(btnEscogerValor);
+		lblImgNoEscogida.setText(imgNoEscogida);
+		lblImgGuardada.setText(lblImgGuardadaValor);
+		lblComicSinImg.setText(lblComicSinImgValor);
+		lblInsertarNumero.setText(mensajeInsertarNumero);
+		lblFechaFutura.setText(fechaFutura);
+		lblFormatoFecha.setText(formatoFecha);
+		lblErrorCampos.setText(errorCampos);
+		lblModificarNumero.setText(mensajeModificarNumero);
+		
 	}
 
 	protected String seleccionarImagen() {
         String ruta = null;
 
-        JFileChooser fc = escogerFichero();
+        JFileChooser fc = escogerFichero(tituloEscogerImg);
 
-        int eleccion = fc.showDialog(null, "Escoger");
+        int eleccion = fc.showDialog(null, btnEscogerValor);
 
         if (eleccion == JFileChooser.APPROVE_OPTION) {// si elige abrir el archivo
             File f = fc.getSelectedFile(); // obtiene el archivo seleccionado
@@ -922,14 +998,14 @@ public class OperacionesComics {
 		
 	}
 
-    private static JFileChooser escogerFichero() {
+    private static JFileChooser escogerFichero(String tituloEscogerImg) {
 
         JFileChooser fc = new JFileChooser();
         String escritorio = System.getProperty("user.home") + "/desktop";//carpeta donde se abre por defecto (escritorio del usuario)
         File destino = new File(escritorio);
 
         fc.setCurrentDirectory(destino);
-        fc.setDialogTitle("Elegir imagen de número");
+        fc.setDialogTitle(tituloEscogerImg);
         fc.setMultiSelectionEnabled(false);
 
         //el primer parametro es la descripcion de las extensiones aceptadas y el resto son las extensiones aceptadas
