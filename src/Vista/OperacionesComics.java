@@ -101,13 +101,13 @@ public class OperacionesComics {
 	private String errorConectar = "Error al conectar", gestionComics = "Gestión cómics", colecciones = "Colecciones", gestionColecciones = "Gestión colecciones";
 	private String error = "Error", tooltipRegistrosAnteriores = "Mostrar 100 registros anteriores";
 	private String noRegistrosAntes = "No hay registros anteriores", primerosRegistros = "Primeros registros", tooltipRegistrosPosteriores = "Mostrar 100 registros posteriores";
-	private String noRegistrosDespues = "No hay registros posteriores", ultimosRegistros = "Últimos registros", fechaAdquisicion = "Fecha adquisici\u00F3n";
+	private String noRegistrosDespues = "No hay registros posteriores", ultimosRegistros = "Últimos registros", fechaAdquisicion = "Fecha adquisición";
 	private JLabel lblPregunta = new JLabel(mensajeSalir);
 	JLabel lblError = new JLabel(errorConexion);
 	JLabel lblErrorAyuda = new JLabel("");
 	JLabel lblNoAnteriores = new JLabel("");
 	JLabel lblNoPosteriores = new JLabel("");
-	private String blanda = "Blanda", resenha = "Rese\u00F1a", lblImagenValor = "Imagen", btnEscogerValor = "Escoger", imgNoEscogida = "No has seleccionado ninguna imagen", imgNoEscogidaTitulo = "Imagen no escogida";
+	private String blanda = "Blanda", resenha = "Reseña", lblImagenValor = "Imagen", btnEscogerValor = "Escoger", imgNoEscogida = "No has seleccionado ninguna imagen", imgNoEscogidaTitulo = "Imagen no escogida";
 	JLabel lblImgNoEscogida = new JLabel(imgNoEscogida);
 	private String lblImgGuardadaValor = "Se ha guardado la ruta de la imagen seleccionada", imgGuardada = "Imagen guardada", lblComicSinImgValor = "El cómic no posee ninguna imagen", noImg = "Imagen no disponible";
 	JLabel lblImgGuardada = new JLabel(lblImgGuardadaValor);
