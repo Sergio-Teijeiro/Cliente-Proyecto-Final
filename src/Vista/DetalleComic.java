@@ -9,6 +9,8 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,31 +24,27 @@ import javax.swing.JLabel;
 
 import Fuentes.Fuentes;
 
-import java.awt.Adjustable;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-import javax.swing.plaf.ScrollBarUI;
 
 import Controlador.HiloCliente;
 
 import javax.imageio.ImageIO;
-import javax.swing.BoundedRangeModel;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 
 import java.awt.FlowLayout;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.JButton;
 
 public class DetalleComic extends JDialog {
 
-	private String tituloPantalla = "";
+	private String tituloPantalla = "", lblFechaValor = "FECHA ADQUISICIÓN", lblResenhaValor = "RESEÑA";
+	private JLabel lblFecha, lblResenha;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -148,7 +146,7 @@ public class DetalleComic extends JDialog {
 		flowLayout2.setVgap(25);
 		panelDatos.add(panelFechaTapa);
 		
-		JLabel lblFecha = new JLabel("FECHA ADQUISICIÓN");
+		lblFecha = new JLabel(lblFechaValor);
 		lblFecha.setBorder(new EmptyBorder(10, 0, 10, 5));
 		
 		lblFecha.setFont(fuente);
@@ -180,7 +178,13 @@ public class DetalleComic extends JDialog {
 		
 		JPanel panelEstadoResenha = new JPanel();
 		FlowLayout flowLayout3 = (FlowLayout) panelEstadoResenha.getLayout();
-		flowLayout3.setHgap(25);
+		
+		if (Locale.getDefault() == new Locale("es","ES")) {
+			flowLayout3.setHgap(25);
+		} else {
+			flowLayout3.setHgap(20);
+		}
+		
 		flowLayout3.setVgap(20);
 		flowLayout3.setAlignment(FlowLayout.LEFT);
 		panelDatos.add(panelEstadoResenha);
@@ -208,7 +212,7 @@ public class DetalleComic extends JDialog {
 
 		panelEstadoResenha.add(scrollEstado);
 		
-		JLabel lblResenha = new JLabel("RESEÑA");
+		lblResenha = new JLabel(lblResenhaValor);
 		lblResenha.setBorder(new EmptyBorder(10, 0, 0, 5));
 		
 		lblResenha.setFont(fuente);
@@ -317,6 +321,18 @@ public class DetalleComic extends JDialog {
 		panelColeccion.add(scrollCol);
 
 		panelImg.add(lblImgColeccion);
+		
+		traducir();
+	}
+
+	private void traducir() {
+		ResourceBundle rb = ResourceBundle.getBundle("traduccion");
+		
+		lblFechaValor = rb.getString("lblFechaValor");
+		lblResenhaValor = rb.getString("lblResenhaValor");
+		
+		lblFecha.setText(lblFechaValor);
+		lblResenha.setText(lblResenhaValor);
 	}
 
 }
