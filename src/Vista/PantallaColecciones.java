@@ -15,6 +15,7 @@ import java.net.Socket;
 import java.nio.file.Files;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -50,7 +51,7 @@ public class PantallaColecciones {
 
 	JFrame frmColecciones;
 	private String[] opciones = { "Sí", "No" };
-	private String mensajeSalir = "¿Deseas salir de la aplicación?", cerrarPrograma = "Cerrar programa";
+	private String mensajeSalir = "¿Deseas salir de la aplicación?", cerrarPrograma = "Cerrar programa", errorConexion = "No se ha podido conectar con el servidor";
 	private String tituloPantalla = "Gestión de colecciones";
 	private JMenu menuComics, menuColecciones, menuInformes;
 	private JMenuItem itemBusqueda,itemComics,itemColecciones,itemInformes;
@@ -62,18 +63,37 @@ public class PantallaColecciones {
 	private JButton btnEscogerImg, btnInsertar, btnModificar, btnBorrar;
 	
 	private byte[] img = null;
+	JLabel lblError = new JLabel(errorConexion);
 	private JSeparator separator;
 	private String mensajeInsertarColeccion = "Debes insertar un nombre", errorCampos = "Error con los campos";
 	private String mensajeAyuda = "Comprueba la ayuda para ver la longitud máxima de cada campo";
 	private String mensajeModificarColeccion = "Debes insertar un ID y un nombre", mensajeID = "Debes insertar un id mayor o igual a 0";
-	private String preguntaImg = "¿Deseas mantener la imagen que ya posee el número?", tituloPreguntaImg = "Imagen no seleccionada";
+	private String preguntaImg = "¿Deseas mantener la imagen que ya posee el número?";
 	private String insertarID = "Debes insertar un ID",mensajeEntero = "Debes insertar un número entero (separado por puntos)";
 	private String preguntaBorrar = "¿Deseas borrar la colección y sus números?", tituloBorrarColeccion = "Colección con números";
+	private String errorConectar = "Error al conectar", gestionComics = "Gestión cómics", colecciones = "Colecciones", gestionColecciones = "Gestión colecciones";
+	private String lblImagenValor = "Imagen", btnEscogerValor = "Escoger", imgNoEscogida = "No has seleccionado ninguna imagen", imgNoEscogidaTitulo = "Imagen no escogida";
+	JLabel lblImgNoEscogida = new JLabel(imgNoEscogida);
+	private String lblImgGuardadaValor = "Se ha guardado la ruta de la imagen seleccionada", imgGuardada = "Imagen guardada";
+	private String lblColeccionSinImgValor = "La colección no posee ninguna imagen", noImg = "Imagen no disponible";
 	
 	public static ArrayList<Coleccion> listaColecciones = new ArrayList<>();
 	public static ArrayList<Numero> numerosRelacionados = new ArrayList<>();
 	private JButton btnVerImg;
 	private String rutaAyuda = "colecciones";
+	JLabel lblImgGuardada = new JLabel(lblImgGuardadaValor);
+	JLabel lblColeccionSinImg = new JLabel(lblColeccionSinImgValor);
+	private JLabel lblPregunta = new JLabel(mensajeSalir);
+	private String tituloEscogerImg = "Elegir imagen de número",error = "Error", lblNombreValor = "Nombre", lblNoExisteColValor = "No existe ninguna colección con ese ID";
+	JLabel lblInsertarColeccion = new JLabel(mensajeInsertarColeccion);
+	JLabel lblErrorAyuda = new JLabel("");
+	JLabel lblErrorCampos = new JLabel(errorCampos);
+	JLabel lblModificarColeccion = new JLabel(mensajeModificarColeccion);
+	JLabel lblBorrarColeccion = new JLabel(insertarID);
+	JLabel lblNoExisteCol = new JLabel(lblNoExisteColValor);
+	JLabel lblBorrarCol = new JLabel(preguntaBorrar);
+	private String borradoCol = "Se ha eliminado correctamente la colección ", borradoListo = "Borrado completado";
+	JLabel lblBorradoCol = new JLabel(borradoCol);
 
 	/**
 	 * Launch the application.
@@ -101,9 +121,8 @@ public class PantallaColecciones {
 				skCliente = new Socket("192.168.56.101", 2000);
 			} catch (Exception ex) {
 	            if (ex.getClass().getName().equals("java.net.ConnectException")) {
-	            	JLabel lblError = new JLabel("No se ha podido conectar con el servidor");
 	            	lblError.setFont(new Font("Caladea", Font.PLAIN, 20));
-	            	JOptionPane.showMessageDialog(frmColecciones,lblError, "Error al conectar",
+	            	JOptionPane.showMessageDialog(frmColecciones,lblError, errorConectar,
 	            			JOptionPane.ERROR_MESSAGE);
 	            }
 			}
@@ -124,7 +143,6 @@ public class PantallaColecciones {
 				ImageIcon icono = new ImageIcon(PantallaPrincipal.class.getResource("/img/app_icon.png"));
 				ImageIcon iconoEscala = new ImageIcon(
 						icono.getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_FAST));
-				JLabel lblPregunta = new JLabel(mensajeSalir);
 				lblPregunta.setFont(new Font("Caladea", Font.PLAIN, 20));
 				int respuesta = JOptionPane.showOptionDialog(frmColecciones, lblPregunta,
 						cerrarPrograma, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, iconoEscala,
@@ -185,7 +203,7 @@ public class PantallaColecciones {
 		itemBusqueda.setFont(new Font("Caladea", Font.PLAIN, 16));
 		menuComics.add(itemBusqueda);
 		
-		itemComics = new JMenuItem("Gestión cómics");
+		itemComics = new JMenuItem(gestionComics);
 		itemComics.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frmColecciones.dispose();
@@ -197,11 +215,11 @@ public class PantallaColecciones {
 		itemComics.setFont(new Font("Caladea", Font.PLAIN, 16));
 		menuComics.add(itemComics);
 		
-		menuColecciones = new JMenu("Colecciones");
+		menuColecciones = new JMenu(colecciones);
 		menuColecciones.setFont(new Font("Caladea", Font.PLAIN, 16));
 		menuBar.add(menuColecciones);
 		
-		itemColecciones = new JMenuItem("Gestión colecciones");
+		itemColecciones = new JMenuItem(gestionColecciones);
 		itemColecciones.setFont(new Font("Caladea", Font.PLAIN, 16));
 		menuColecciones.add(itemColecciones);
 		
@@ -282,7 +300,7 @@ public class PantallaColecciones {
 		flowLayout_1.setAlignment(FlowLayout.LEFT);
 		panelPrincipal.add(panelNombre);
 		
-		lblNombre = new JLabel("Nombre");
+		lblNombre = new JLabel(lblNombreValor);
 		lblNombre.setFont(new Font("Caladea", Font.PLAIN, 20));
 		panelNombre.add(lblNombre);
 		
@@ -307,11 +325,11 @@ public class PantallaColecciones {
 		flowLayout_2.setAlignment(FlowLayout.LEFT);
 		panelPrincipal.add(panelImg);
 		
-		lblImg = new JLabel("Imagen");
+		lblImg = new JLabel(lblImagenValor);
 		lblImg.setFont(new Font("Caladea", Font.PLAIN, 20));
 		panelImg.add(lblImg);
 		
-		btnEscogerImg = new JButton("Escoger");
+		btnEscogerImg = new JButton(btnEscogerValor);
 		btnEscogerImg.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Escoger una imagen y guardar sus bytes
@@ -319,9 +337,8 @@ public class PantallaColecciones {
 				String rutaImg = seleccionarImagen();
 				
 		        if (rutaImg == null) {
-					JLabel lblMensaje = new JLabel("No has seleccionado ninguna imagen");
-					lblMensaje.setFont(new Font("Caladea", Font.PLAIN, 16));
-		            JOptionPane.showMessageDialog(null,lblMensaje , "Imagen no escogida", JOptionPane.WARNING_MESSAGE);
+					lblImgNoEscogida.setFont(new Font("Caladea", Font.PLAIN, 16));
+		            JOptionPane.showMessageDialog(null,lblImgNoEscogida , imgNoEscogidaTitulo, JOptionPane.WARNING_MESSAGE);
 		        } else {
 		        	File fichero = new File(rutaImg);
 		        	try {
@@ -330,9 +347,9 @@ public class PantallaColecciones {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-					JLabel lblMensaje = new JLabel("Se ha guardado la ruta de la imagen seleccionada");
-					lblMensaje.setFont(new Font("Caladea", Font.PLAIN, 16));
-		            JOptionPane.showMessageDialog(null,lblMensaje , "Imagen guardada", JOptionPane.INFORMATION_MESSAGE);
+
+					lblImgGuardada.setFont(new Font("Caladea", Font.PLAIN, 16));
+		            JOptionPane.showMessageDialog(null,lblImgGuardada , imgGuardada, JOptionPane.INFORMATION_MESSAGE);
 		        }
 			}
 		});
@@ -343,9 +360,8 @@ public class PantallaColecciones {
 		btnVerImg.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (img == null) {
-					JLabel lblMensaje = new JLabel("La colección no posee ninguna imagen");
-					lblMensaje.setFont(new Font("Caladea", Font.PLAIN, 16));
-					JOptionPane.showMessageDialog(null, lblMensaje, "Imagen no disponible", JOptionPane.ERROR_MESSAGE);
+					lblColeccionSinImg.setFont(new Font("Caladea", Font.PLAIN, 16));
+					JOptionPane.showMessageDialog(null, lblColeccionSinImg, noImg, JOptionPane.ERROR_MESSAGE);
 				} else {
 					VerImg verImg = new VerImg(img);
 					verImg.setVisible(true);
@@ -368,17 +384,15 @@ public class PantallaColecciones {
 			public void actionPerformed(ActionEvent e) {
 				//INSERTAR UNA COLECCION
 				if (txtNombre.getText().isBlank()) {
-					JLabel lblError = new JLabel(mensajeInsertarColeccion);
-					lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
-					JOptionPane.showMessageDialog(frmColecciones,lblError,"Error",JOptionPane.ERROR_MESSAGE);
+					lblInsertarColeccion.setFont(new Font("Caladea", Font.PLAIN, 16));
+					JOptionPane.showMessageDialog(frmColecciones,lblInsertarColeccion,error,JOptionPane.ERROR_MESSAGE);
 				} else {
 					try {
 						//Comprobar longitudes
 						if (txtNombre.getText().length() > 200) {
-							JLabel lblError = new JLabel(mensajeAyuda);
-							lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
+							lblErrorAyuda.setFont(new Font("Caladea", Font.PLAIN, 16));
 							JOptionPane.showMessageDialog(frmColecciones,
-									lblError, "Error",
+									lblErrorAyuda, error,
 									JOptionPane.ERROR_MESSAGE);
 						} else {
 							//Solicitud a servidor de insertar coleccion
@@ -390,9 +404,8 @@ public class PantallaColecciones {
 							img = null;
 						}
 					} catch (Exception e1) {
-						JLabel lblError = new JLabel(errorCampos);
-						lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
-						JOptionPane.showMessageDialog(frmColecciones, lblError, "Error",
+						lblErrorCampos.setFont(new Font("Caladea", Font.PLAIN, 16));
+						JOptionPane.showMessageDialog(frmColecciones, lblErrorCampos, error,
 								JOptionPane.ERROR_MESSAGE);
 						 //e1.printStackTrace();
 					}
@@ -408,17 +421,15 @@ public class PantallaColecciones {
 			public void actionPerformed(ActionEvent e) {
 				//MODIFICAR UNA COLECCION
 				if (txtID.getText().isBlank() || txtNombre.getText().isBlank()) {
-					JLabel lblError = new JLabel(mensajeModificarColeccion);
-					lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
-					JOptionPane.showMessageDialog(frmColecciones,lblError,"Error",JOptionPane.ERROR_MESSAGE);
+					lblModificarColeccion.setFont(new Font("Caladea", Font.PLAIN, 16));
+					JOptionPane.showMessageDialog(frmColecciones,lblModificarColeccion,error,JOptionPane.ERROR_MESSAGE);
 				} else {
 					try {
 						//Comprobar longitudes
 						if (txtNombre.getText().length() > 200) {
-							JLabel lblError = new JLabel(mensajeAyuda);
-							lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
+							lblErrorAyuda.setFont(new Font("Caladea", Font.PLAIN, 16));
 							JOptionPane.showMessageDialog(frmColecciones,
-									lblError, "Error",
+									lblErrorAyuda, error,
 									JOptionPane.ERROR_MESSAGE);
 						} else {
 							long aux = (long) NumberFormat.getNumberInstance().parse(txtID.getText().trim());
@@ -438,7 +449,7 @@ public class PantallaColecciones {
 									ImageIcon iconoEscala = new ImageIcon(
 											icono.getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_FAST));
 									int respuesta = JOptionPane.showOptionDialog(frmColecciones, preguntaImg,
-											tituloPreguntaImg, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, iconoEscala,
+											imgNoEscogidaTitulo, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, iconoEscala,
 											opciones, opciones[0]);
 									
 									if (respuesta == 0) { //si elige si, mantengo la imagen
@@ -455,9 +466,8 @@ public class PantallaColecciones {
 							}
 						}
 					} catch (Exception e1) {
-						JLabel lblError = new JLabel(errorCampos);
-						lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
-						JOptionPane.showMessageDialog(frmColecciones, lblError, "Error",
+						lblErrorCampos.setFont(new Font("Caladea", Font.PLAIN, 16));
+						JOptionPane.showMessageDialog(frmColecciones, lblErrorCampos, error,
 								JOptionPane.ERROR_MESSAGE);
 						 //e1.printStackTrace();
 					}
@@ -473,9 +483,8 @@ public class PantallaColecciones {
 			public void actionPerformed(ActionEvent e) {
 				//BORRAR UNA COLECCION
 				if (txtID.getText().isBlank()) {
-					JLabel lblError = new JLabel(insertarID);
-					lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
-					JOptionPane.showMessageDialog(frmColecciones,lblError,"Error",JOptionPane.ERROR_MESSAGE);
+					lblBorrarColeccion.setFont(new Font("Caladea", Font.PLAIN, 16));
+					JOptionPane.showMessageDialog(frmColecciones,lblBorrarColeccion,error,JOptionPane.ERROR_MESSAGE);
 				} else {
 					Integer id = null;
 					boolean formato = true;
@@ -487,14 +496,14 @@ public class PantallaColecciones {
 						} catch (Exception e1) {
 							formato = false;
 							JOptionPane.showMessageDialog(frmColecciones, mensajeEntero,
-									"Error", JOptionPane.ERROR_MESSAGE);
+									error, JOptionPane.ERROR_MESSAGE);
 							// e1.printStackTrace();
 						}	
 						
 						if (formato)
 						if (id < 0) {
 							JOptionPane.showMessageDialog(frmColecciones,
-								mensajeID, "Error",JOptionPane.ERROR_MESSAGE);
+								mensajeID, error,JOptionPane.ERROR_MESSAGE);
 						} else {
 								Coleccion coleccion = new Coleccion(id, txtNombre.getText(), img);
 								// Solicitud a servidor de borrar coleccion
@@ -506,21 +515,19 @@ public class PantallaColecciones {
 								hilo.join();
 								
 								if (!hilo.existeColeccion) {
-			                    	JLabel lblError = new JLabel("No existe ninguna colección con ese ID");
-			                    	lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
-			                        JOptionPane.showMessageDialog(null, lblError, "Error", JOptionPane.ERROR_MESSAGE);
+			                    	lblNoExisteCol.setFont(new Font("Caladea", Font.PLAIN, 16));
+			                        JOptionPane.showMessageDialog(null, lblNoExisteCol, error, JOptionPane.ERROR_MESSAGE);
 								} else {
 									img = null;
 
 									if (!numerosRelacionados.isEmpty()) {
 										// Si hay numeros relacionados, permito que el usuario escoja si borrar todo
-										JLabel lblMensaje = new JLabel(preguntaBorrar);
-										lblMensaje.setFont(new Font("Caladea", Font.PLAIN, 16));
+										lblBorrarCol.setFont(new Font("Caladea", Font.PLAIN, 16));
 										ImageIcon icono = new ImageIcon(
 												PantallaPrincipal.class.getResource("/img/app_icon.png"));
 										ImageIcon iconoEscala = new ImageIcon(
 												icono.getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_FAST));
-										int respuesta = JOptionPane.showOptionDialog(frmColecciones, lblMensaje,
+										int respuesta = JOptionPane.showOptionDialog(frmColecciones, lblBorrarCol,
 												tituloBorrarColeccion, JOptionPane.YES_NO_OPTION,
 												JOptionPane.QUESTION_MESSAGE, iconoEscala, opciones, opciones[1]);
 										
@@ -530,17 +537,16 @@ public class PantallaColecciones {
 											hilo3.start();
 										}
 									} else {
-				                    	JLabel lblMensaje = new JLabel("Se ha eliminado correctamente la colección "+coleccion.getNombre());
-				                    	lblMensaje.setFont(new Font("Caladea", Font.PLAIN, 16));
-										JOptionPane.showMessageDialog(null, lblMensaje, "Borrado completado", JOptionPane.INFORMATION_MESSAGE);
+				                    	lblBorradoCol.setText(borradoCol+coleccion.getNombre());
+				                    	lblBorradoCol.setFont(new Font("Caladea", Font.PLAIN, 16));
+										JOptionPane.showMessageDialog(null, lblBorradoCol, borradoListo, JOptionPane.INFORMATION_MESSAGE);
 									}
 								}
 						}
 						
 					} catch (Exception e1) {
-						JLabel lblError = new JLabel(errorCampos);
-						lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
-						JOptionPane.showMessageDialog(frmColecciones, lblError, "Error",
+						lblErrorCampos.setFont(new Font("Caladea", Font.PLAIN, 16));
+						JOptionPane.showMessageDialog(frmColecciones, lblErrorCampos, error,
 								JOptionPane.ERROR_MESSAGE);
 						 //e1.printStackTrace();
 					}					
@@ -579,14 +585,72 @@ public class PantallaColecciones {
 	
 		PantallaPrincipal.helpBroker.enableHelpKey(txtID, rutaAyuda, PantallaPrincipal.helpSet);
 		PantallaPrincipal.helpBroker.enableHelpKey(txtNombre, rutaAyuda, PantallaPrincipal.helpSet);
+		
+		traducir();
 	}
 	
+	private void traducir() {
+	ResourceBundle rb = ResourceBundle.getBundle("traduccion");
+		
+		mensajeSalir = rb.getString("mensajeSalir");
+		opciones[0] = rb.getString("si");
+		opciones[1] = rb.getString("no");
+		cerrarPrograma = rb.getString("cerrarPrograma");
+		errorConexion = rb.getString("errorConexion");
+		errorConectar = rb.getString("errorConectar");
+		gestionComics = rb.getString("gestionComics");
+		colecciones = rb.getString("colecciones");
+		gestionColecciones = rb.getString("gestionColecciones");
+		mensajeAyuda = rb.getString("mensajeAyuda");
+		error = rb.getString("error");
+		lblImagenValor = rb.getString("lblImagenValor");
+		btnEscogerValor = rb.getString("btnEscogerValor");
+		imgNoEscogida = rb.getString("imgNoEscogida");
+		noImg = rb.getString("noImg");
+		imgNoEscogidaTitulo = rb.getString("imgNoEscogidaTitulo");
+		lblImgGuardadaValor = rb.getString("lblImgGuardadaValor");
+		imgGuardada = rb.getString("imgGuardada");
+		tituloPantalla = rb.getString("tituloPantallaColecciones");
+		lblNombreValor = rb.getString("lblNombreValor");
+		lblColeccionSinImgValor = rb.getString("lblColeccionSinImgValor");
+		mensajeInsertarColeccion = rb.getString("mensajeInsertarColeccion");
+		errorCampos = rb.getString("errorCampos");
+		mensajeModificarColeccion = rb.getString("mensajeModificarColeccion");
+		mensajeID = rb.getString("mensajeID");
+		preguntaImg = rb.getString("preguntaImg");
+		mensajeEntero = rb.getString("mensajeEntero");
+		lblNoExisteColValor = rb.getString("lblNoExisteColValor");
+		preguntaBorrar = rb.getString("preguntaBorrarCol");
+		borradoCol = rb.getString("borradoCol");
+		tituloEscogerImg = rb.getString("tituloEscogerImg");
+		
+		lblPregunta.setText(mensajeSalir);
+		lblError.setText(errorConexion);
+		itemComics.setText(gestionComics);
+		menuColecciones.setText(colecciones);
+		itemColecciones.setText(gestionColecciones);
+		lblErrorAyuda.setText(mensajeAyuda);
+		lblImg.setText(lblImagenValor);
+		btnEscogerImg.setText(btnEscogerValor);
+		lblImgNoEscogida.setText(imgNoEscogida);
+		lblImgGuardada.setText(lblImgGuardadaValor);
+		lblErrorCampos.setText(errorCampos);
+		frmColecciones.setTitle(tituloPantalla);
+		lblNombre.setText(lblNombreValor);
+		lblColeccionSinImg.setText(lblColeccionSinImgValor);
+		lblInsertarColeccion.setText(mensajeInsertarColeccion);
+		lblModificarColeccion.setText(mensajeModificarColeccion);
+		lblNoExisteCol.setText(lblNoExisteColValor);
+		lblBorrarCol.setText(preguntaBorrar);
+		
+	}
+
 	protected String seleccionarImagen() {
         String ruta = null;
 
-        JFileChooser fc = escogerFichero();
+        JFileChooser fc = escogerFichero(tituloEscogerImg);
 
-        int eleccion = fc.showDialog(null, "Escoger");
+        int eleccion = fc.showDialog(null, btnEscogerValor);
 
         if (eleccion == JFileChooser.APPROVE_OPTION) {// si elige abrir el archivo
             File f = fc.getSelectedFile(); // obtiene el archivo seleccionado
@@ -597,14 +661,14 @@ public class PantallaColecciones {
 		
 	}	
 	
-    private static JFileChooser escogerFichero() {
+    private static JFileChooser escogerFichero(String tituloEscogerImg) {
 
         JFileChooser fc = new JFileChooser();
         String escritorio = System.getProperty("user.home") + "/desktop";//carpeta donde se abre por defecto (escritorio del usuario)
         File destino = new File(escritorio);
 
         fc.setCurrentDirectory(destino);
-        fc.setDialogTitle("Elegir imagen de colección");
+        fc.setDialogTitle(tituloEscogerImg);
         fc.setMultiSelectionEnabled(false);
 
         //el primer parametro es la descripcion de las extensiones aceptadas y el resto son las extensiones aceptadas
