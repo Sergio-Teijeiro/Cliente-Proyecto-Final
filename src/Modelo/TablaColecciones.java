@@ -5,6 +5,11 @@ import java.util.Locale;
 
 import javax.swing.table.AbstractTableModel;
 
+/**
+ * Modelo de tabla de colecciones. Muestra su nombre.
+ * @author sergio
+ *
+ */
 public class TablaColecciones extends AbstractTableModel{
 	private ArrayList<Coleccion> listaColecciones;
 	private String[] columnas = new String[1];

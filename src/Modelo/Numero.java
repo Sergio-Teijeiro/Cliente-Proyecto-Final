@@ -4,6 +4,12 @@ import java.awt.image.BufferedImage;
 import java.io.Serializable;
 import java.sql.Date;
 
+/**
+ * Modelo de número. Contiene el ID del número asociado, su título, la fecha de adquisición, su tapa (dura o blanda), su estado, su reseña, 
+ * el array de bytes de su imagen y el ID de su colección asociada.
+ * @author sergio
+ *
+ */
 public class Numero implements Serializable {
 	int id;
 	String titulo;

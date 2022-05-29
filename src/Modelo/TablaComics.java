@@ -7,6 +7,11 @@ import javax.swing.table.AbstractTableModel;
 
 import Controlador.HiloCliente;
 
+/**
+ * Modelo de tabla de cómics. Muestra su título y el nombre de la colección asociada.
+ * @author sergio
+ *
+ */
 public class TablaComics extends AbstractTableModel {
 	private ArrayList<Numero> listaComics;
 	private String[] columnas = {"Título","Colección"};
