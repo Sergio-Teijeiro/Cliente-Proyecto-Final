@@ -12,6 +12,7 @@ import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -37,7 +38,7 @@ public class PantallaInformes {
 
 	JFrame frmInformes;
 	private String[] opciones = { "Sí", "No" };
-	private String mensajeSalir = "¿Deseas salir de la aplicación?", cerrarPrograma = "Cerrar programa";
+	private String mensajeSalir = "¿Deseas salir de la aplicación?", cerrarPrograma = "Cerrar programa", errorConexion = "No se ha podido conectar con el servidor";
 	private String tituloPantalla = "Creación de informes";
 	private JMenu menuComics, menuColecciones, menuInformes;
 	private JMenuItem itemBusqueda,itemComics,itemColecciones,itemInformes;
@@ -55,8 +56,14 @@ public class PantallaInformes {
 	private JButton btnInformeComicsCol;
 	private DefaultComboBoxModel<Coleccion> modeloCombo = new DefaultComboBoxModel<Coleccion>();
 	private DefaultComboBoxModel<Coleccion> modeloCombo2 = new DefaultComboBoxModel<Coleccion>();
+	JLabel lblError = new JLabel(errorConexion);
+	JLabel lblPregunta = new JLabel(mensajeSalir);
 	private String rutaAyuda = "informes";
 	private int offset = 0;
+	private String errorConectar = "Error al conectar", gestionComics = "Gestión cómics", colecciones = "Colecciones", gestionColecciones = "Gestión colecciones",error = "Error";
+	private String btnInformeColeccionesValor = "Informe de todas las colecciones", btnInformeColeccionesNombreValor = "Informe de colecciones por nombre";
+	private String seleccionarCol = "Debes seleccionar una colección", btnInformeComicsValor = "Informe de todos los cómics";
+	private JLabel lblErrorCol = new JLabel(seleccionarCol);
 	
 	public static int contadorInformesComics = 0;
 
@@ -80,9 +87,8 @@ public class PantallaInformes {
 				skCliente = new Socket("192.168.56.101", 2000);
 			} catch (Exception ex) {
 	            if (ex.getClass().getName().equals("java.net.ConnectException")) {
-	            	JLabel lblError = new JLabel("No se ha podido conectar con el servidor");
 	            	lblError.setFont(new Font("Caladea", Font.PLAIN, 20));
-	            	JOptionPane.showMessageDialog(frmInformes,lblError, "Error al conectar",
+	            	JOptionPane.showMessageDialog(frmInformes,lblError, errorConectar,
 	            			JOptionPane.ERROR_MESSAGE);
 	            }
 			}
@@ -103,7 +109,7 @@ public class PantallaInformes {
 				ImageIcon icono = new ImageIcon(PantallaPrincipal.class.getResource("/img/app_icon.png"));
 				ImageIcon iconoEscala = new ImageIcon(
 						icono.getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_FAST));
-				JLabel lblPregunta = new JLabel(mensajeSalir);
+				
 				lblPregunta.setFont(new Font("Caladea", Font.PLAIN, 20));
 				int respuesta = JOptionPane.showOptionDialog(frmInformes, lblPregunta,
 						cerrarPrograma, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, iconoEscala,
@@ -164,7 +170,7 @@ public class PantallaInformes {
 		itemBusqueda.setFont(new Font("Caladea", Font.PLAIN, 16));
 		menuComics.add(itemBusqueda);
 		
-		itemComics = new JMenuItem("Gestión cómics");
+		itemComics = new JMenuItem(gestionComics);
 		itemComics.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frmInformes.dispose();
@@ -180,7 +186,7 @@ public class PantallaInformes {
 		menuColecciones.setFont(new Font("Caladea", Font.PLAIN, 16));
 		menuBar.add(menuColecciones);
 		
-		itemColecciones = new JMenuItem("Gestión colecciones");
+		itemColecciones = new JMenuItem(gestionColecciones);
 		itemColecciones.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frmInformes.dispose();
@@ -211,7 +217,7 @@ public class PantallaInformes {
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		panelPrincipal.add(panelInforme1);
 		
-		btnInformeColecciones = new JButton("Informe de todas las colecciones");
+		btnInformeColecciones = new JButton(btnInformeColeccionesValor);
 		btnInformeColecciones.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				HiloCliente hilo = new HiloCliente(skCliente, "informeColecciones", null);
@@ -246,13 +252,12 @@ public class PantallaInformes {
 		
 		panelInforme2.add(cmbColecciones);
 		
-		btnInformeColeccionesNombre = new JButton("Informe de colecciones por nombre");
+		btnInformeColeccionesNombre = new JButton(btnInformeColeccionesNombreValor);
 		btnInformeColeccionesNombre.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (cmbColecciones.getSelectedItem() == null) {
-	            	JLabel lblError = new JLabel("Debes seleccionar una colección");
-	            	lblError.setFont(new Font("Caladea", Font.PLAIN, 20));
-	            	JOptionPane.showMessageDialog(frmInformes,lblError, "Error",
+	            	lblErrorCol.setFont(new Font("Caladea", Font.PLAIN, 20));
+	            	JOptionPane.showMessageDialog(frmInformes,lblErrorCol,error,
 	            			JOptionPane.ERROR_MESSAGE);
 				} else {
 					
@@ -280,7 +285,7 @@ public class PantallaInformes {
 		flowLayout_2.setAlignment(FlowLayout.LEFT);
 		panelPrincipal.add(panelInforme3);
 		
-		btnInformeComics = new JButton("Informe de todos los c\u00F3mics");
+		btnInformeComics = new JButton(btnInformeComicsValor);
 		btnInformeComics.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				contadorInformesComics = 0;
@@ -340,9 +345,8 @@ public class PantallaInformes {
 		btnInformeComicsCol.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (cmbColecciones2.getSelectedItem() == null) {
-					JLabel lblError = new JLabel("Debes seleccionar una colección");
-					lblError.setFont(new Font("Caladea", Font.PLAIN, 20));
-					JOptionPane.showMessageDialog(frmInformes, lblError, "Error", JOptionPane.ERROR_MESSAGE);
+					lblErrorCol.setFont(new Font("Caladea", Font.PLAIN, 20));
+					JOptionPane.showMessageDialog(frmInformes, lblErrorCol, error, JOptionPane.ERROR_MESSAGE);
 				} else {
 					Coleccion coleccion = (Coleccion) cmbColecciones2.getSelectedItem();
 
@@ -375,6 +379,38 @@ public class PantallaInformes {
 		PantallaPrincipal.helpBroker.enableHelpKey(btnInformeColeccionesNombre, rutaAyuda, PantallaPrincipal.helpSet);
 		PantallaPrincipal.helpBroker.enableHelpKey(btnInformeComics, rutaAyuda, PantallaPrincipal.helpSet);
 		PantallaPrincipal.helpBroker.enableHelpKey(btnInformeComicsCol, rutaAyuda, PantallaPrincipal.helpSet);
+		
+		traducir();
+	}
+
+	private void traducir() {
+		ResourceBundle rb = ResourceBundle.getBundle("traduccion");
+		
+		mensajeSalir = rb.getString("mensajeSalir");
+		opciones[0] = rb.getString("si");
+		opciones[1] = rb.getString("no");
+		cerrarPrograma = rb.getString("cerrarPrograma");
+		errorConexion = rb.getString("errorConexion");
+		errorConectar = rb.getString("errorConectar");
+		gestionComics = rb.getString("gestionComics");
+		colecciones = rb.getString("colecciones");
+		gestionColecciones = rb.getString("gestionColecciones");
+		error = rb.getString("error");
+		btnInformeColeccionesValor = rb.getString("btnInformeColeccionesValor");
+		btnInformeColeccionesNombreValor = rb.getString("btnInformeColeccionesNombreValor");
+		seleccionarCol = rb.getString("seleccionarCol");
+		btnInformeComicsValor = rb.getString("btnInformeComicsValor");
+		
+		lblPregunta.setText(mensajeSalir);
+		lblError.setText(errorConexion);
+		itemComics.setText(gestionComics);
+		menuColecciones.setText(colecciones);
+		itemColecciones.setText(gestionColecciones);
+		btnInformeColecciones.setText(btnInformeColeccionesValor);
+		btnInformeColeccionesNombre.setText(btnInformeColeccionesNombreValor);
+		lblErrorCol.setText(seleccionarCol);
+		btnInformeComics.setText(btnInformeComicsValor);
+		
 	}
 
 	private void cargarColecciones(Socket skCliente) {
