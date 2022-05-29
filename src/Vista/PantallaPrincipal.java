@@ -38,6 +38,12 @@ import com.jtattoo.plaf.fast.FastLookAndFeel;
 import Fuentes.Fuentes;
 import javax.swing.border.EmptyBorder;
 
+/**
+ * Pantalla principal del programa que se encarga de mostrar una vista de bienvenida al usuario y permite cambiar de idioma, consultar la ayuda o conectar con la base de datos 
+ * (mediante los valores predeterminados)
+ * @author sergio
+ *
+ */
 public class PantallaPrincipal {
 
 	private JFrame frmPrincipal;
@@ -74,15 +80,12 @@ public class PantallaPrincipal {
 		});
 	}
 
-	/**
-	 * Create the application.
-	 */
 	public PantallaPrincipal() {
 		initialize();
 	}
 
 	/**
-	 * Initialize the contents of the frame.
+	 * Inicializa la pantalla.
 	 */
 	private void initialize() {
 		URL helpSetURL = this.getClass().getResource("/ayuda/help.hs");
@@ -267,6 +270,9 @@ public class PantallaPrincipal {
 		helpBroker.enableHelpKey(btnConectar, "menu", helpSet);
 	}
 
+	/**
+	 * Traduce la pantalla actual según el idioma establecido por el usuario.
+	 */
 	private void traducir() {
 		ResourceBundle rb = ResourceBundle.getBundle("traduccion");
 		

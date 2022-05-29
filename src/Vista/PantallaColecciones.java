@@ -47,6 +47,11 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.JSeparator;
 
+/**
+ * Pantalla que permite gestionar las colecciones (inserción, modificación y borrado). Además, se muestran los campos de cada colección tras seleccionarla en la tabla
+ * @author sergio
+ *
+ */
 public class PantallaColecciones {
 
 	JFrame frmColecciones;
@@ -95,9 +100,6 @@ public class PantallaColecciones {
 	private String borradoCol = "Se ha eliminado correctamente la colección ", borradoListo = "Borrado completado";
 	JLabel lblBorradoCol = new JLabel(borradoCol);
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -112,7 +114,8 @@ public class PantallaColecciones {
 	}
 
 	/**
-	 * Create the application.
+	 * Constructor de la pantalla que, antes de inicializar la pantalla, reconecta con el servidor si se perdió la conexión
+	 * @param skCliente Socket del cliente
 	 */
 	public PantallaColecciones(Socket skCliente) {
 		//reconectar con el servidor si se desconecto
@@ -132,7 +135,8 @@ public class PantallaColecciones {
 	}
 
 	/**
-	 * Initialize the contents of the frame.
+	 * Inicializa la pantalla
+	 * @param skCliente Socket del cliente
 	 */
 	private void initialize(Socket skCliente) {
 		frmColecciones = new JFrame();
@@ -589,6 +593,9 @@ public class PantallaColecciones {
 		traducir();
 	}
 	
+	/**
+	 * Traduce la pantalla actual según el idioma establecido por el usuario.
+	 */
 	private void traducir() {
 	ResourceBundle rb = ResourceBundle.getBundle("traduccion");
 		
@@ -645,6 +652,10 @@ public class PantallaColecciones {
 		
 	}
 
+	/**
+	 * Devuelve la ruta de una imagen seleccionada por el usuario
+	 * @return Ruta de la imagen seleccionada
+	 */
 	protected String seleccionarImagen() {
         String ruta = null;
 
@@ -661,6 +672,11 @@ public class PantallaColecciones {
 		
 	}	
 	
+	/**
+	 * Muestra un diálogo para escoger una image, que se muestra por defecto en el escritorio del usuario
+	 * @param tituloEscogerImg Título del diálogo
+	 * @return JFileChooser con las características predefinidas
+	 */
     private static JFileChooser escogerFichero(String tituloEscogerImg) {
 
         JFileChooser fc = new JFileChooser();
@@ -679,6 +695,10 @@ public class PantallaColecciones {
         return fc;
     }
 
+	/**
+	 * Carga todas las colecciones en la tabla
+	 * @param skCliente Socket del cliente
+	 */
 	private void cargarColecciones(Socket skCliente) {
 		listaColecciones.clear();
 		

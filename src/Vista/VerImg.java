@@ -17,6 +17,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.BorderLayout;
 
+/**
+ * Pantalla para mostrar cualquier imagen
+ * @author sergio
+ *
+ */
 public class VerImg extends JDialog {
 
 	public static void main(String[] args) {
@@ -33,6 +38,10 @@ public class VerImg extends JDialog {
 		});
 	}
 	
+	/**
+	 * Muestra la imagen escalada
+	 * @param img Array de bytes de la imagen enviada
+	 */
 	public VerImg(byte[] img) {
 		setResizable(false);
 		

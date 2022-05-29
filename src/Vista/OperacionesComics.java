@@ -54,6 +54,11 @@ import javax.swing.JFileChooser;
 import javax.swing.JButton;
 import javax.swing.JSeparator;
 
+/**
+ * Pantalla para gestionar los cómics (inserción, modificación y borrado). Además, se muestran los campos de cada cómic tras seleccionarlo en la tabla (que muestra los cómics de 100 en 100)
+ * @author sergio
+ *
+ */
 public class OperacionesComics {
 
 	JFrame frmComics;
@@ -120,9 +125,6 @@ public class OperacionesComics {
 	JLabel lblModificarNumero = new JLabel(mensajeModificarNumero);
 	JLabel lblBorrarNumero = new JLabel(insertarID);
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -137,7 +139,8 @@ public class OperacionesComics {
 	}
 
 	/**
-	 * Create the application.
+	 * Constructor de la pantalla que, antes de inicializar la pantalla, reconecta con el servidor si se perdió la conexión
+	 * @param skCliente Socket del cliente
 	 */
 	public OperacionesComics(Socket skCliente) {
 		//reconectar con el servidor si se desconecto
@@ -157,8 +160,8 @@ public class OperacionesComics {
 	}
 
 	/**
-	 * Initialize the contents of the frame.
-	 * @param skCliente 
+	 * Inicializa la pantalla
+	 * @param skCliente Socket del cliente
 	 */
 	private void initialize(Socket skCliente) {
 		frmComics = new JFrame();
@@ -883,7 +886,10 @@ public class OperacionesComics {
 		
 		traducir();
 	}
-
+	
+/**
+ * Traduce la pantalla actual según el idioma establecido por el usuario.
+ */
 	private void traducir() {
 		ResourceBundle rb = ResourceBundle.getBundle("traduccion");
 		
@@ -953,7 +959,11 @@ public class OperacionesComics {
 		lblModificarNumero.setText(mensajeModificarNumero);
 		
 	}
-
+	
+	/**
+	 * Devuelve la ruta de una imagen seleccionada por el usuario
+	 * @return Ruta de la imagen seleccionada
+	 */
 	protected String seleccionarImagen() {
         String ruta = null;
 
@@ -970,6 +980,10 @@ public class OperacionesComics {
 		
 	}
 
+	/**
+	 * Carga todas las colecciones en un combo
+	 * @param skCliente Socket del cliente
+	 */
 	private void cargarColecciones(Socket skCliente) {
 		modeloComboColecciones.removeAllElements();
 		
@@ -983,6 +997,10 @@ public class OperacionesComics {
 		}
 	}
 	
+	/**
+	 * Carga los 100 cómics correspondientes en la tabla
+	 * @param skCliente
+	 */
 	private void cargarComics(Socket skCliente) {
 		PantallaBusqueda.listaComics.clear();
 		
@@ -998,6 +1016,11 @@ public class OperacionesComics {
 		
 	}
 
+	/**
+	 * Muestra un diálogo para escoger una image, que se muestra por defecto en el escritorio del usuario
+	 * @param tituloEscogerImg Título del diálogo
+	 * @return JFileChooser con las características predefinidas
+	 */
     private static JFileChooser escogerFichero(String tituloEscogerImg) {
 
         JFileChooser fc = new JFileChooser();

@@ -47,6 +47,11 @@ import javax.swing.UIManager;
 import javax.swing.JButton;
 import java.awt.Insets;
 
+/**
+ * Pantalla que permite la visualización de los cómics a partir de un filtrado según colección del cómic o título de cómic. Los datos son mostrados de 100 en 100 en una tabla
+ * @author sergio
+ *
+ */
 public class PantallaBusqueda {
 
 	JFrame frmBusqueda;
@@ -84,9 +89,6 @@ public class PantallaBusqueda {
 	private String noRegistrosAntes = "No hay registros anteriores", primerosRegistros = "Primeros registros", tooltipRegistrosPosteriores = "Mostrar 100 registros posteriores";
 	private String noRegistrosDespues = "No hay registros posteriores", ultimosRegistros = "Últimos registros";
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -100,10 +102,10 @@ public class PantallaBusqueda {
 		});
 	}
 
-	/**
-	 * Create the application.
-	 * @param skCliente 
-	 */
+/**
+ * Constructor de la pantalla que, antes de inicializar la pantalla, reconecta con el servidor si se perdió la conexión
+ * @param skCliente Socket del cliente
+ */
 	public PantallaBusqueda(Socket skCliente) {
 		//reconectar con el servidor si se desconecto
 		if (skCliente.isClosed()) {
@@ -122,10 +124,10 @@ public class PantallaBusqueda {
 		initialize(skCliente);
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 * @param skCliente 
-	 */
+/**
+ * Inicializa la pantalla
+ * @param skCliente Socket del cliente
+ */
 	private void initialize(Socket skCliente) {
 		frmBusqueda = new JFrame();
 		frmBusqueda.addWindowListener(new WindowAdapter() {
@@ -463,6 +465,11 @@ public class PantallaBusqueda {
 		traducir();
 	}
 
+/**
+ * Carga en la tabla los cómics que contengan el título especificado
+ * @param skCliente Socket del cliente
+ * @param titulo Título de los cómics
+ */
 	protected void cargarComicsPorTitulo(Socket skCliente, String titulo) {
 		listaComics.clear();
 		
@@ -477,7 +484,12 @@ public class PantallaBusqueda {
 		}
 		
 	}
-
+	
+	/**
+	 * Carga en la tabla los cómics de la colección con el nombre específicado
+	 * @param skCliente Socket del cliente
+	 * @param nombreColeccion Nombre de la colección de los cómics
+	 */
 	private void cargarComicsPorColeccion(Socket skCliente, String nombreColeccion) {
 		listaComics.clear();
 		
@@ -493,6 +505,10 @@ public class PantallaBusqueda {
 		
 	}
 
+	/**
+	 * Carga en la tabla los 100 cómics correspondientes
+	 * @param skCliente Socket del cliente
+	 */
 	private void cargarComics(Socket skCliente) {
 		listaComics.clear();
 		
@@ -508,6 +524,9 @@ public class PantallaBusqueda {
 		
 	}
 
+	/**
+	 * Traduce la pantalla actual según el idioma establecido por el usuario.
+	 */
 	private void traducir() {
 		ResourceBundle rb = ResourceBundle.getBundle("traduccion");
 		

@@ -34,6 +34,11 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 
+/**
+ * Pantalla para generar y consultar informes creados a partir de los datos de la base de datos, algunos de ellos con filtros proporcionados por el usuario
+ * @author sergio
+ *
+ */
 public class PantallaInformes {
 
 	JFrame frmInformes;
@@ -80,6 +85,10 @@ public class PantallaInformes {
 		});
 	}
 
+	/**
+	 * Constructor de la pantalla que, antes de inicializar la pantalla, reconecta con el servidor si se perdió la conexión
+	 * @param skCliente Socket del cliente
+	 */
 	public PantallaInformes(Socket skCliente) {
 		//reconectar con el servidor si se desconecto
 		if (skCliente.isClosed()) {
@@ -98,7 +107,8 @@ public class PantallaInformes {
 	}
 
 	/**
-	 * Initialize the contents of the frame.
+	 * Inicializa la pantalla
+	 * @param skCliente Socket del cliente
 	 */
 	private void initialize(Socket skCliente) {
 		frmInformes = new JFrame();
@@ -383,6 +393,9 @@ public class PantallaInformes {
 		traducir();
 	}
 
+	/**
+	 * Traduce la pantalla actual según el idioma establecido por el usuario.
+	 */
 	private void traducir() {
 		ResourceBundle rb = ResourceBundle.getBundle("traduccion");
 		
@@ -413,6 +426,10 @@ public class PantallaInformes {
 		
 	}
 
+	/**
+	 * Carga todas las colecciones en los combos
+	 * @param skCliente Socket del cliente
+	 */
 	private void cargarColecciones(Socket skCliente) {
 		modeloCombo.removeAllElements();
 		modeloCombo2.removeAllElements();

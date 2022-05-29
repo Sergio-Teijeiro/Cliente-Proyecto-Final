@@ -42,14 +42,16 @@ import java.awt.FlowLayout;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+/**
+ * Pantalla que muestra los detalles del cómic seleccionado de la tabla de la pantalla de búsqueda de cómics
+ * @author sergio
+ *
+ */
 public class DetalleComic extends JDialog {
 
 	private String tituloPantalla = "", lblFechaValor = "FECHA ADQUISICIÓN", lblResenhaValor = "RESEÑA";
 	private JLabel lblFecha, lblResenha;
 	
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -64,11 +66,11 @@ public class DetalleComic extends JDialog {
 		});
 	}
 
-	/**
-	 * Create the dialog.
-	 * @param skCliente 
-	 * @param coleccion2 
-	 */
+/**
+ * Crea el diálogo
+ * @param numero Cómic seleccionado en la tabla de la pantalla de búsqueda de cómics
+ * @param skCliente Socket del cliente
+ */
 	public DetalleComic(Numero numero, Socket skCliente) {
 		setResizable(false);
 		tituloPantalla = numero.getTitulo();
@@ -328,7 +330,10 @@ public class DetalleComic extends JDialog {
 		
 		traducir();
 	}
-
+	
+	/**
+	 * Traduce la pantalla actual según el idioma establecido por el usuario.
+	 */
 	private void traducir() {
 		ResourceBundle rb = ResourceBundle.getBundle("traduccion");
 		
