@@ -9,6 +9,8 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.text.DateFormat;
+import java.text.NumberFormat;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -103,7 +105,8 @@ public class DetalleComic extends JDialog {
 		txtID.setWrapStyleWord(true);
 		txtID.setRows(1);
 		txtID.setColumns(3);
-		txtID.setText(String.valueOf(numero.getId()));
+		String idConvertido = NumberFormat.getInstance().format(numero.getId());
+		txtID.setText(idConvertido);
 		txtID.setFont(new Font("Caladea", Font.PLAIN, 20));
 		txtID.setCaretPosition(0); //poner cursor al principio
 		txtID.setEditable(false);
@@ -155,7 +158,8 @@ public class DetalleComic extends JDialog {
 		JTextField txtFecha= new JTextField();
 		txtFecha.setPreferredSize(new Dimension(20,40));
 		txtFecha.setColumns(7);
-		txtFecha.setText(numero.getFechaAdquisicion().toString());
+		String fecha = DateFormat.getDateInstance().format(numero.getFechaAdquisicion());
+		txtFecha.setText(fecha);
 		txtFecha.setFont(new Font("Caladea", Font.PLAIN, 20));
 		txtFecha.setCaretPosition(0); //poner cursor al principio
 		txtFecha.setEditable(false);
