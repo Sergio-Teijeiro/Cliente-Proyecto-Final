@@ -10,6 +10,7 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
@@ -130,7 +131,7 @@ public class HiloCliente extends Thread {
     public void run() {
         try {
         	
-            String mensaje = "";
+            String mensaje = "", error = "";
             OutputStream out = socketCliente.getOutputStream();
             DataOutputStream flujo_salida = new DataOutputStream(out);
             InputStream aux = socketCliente.getInputStream();
@@ -142,6 +143,14 @@ public class HiloCliente extends Thread {
 
             switch (peticion) {
                 case "altaNumero":
+                	if (Locale.getDefault() == new Locale("es","ES")) {
+                		flujo_salida.writeUTF("es");
+                		error = "Error";
+                	} else {
+                		flujo_salida.writeUTF("gl");
+                		error = "Erro";
+                	}
+                	
         			objeto_salida.writeObject(offset);
                     objeto_salida.writeObject(objeto);
                     //objeto_salida.flush();
@@ -151,7 +160,7 @@ public class HiloCliente extends Thread {
                     if (mensaje.contains("existe")) {
                     	JLabel lblError = new JLabel(mensaje);
                     	lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
-                        JOptionPane.showMessageDialog(null, lblError, "Error", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, lblError, error, JOptionPane.ERROR_MESSAGE);
                     } else {
                     	JLabel lblMensaje = new JLabel(mensaje);
                     	lblMensaje.setFont(new Font("Caladea", Font.PLAIN, 16));
@@ -168,6 +177,14 @@ public class HiloCliente extends Thread {
                     }
                     break;
                 case "bajaNumero":
+                	if (Locale.getDefault() == new Locale("es","ES")) {
+                		flujo_salida.writeUTF("es");
+                		error = "Error";
+                	} else {
+                		flujo_salida.writeUTF("gl");
+                		error = "Erro";
+                	}                	
+                	
         			objeto_salida.writeObject(offset);
                     objeto_salida.writeObject(objeto);
                     //objeto_salida.flush();
@@ -177,7 +194,7 @@ public class HiloCliente extends Thread {
                     if (mensaje.contains("existe")) {
                     	JLabel lblError = new JLabel(mensaje);
                     	lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
-                        JOptionPane.showMessageDialog(null, lblError, "Error", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, lblError, error, JOptionPane.ERROR_MESSAGE);
                     } else {
                     	JLabel lblMensaje = new JLabel(mensaje);
                     	lblMensaje.setFont(new Font("Caladea", Font.PLAIN, 16));
@@ -197,6 +214,14 @@ public class HiloCliente extends Thread {
                     } 
                     break;
                 case "modificarNumero":
+                	if (Locale.getDefault() == new Locale("es","ES")) {
+                		flujo_salida.writeUTF("es");
+                		error = "Error";
+                	} else {
+                		flujo_salida.writeUTF("gl");
+                		error = "Erro";
+                	}                	
+                	
         			objeto_salida.writeObject(offset);
                     objeto_salida.writeObject(objeto);
                     //objeto_salida.flush();
@@ -206,7 +231,7 @@ public class HiloCliente extends Thread {
                     if (mensaje.contains("existe")) {
                     	JLabel lblError = new JLabel(mensaje);
                     	lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
-                        JOptionPane.showMessageDialog(null, lblError, "Error", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, lblError, error, JOptionPane.ERROR_MESSAGE);
                     } else {
                     	JLabel lblMensaje = new JLabel(mensaje);
                     	lblMensaje.setFont(new Font("Caladea", Font.PLAIN, 16));
@@ -272,6 +297,14 @@ public class HiloCliente extends Thread {
                 		}
                 	break;
                 case "altaColeccion":
+                	if (Locale.getDefault() == new Locale("es","ES")) {
+                		flujo_salida.writeUTF("es");
+                		error = "Error";
+                	} else {
+                		flujo_salida.writeUTF("gl");
+                		error = "Erro";
+                	}                	
+                	
                     objeto_salida.writeObject(objeto);
                     //objeto_salida.flush();
 
@@ -280,7 +313,7 @@ public class HiloCliente extends Thread {
                     if (mensaje.contains("existe")) {
                     	JLabel lblError = new JLabel(mensaje);
                     	lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
-                        JOptionPane.showMessageDialog(null, lblError, "Error", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, lblError, error, JOptionPane.ERROR_MESSAGE);
                     } else {
                     	JLabel lblMensaje = new JLabel(mensaje);
                     	lblMensaje.setFont(new Font("Caladea", Font.PLAIN, 16));
@@ -297,6 +330,14 @@ public class HiloCliente extends Thread {
                     }                	
                 	break;
                 case "modificarColeccion":
+                	if (Locale.getDefault() == new Locale("es","ES")) {
+                		flujo_salida.writeUTF("es");
+                		error = "Error";
+                	} else {
+                		flujo_salida.writeUTF("gl");
+                		error = "Erro";
+                	}                	
+                	
                     objeto_salida.writeObject(objeto);
                     //objeto_salida.flush();
 
@@ -305,7 +346,7 @@ public class HiloCliente extends Thread {
                     if (mensaje.contains("existe")) {
                     	JLabel lblError = new JLabel(mensaje);
                     	lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
-                    	JOptionPane.showMessageDialog(null, lblError, "Error", JOptionPane.ERROR_MESSAGE);
+                    	JOptionPane.showMessageDialog(null, lblError, error, JOptionPane.ERROR_MESSAGE);
                     } else {
                     	JLabel lblMensaje = new JLabel(mensaje);
                     	lblMensaje.setFont(new Font("Caladea", Font.PLAIN, 16));
@@ -322,6 +363,14 @@ public class HiloCliente extends Thread {
                     }   
                 	break;
                 case "bajaColeccion":
+                	if (Locale.getDefault() == new Locale("es","ES")) {
+                		flujo_salida.writeUTF("es");
+                		error = "Error";
+                	} else {
+                		flujo_salida.writeUTF("gl");
+                		error = "Erro";
+                	}                	
+                	
                     objeto_salida.writeObject(objeto);
                     //objeto_salida.flush();
 
@@ -348,6 +397,14 @@ public class HiloCliente extends Thread {
                     }
                 	break;
                 case "bajaColeccionYNumeros":
+                	if (Locale.getDefault() == new Locale("es","ES")) {
+                		flujo_salida.writeUTF("es");
+                		error = "Error";
+                	} else {
+                		flujo_salida.writeUTF("gl");
+                		error = "Erro";
+                	}                	
+                	
                 	objeto_salida.writeObject(objeto);
                 	objeto_salida.writeObject(PantallaColecciones.numerosRelacionados);
                 	
