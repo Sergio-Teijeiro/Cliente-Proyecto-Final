@@ -42,15 +42,16 @@ public class PantallaPrincipal {
 
 	private JFrame frmPrincipal;
 	private String[] opciones = { "Sí", "No" };
-	private String mensajeSalir = "¿Deseas salir de la aplicación?", cerrarPrograma = "Cerrar programa", tituloPantalla = "Comicalia";
+	private String mensajeSalir = "¿Deseas salir de la aplicación?", cerrarPrograma = "Cerrar programa", tituloPantalla = "Comicalia",errorConexion = "No se ha podido conectar con el servidor";
 	private JMenu menuIdioma;
 	private JMenuItem itemEspanhol, itemGallego;
 	private JButton btnConectar, btnInfo;
 	private JLabel lblTitulo;
 	Socket skCliente;
 	
-	private String gallego = "Gallego", tooltipAyuda = "Ayuda";
+	private String gallego = "Gallego", tooltipAyuda = "Ayuda", errorConectar = "Error al conectar";
 	private JLabel lblPregunta = new JLabel(mensajeSalir);
+	JLabel lblError = new JLabel(errorConexion);
 	
 	public static HelpSet helpSet;
 	public static HelpBroker helpBroker;
@@ -196,9 +197,8 @@ public class PantallaPrincipal {
 
 		        } catch (Exception ex) {
 		            if (ex.getClass().getName().equals("java.net.ConnectException")) {
-		            	JLabel lblError = new JLabel("No se ha podido conectar con el servidor");
-		            	lblError.setFont(new Font("Caladea", Font.PLAIN, 16));
-		            	JOptionPane.showMessageDialog(frmPrincipal,lblError, "Error al conectar",
+		            	lblError.setFont(new Font("Caladea", Font.PLAIN, 20));
+		            	JOptionPane.showMessageDialog(frmPrincipal,lblError, errorConectar,
 		            			JOptionPane.ERROR_MESSAGE);
 		            }
 		            //ex.printStackTrace();
@@ -276,10 +276,13 @@ public class PantallaPrincipal {
 		opciones[1] = rb.getString("no");
 		cerrarPrograma = rb.getString("cerrarPrograma");
 		tooltipAyuda = rb.getString("tooltipAyuda");
+		errorConexion = rb.getString("errorConexion");
+		errorConectar = rb.getString("errorConectar");
 		
 		itemGallego.setText(gallego);
 		lblPregunta.setText(mensajeSalir);
 		btnInfo.setToolTipText(tooltipAyuda);
+		lblError.setText(errorConexion);
 	}
 
 }
