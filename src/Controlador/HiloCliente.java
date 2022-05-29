@@ -31,6 +31,11 @@ import net.sf.jasperreports.view.JasperViewer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Hilo que usa el cliente para realizar las diferentes peticiones al servidor
+ * @author sergio
+ *
+ */
 public class HiloCliente extends Thread {
 	Socket socketCliente;
     String peticion;
@@ -43,6 +48,12 @@ public class HiloCliente extends Thread {
     public boolean existeColeccion = true;
     int offset;
     
+    /**
+     * Constructor 1
+     * @param socketCliente Socket del cliente
+     * @param peticion Nombre clave de la petición
+     * @param obj Objeto enviado
+     */
     public HiloCliente(Socket socketCliente, String peticion, Object obj) {
         this.socketCliente = socketCliente;
         this.peticion = peticion;
@@ -59,6 +70,13 @@ public class HiloCliente extends Thread {
         }
     }
     
+    /**
+     * Constructor 2
+     * @param socketCliente Socket del cliente
+     * @param peticion Nombre clave de la petición
+     * @param obj Objeto enviado
+     * @param col Colección enviada
+     */
     public HiloCliente(Socket socketCliente, String peticion, Object obj, Coleccion col) {
         this.socketCliente = socketCliente;
         this.peticion = peticion;
@@ -76,6 +94,13 @@ public class HiloCliente extends Thread {
         }
     }
     
+    /**
+     * Constructor 3
+     * @param socketCliente Socket del cliente
+     * @param peticion Nombre clave de la petición
+     * @param obj Objeto enviado
+     * @param Tabla Tabla enviada
+     */
     public HiloCliente(Socket socketCliente, String peticion, Object obj, JTable Tabla) {
         this.socketCliente = socketCliente;
         this.peticion = peticion;
@@ -93,6 +118,12 @@ public class HiloCliente extends Thread {
         }
     }
     
+    /**
+     * Constructor 4
+     * @param socketCliente Socket del cliente
+     * @param peticion Nombre clave de la petición
+     * @param modeloCombo Combo de colecciones enviado
+     */
     public HiloCliente(Socket socketCliente, String peticion, DefaultComboBoxModel<Coleccion> modeloCombo) {
         this.socketCliente = socketCliente;
         this.peticion = peticion;
@@ -109,6 +140,14 @@ public class HiloCliente extends Thread {
         }
     }   
     
+    /**
+     * Constructor 5
+     * @param socketCliente Socket del cliente
+     * @param peticion Nombre clave de la petición
+     * @param numero Número enviado
+     * @param tabla Tabla enviada
+     * @param offset Intervalo enviado por el usuario
+     */
     public HiloCliente(Socket skCliente, String peticion, Numero numero, JTable tabla, int offset) {
         this.socketCliente = skCliente;
         this.peticion = peticion;
