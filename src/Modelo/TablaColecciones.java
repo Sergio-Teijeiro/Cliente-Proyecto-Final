@@ -1,16 +1,23 @@
 package Modelo;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import javax.swing.table.AbstractTableModel;
 
 public class TablaColecciones extends AbstractTableModel{
 	private ArrayList<Coleccion> listaColecciones;
-	private String[] columnas = {"Nombre"};
+	private String[] columnas = new String[1];
 	
 	public TablaColecciones(ArrayList<Coleccion> colecciones) {
 		super();
 		this.listaColecciones = colecciones;
+		
+		if (Locale.getDefault() == new Locale("es","ES")) {
+			columnas[0] = "Nombre";
+		} else {
+			columnas[0] = "Nome";
+		}
 	}
 	
 	@Override
