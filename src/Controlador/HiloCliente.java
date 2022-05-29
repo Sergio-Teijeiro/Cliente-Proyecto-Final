@@ -142,7 +142,7 @@ public class HiloCliente extends Thread {
     
     /**
      * Constructor 5
-     * @param socketCliente Socket del cliente
+     * @param skCliente Socket del cliente
      * @param peticion Nombre clave de la petición
      * @param numero Número enviado
      * @param tabla Tabla enviada
