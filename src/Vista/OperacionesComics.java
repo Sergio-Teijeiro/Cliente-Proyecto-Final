@@ -132,7 +132,7 @@ public class OperacionesComics {
 					OperacionesComics window = new OperacionesComics(null);
 					window.frmComics.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					//e.printStackTrace();
 				}
 			}
 		});
@@ -194,9 +194,9 @@ public class OperacionesComics {
 			                skCliente.close();
 			            }
 			        } catch (IOException ex) {
-			            Logger.getLogger(PantallaBusqueda.class.getName()).log(Level.SEVERE, null, ex);
+			           // Logger.getLogger(PantallaBusqueda.class.getName()).log(Level.SEVERE, null, ex);
 			        } catch (InterruptedException ex) {
-			            Logger.getLogger(PantallaBusqueda.class.getName()).log(Level.SEVERE, null, ex);
+			            //Logger.getLogger(PantallaBusqueda.class.getName()).log(Level.SEVERE, null, ex);
 			        }
 					
 				} else { // si cierra el dialogo de confirmacion, no cierra la ventana principal
@@ -330,8 +330,7 @@ public class OperacionesComics {
 				try {
 					hilo.join();
 				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					//e1.printStackTrace();
 				}
 
 				if (offset + 100 > PantallaBusqueda.numComics) {
@@ -494,8 +493,7 @@ public class OperacionesComics {
 		        	try {
 						img = Files.readAllBytes(fichero.toPath());
 					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
+						//e1.printStackTrace();
 					}
 		        	
 					lblImgGuardada.setFont(new Font("Caladea", Font.PLAIN, 16));
@@ -993,7 +991,7 @@ public class OperacionesComics {
 		try {
 			hilo.join();
 		} catch (InterruptedException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}
 	
@@ -1010,8 +1008,7 @@ public class OperacionesComics {
 		try {
 			hilo.join();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		
 	}

@@ -74,7 +74,7 @@ public class PantallaPrincipal {
 					PantallaPrincipal window = new PantallaPrincipal();
 					window.frmPrincipal.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					//e.printStackTrace();
 				}
 			}
 		});
@@ -95,7 +95,7 @@ public class PantallaPrincipal {
 			helpSet = new HelpSet(null,helpSetURL);
 			helpBroker = helpSet.createHelpBroker();
 		} catch (HelpSetException e3) {
-			e3.printStackTrace();
+			//e3.printStackTrace();
 		}
 		
 		frmPrincipal = new JFrame();

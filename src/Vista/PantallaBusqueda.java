@@ -96,7 +96,7 @@ public class PantallaBusqueda {
 					PantallaBusqueda window = new PantallaBusqueda(null);
 					window.frmBusqueda.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					//e.printStackTrace();
 				}
 			}
 		});
@@ -159,9 +159,9 @@ public class PantallaBusqueda {
 			                skCliente.close();
 			            }
 			        } catch (IOException ex) {
-			            Logger.getLogger(PantallaBusqueda.class.getName()).log(Level.SEVERE, null, ex);
+			            //Logger.getLogger(PantallaBusqueda.class.getName()).log(Level.SEVERE, null, ex);
 			        } catch (InterruptedException ex) {
-			            Logger.getLogger(PantallaBusqueda.class.getName()).log(Level.SEVERE, null, ex);
+			            //Logger.getLogger(PantallaBusqueda.class.getName()).log(Level.SEVERE, null, ex);
 			        }
 					
 				} else { // si cierra el dialogo de confirmacion, no cierra la ventana principal
@@ -437,8 +437,7 @@ public class PantallaBusqueda {
 					try {
 						hilo.join();
 					} catch (InterruptedException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
+						//e1.printStackTrace();
 					}
 					
 					if (offset + 100 > numComics) {
@@ -479,8 +478,7 @@ public class PantallaBusqueda {
 		try {
 			hilo.join();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		
 	}
@@ -499,8 +497,7 @@ public class PantallaBusqueda {
 		try {
 			hilo.join();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		
 	}
@@ -518,8 +515,7 @@ public class PantallaBusqueda {
 		try {
 			hilo.join();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		
 	}

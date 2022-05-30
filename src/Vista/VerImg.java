@@ -57,7 +57,7 @@ public class VerImg extends JDialog {
 		try {
 			bufImg = ImageIO.read(new ByteArrayInputStream(img));
 		} catch (IOException ex) {
-			Logger.getLogger(DetalleComic.class.getName()).log(Level.SEVERE, null, ex);
+			//Logger.getLogger(DetalleComic.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		
 		JLabel lblImg = new JLabel();

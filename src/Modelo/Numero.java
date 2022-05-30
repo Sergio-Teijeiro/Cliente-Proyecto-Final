@@ -18,7 +18,6 @@ public class Numero implements Serializable {
 	String estado;
 	String resenha;
 	byte[] img;
-	//BufferedImage img;
 	int idColeccion;
 	
 	public Numero() {

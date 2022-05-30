@@ -66,8 +66,7 @@ public class TablaComics extends AbstractTableModel {
 				try {
 					hilo.join();
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					//e.printStackTrace();
 				}
 				
 				colecciones.add(coleccion);

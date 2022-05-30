@@ -79,7 +79,7 @@ public class PantallaInformes {
 					PantallaInformes window = new PantallaInformes(null);
 					window.frmInformes.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					//e.printStackTrace();
 				}
 			}
 		});
@@ -142,9 +142,9 @@ public class PantallaInformes {
 			                skCliente.close();
 			            }
 			        } catch (IOException ex) {
-			            Logger.getLogger(PantallaBusqueda.class.getName()).log(Level.SEVERE, null, ex);
+			            //Logger.getLogger(PantallaBusqueda.class.getName()).log(Level.SEVERE, null, ex);
 			        } catch (InterruptedException ex) {
-			            Logger.getLogger(PantallaBusqueda.class.getName()).log(Level.SEVERE, null, ex);
+			            //Logger.getLogger(PantallaBusqueda.class.getName()).log(Level.SEVERE, null, ex);
 			        }
 					
 				} else { // si cierra el dialogo de confirmacion, no cierra la ventana principal
@@ -236,8 +236,7 @@ public class PantallaInformes {
 				try {
 					hilo.join();
 				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					//e1.printStackTrace();
 				}
 			}
 		});
@@ -279,8 +278,7 @@ public class PantallaInformes {
 					try {
 						hilo.join();
 					} catch (InterruptedException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
+						//e1.printStackTrace();
 					}
 				}
 			}
@@ -307,8 +305,7 @@ public class PantallaInformes {
 				try {
 					hilo.join();
 				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					//e1.printStackTrace();
 				}
 				
 				while (offset < PantallaBusqueda.numComics) {
@@ -320,8 +317,7 @@ public class PantallaInformes {
 					try {
 						hilo2.join();
 					} catch (InterruptedException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
+						//e1.printStackTrace();
 					}
 					
 					offset += 1000;
@@ -366,8 +362,7 @@ public class PantallaInformes {
 					try {
 						hilo.join();
 					} catch (InterruptedException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
+						//e1.printStackTrace();
 					}
 				}
 			}
@@ -440,8 +435,7 @@ public class PantallaInformes {
 		try {
 			hilo.join();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		
 		for (int i=0;i<modeloCombo.getSize();i++) {

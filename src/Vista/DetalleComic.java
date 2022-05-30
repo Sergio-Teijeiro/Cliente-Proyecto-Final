@@ -256,7 +256,7 @@ public class DetalleComic extends JDialog {
 			try {
 				img = ImageIO.read(new ByteArrayInputStream(data));
 			} catch (IOException ex) {
-				Logger.getLogger(DetalleComic.class.getName()).log(Level.SEVERE, null, ex);
+				//Logger.getLogger(DetalleComic.class.getName()).log(Level.SEVERE, null, ex);
 			}
 
 			ImageIcon iconoEscala = new ImageIcon(img.getScaledInstance(lblImgNumero.getWidth(),
@@ -279,8 +279,7 @@ public class DetalleComic extends JDialog {
 		try {
 			hilo.join();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		
 		coleccion = TablaComics.coleccion;
@@ -291,7 +290,7 @@ public class DetalleComic extends JDialog {
 			try {
 				imgCol = ImageIO.read(new ByteArrayInputStream(dataCol));
 			} catch (IOException ex) {
-				Logger.getLogger(DetalleComic.class.getName()).log(Level.SEVERE, null, ex);
+				//Logger.getLogger(DetalleComic.class.getName()).log(Level.SEVERE, null, ex);
 			}
 
 			ImageIcon iconoEscala2 = new ImageIcon(imgCol.getScaledInstance(lblImgColeccion.getWidth(),

@@ -107,7 +107,7 @@ public class PantallaColecciones {
 					PantallaColecciones window = new PantallaColecciones(null);
 					window.frmColecciones.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					//e.printStackTrace();
 				}
 			}
 		});
@@ -169,9 +169,9 @@ public class PantallaColecciones {
 			                skCliente.close();
 			            }
 			        } catch (IOException ex) {
-			            Logger.getLogger(PantallaBusqueda.class.getName()).log(Level.SEVERE, null, ex);
+			            //Logger.getLogger(PantallaBusqueda.class.getName()).log(Level.SEVERE, null, ex);
 			        } catch (InterruptedException ex) {
-			            Logger.getLogger(PantallaBusqueda.class.getName()).log(Level.SEVERE, null, ex);
+			            //Logger.getLogger(PantallaBusqueda.class.getName()).log(Level.SEVERE, null, ex);
 			        }
 					
 				} else { // si cierra el dialogo de confirmacion, no cierra la ventana principal
@@ -348,8 +348,7 @@ public class PantallaColecciones {
 		        	try {
 						img = Files.readAllBytes(fichero.toPath());
 					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
+						//e1.printStackTrace();
 					}
 
 					lblImgGuardada.setFont(new Font("Caladea", Font.PLAIN, 16));
