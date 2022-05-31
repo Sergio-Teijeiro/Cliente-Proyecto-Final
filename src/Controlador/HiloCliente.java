@@ -466,7 +466,7 @@ public class HiloCliente extends Thread {
 
                 	JasperViewer.viewReport(informe, false);
 
-                	JasperExportManager.exportReportToPdfFile(informe, "./src/informes/informeColecciones.pdf");
+                	//JasperExportManager.exportReportToPdfFile(informe, "./src/informes/informeColecciones.pdf");
                 	break;
                 case "informeColPorNombre": Coleccion col = (Coleccion) objeto;
                 
@@ -476,7 +476,7 @@ public class HiloCliente extends Thread {
 
             		JasperViewer.viewReport(informe, false);
             		
-            		JasperExportManager.exportReportToPdfFile(informe, "./src/informes/informeColNombre.pdf");
+            		//JasperExportManager.exportReportToPdfFile(informe, "./src/informes/informeColNombre.pdf");
             		break;
                 case "informeComics": offset = (int) objeto;
                 
@@ -485,7 +485,7 @@ public class HiloCliente extends Thread {
 	
 	        		JasperViewer.viewReport(informe, false);
 	        		
-	        		JasperExportManager.exportReportToPdfFile(informe, "./src/informes/informeComics"+PantallaInformes.contadorInformesComics+".pdf");                
+	        		//JasperExportManager.exportReportToPdfFile(informe, "./src/informes/informeComics"+PantallaInformes.contadorInformesComics+".pdf");                
                 	break;
                 case "informeComicsPorCol": col = (Coleccion) objeto;
                 
@@ -495,7 +495,7 @@ public class HiloCliente extends Thread {
 	
 	        		JasperViewer.viewReport(informe, false);
 	        		
-	        		JasperExportManager.exportReportToPdfFile(informe, "./src/informes/informeComicsCol.pdf");
+	        		//JasperExportManager.exportReportToPdfFile(informe, "./src/informes/informeComicsCol.pdf");
                 	break;
                 case "getNumeroComics": PantallaBusqueda.numComics = (int) objeto_entrada.readObject();
                 	break;
