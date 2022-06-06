@@ -69,8 +69,6 @@ public class PantallaInformes {
 	private String btnInformeColeccionesValor = "Informe de todas las colecciones", btnInformeColeccionesNombreValor = "Informe de colecciones por nombre";
 	private String seleccionarCol = "Debes seleccionar una colección", btnInformeComicsValor = "Informe de todos los cómics";
 	private JLabel lblErrorCol = new JLabel(seleccionarCol);
-	
-	public static int contadorInformesComics = 0;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -296,34 +294,15 @@ public class PantallaInformes {
 		btnInformeComics = new JButton(btnInformeComicsValor);
 		btnInformeComics.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				contadorInformesComics = 0;
-				
-				/*consultar al servidor numero de comics*/
-				HiloCliente hilo = new HiloCliente(skCliente, "getNumeroComics", null);
+					
+				HiloCliente hilo = new HiloCliente(skCliente, "informeComics", null);
 				hilo.start();
 
 				try {
 					hilo.join();
 				} catch (InterruptedException e1) {
-					//e1.printStackTrace();
+					// e1.printStackTrace();
 				}
-				
-				while (offset < PantallaBusqueda.numComics) {
-					contadorInformesComics++;
-					
-					HiloCliente hilo2 = new HiloCliente(skCliente, "informeComics", offset);
-					hilo2.start();
-					
-					try {
-						hilo2.join();
-					} catch (InterruptedException e1) {
-						//e1.printStackTrace();
-					}
-					
-					offset += 1000;
-				}
-				
-
 			}
 		});
 		btnInformeComics.setFont(new Font("Caladea", Font.PLAIN, 20));
