@@ -22,6 +22,11 @@ import javax.swing.border.LineBorder;
 import java.awt.Color;
 import java.awt.Dimension;
 
+/**
+ * Pantalla que permite especificar la dirección IP a la que se va a conectar el cliente del servidor
+ * @author sergio
+ *
+ */
 public class ModificarIP extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
@@ -140,6 +145,9 @@ public class ModificarIP extends JDialog {
 		traducir();
 	}
 	
+	/**
+	 * Traduce la pantalla actual según el idioma establecido por el usuario.
+	 */
 	private void traducir() {
 		ResourceBundle rb = ResourceBundle.getBundle("traduccion");
 		
@@ -154,7 +162,11 @@ public class ModificarIP extends JDialog {
 		
 	}
 
-	// Function to validate the IPs address.
+	/**
+	 * Función que valida la dirección IP introducida
+	 * @param ip Cadena de la dirección IP escrita
+	 * @return Si la cadena es una dirección IP válida
+	 */
     public static boolean isValidIPAddress(String ip)
     {
  
