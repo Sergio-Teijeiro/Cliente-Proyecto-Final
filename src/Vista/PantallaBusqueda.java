@@ -110,7 +110,7 @@ public class PantallaBusqueda {
 		//reconectar con el servidor si se desconecto
 		if (skCliente.isClosed()) {
 			try {
-				skCliente = new Socket("192.168.56.101", 2000);
+				skCliente = new Socket(ModificarIP.ipValida, 2000);
 			} catch (Exception ex) {
 	            if (ex.getClass().getName().equals("java.net.ConnectException")) {
 	            	

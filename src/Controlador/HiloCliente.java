@@ -182,7 +182,7 @@ public class HiloCliente extends Thread {
 
             switch (peticion) {
                 case "altaNumero":
-                	if (Locale.getDefault() == new Locale("es","ES")) {
+                	if (!Locale.getDefault().getDisplayName().contains("galego")) {
                 		flujo_salida.writeUTF("es");
                 		error = "Error";
                 	} else {
@@ -216,7 +216,7 @@ public class HiloCliente extends Thread {
                     }
                     break;
                 case "bajaNumero":
-                	if (Locale.getDefault() == new Locale("es","ES")) {
+                	if (!Locale.getDefault().getDisplayName().contains("galego")) {
                 		flujo_salida.writeUTF("es");
                 		error = "Error";
                 	} else {
@@ -253,7 +253,7 @@ public class HiloCliente extends Thread {
                     } 
                     break;
                 case "modificarNumero":
-                	if (Locale.getDefault() == new Locale("es","ES")) {
+                	if (!Locale.getDefault().getDisplayName().contains("galego")) {
                 		flujo_salida.writeUTF("es");
                 		error = "Error";
                 	} else {
@@ -336,7 +336,7 @@ public class HiloCliente extends Thread {
                 		}
                 	break;
                 case "altaColeccion":
-                	if (Locale.getDefault() == new Locale("es","ES")) {
+                	if (!Locale.getDefault().getDisplayName().contains("galego")) {
                 		flujo_salida.writeUTF("es");
                 		error = "Error";
                 	} else {
@@ -369,7 +369,7 @@ public class HiloCliente extends Thread {
                     }                	
                 	break;
                 case "modificarColeccion":
-                	if (Locale.getDefault() == new Locale("es","ES")) {
+                	if (!Locale.getDefault().getDisplayName().contains("galego")) {
                 		flujo_salida.writeUTF("es");
                 		error = "Error";
                 	} else {
@@ -402,7 +402,7 @@ public class HiloCliente extends Thread {
                     }   
                 	break;
                 case "bajaColeccion":
-                	if (Locale.getDefault() == new Locale("es","ES")) {
+                	if (!Locale.getDefault().getDisplayName().contains("galego")) {
                 		flujo_salida.writeUTF("es");
                 		error = "Error";
                 	} else {
@@ -436,7 +436,7 @@ public class HiloCliente extends Thread {
                     }
                 	break;
                 case "bajaColeccionYNumeros":
-                	if (Locale.getDefault() == new Locale("es","ES")) {
+                	if (!Locale.getDefault().getDisplayName().contains("galego")) {
                 		flujo_salida.writeUTF("es");
                 		error = "Error";
                 	} else {

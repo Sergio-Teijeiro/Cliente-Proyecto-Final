@@ -33,6 +33,8 @@ public class ModificarIP extends JDialog {
 	JLabel lblError = new JLabel(mensajeInsertarIP);
 	JLabel lblErrorPatronIP = new JLabel(mensajePatronIP);
 	JLabel lblErrorConectar = new JLabel(errorConexion);
+	
+	public static String ipValida;
 
 	public static void main(String[] args) {
 		try {
@@ -64,7 +66,7 @@ public class ModificarIP extends JDialog {
 			panelIP.add(lblIP);
 		}
 		{
-			txtIP = new JTextField("192.168.56.101");
+			txtIP = new JTextField("192.168.56.104");
 			txtIP.setFont(new Font("Caladea", Font.PLAIN, 18));
 			panelIP.add(txtIP);
 			txtIP.setColumns(20);
@@ -101,6 +103,8 @@ public class ModificarIP extends JDialog {
 									dispose();
 									
 									frmPrincipal.dispose();
+									
+									ipValida = ip;
 								} catch (Exception ex) {
 						            if (ex.getClass().getName().equals("java.net.ConnectException")) {
 						            	lblErrorConectar.setFont(new Font("Caladea", Font.PLAIN, 20));

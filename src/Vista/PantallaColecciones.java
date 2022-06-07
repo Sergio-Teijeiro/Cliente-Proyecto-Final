@@ -73,7 +73,7 @@ public class PantallaColecciones {
 	private String mensajeInsertarColeccion = "Debes insertar un nombre", errorCampos = "Error con los campos";
 	private String mensajeAyuda = "Comprueba la ayuda para ver la longitud máxima de cada campo";
 	private String mensajeModificarColeccion = "Debes insertar un ID y un nombre", mensajeID = "Debes insertar un id mayor o igual a 0";
-	private String preguntaImg = "¿Deseas mantener la imagen que ya posee el número?";
+	private String preguntaImg = "¿Deseas mantener la imagen que ya posee la colección?";
 	private String insertarID = "Debes insertar un ID",mensajeEntero = "Debes insertar un número entero (separado por puntos)";
 	private String preguntaBorrar = "¿Deseas borrar la colección y sus números?", tituloBorrarColeccion = "Colección con números";
 	private String errorConectar = "Error al conectar", gestionComics = "Gestión cómics", colecciones = "Colecciones", gestionColecciones = "Gestión colecciones";
@@ -121,7 +121,7 @@ public class PantallaColecciones {
 		//reconectar con el servidor si se desconecto
 		if (skCliente.isClosed()) {
 			try {
-				skCliente = new Socket("192.168.56.101", 2000);
+				skCliente = new Socket(ModificarIP.ipValida, 2000);
 			} catch (Exception ex) {
 	            if (ex.getClass().getName().equals("java.net.ConnectException")) {
 	            	lblError.setFont(new Font("Caladea", Font.PLAIN, 20));
@@ -623,7 +623,7 @@ public class PantallaColecciones {
 		errorCampos = rb.getString("errorCampos");
 		mensajeModificarColeccion = rb.getString("mensajeModificarColeccion");
 		mensajeID = rb.getString("mensajeID");
-		preguntaImg = rb.getString("preguntaImg");
+		preguntaImg = rb.getString("preguntaImgCol");
 		mensajeEntero = rb.getString("mensajeEntero");
 		lblNoExisteColValor = rb.getString("lblNoExisteColValor");
 		preguntaBorrar = rb.getString("preguntaBorrarCol");
