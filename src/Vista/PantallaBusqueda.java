@@ -441,7 +441,7 @@ public class PantallaBusqueda {
 					}
 					
 					if (offset + 100 > numComics) {
-						JOptionPane.showMessageDialog(frmBusqueda, lblError, ultimosRegistros,
+						JOptionPane.showMessageDialog(frmBusqueda, lblNoPosteriores, ultimosRegistros,
 								JOptionPane.INFORMATION_MESSAGE);
 					} else {
 						offset += 100;
