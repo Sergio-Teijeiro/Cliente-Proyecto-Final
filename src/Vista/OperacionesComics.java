@@ -123,7 +123,8 @@ public class OperacionesComics {
 	JLabel lblFormatoFecha = new JLabel(formatoFecha);
 	JLabel lblErrorCampos = new JLabel(errorCampos);
 	JLabel lblModificarNumero = new JLabel(mensajeModificarNumero);
-	JLabel lblBorrarNumero = new JLabel(insertarID);
+	JLabel lblBorrarNumero = new JLabel(insertarID), lblMensajeId = new JLabel(mensajeID), lblMensajeEntero = new JLabel (mensajeEntero);
+	
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -691,13 +692,14 @@ public class OperacionesComics {
 								resenha = txtAreaResenha.getText();
 							}
 							
-							if (formato) {
+							if (formato && txtID.getText().trim().matches("\\d*")) {
 								long aux = (long) NumberFormat.getNumberInstance().parse(txtID.getText().trim());
 								id = (int) aux;
 
 								if (id < 0) {
+									lblMensajeId.setFont(new Font("Caladea", Font.PLAIN, 16));
 									JOptionPane.showMessageDialog(frmComics,
-											mensajeID, error,
+											lblMensajeId, error,
 											JOptionPane.ERROR_MESSAGE);
 								} else {
 									//Solicitud a servidor de modificar numero
@@ -722,9 +724,19 @@ public class OperacionesComics {
 												opciones, opciones[0]);
 										
 										if (respuesta == 0) { //si elige si, mantengo la imagen
-											Numero numAux = PantallaBusqueda.listaComics.get(tbComics.getSelectedRow());
+											HiloCliente hilo = new HiloCliente(skCliente,"cargarComicPorID",numero.getId(),tbComics);
+											hilo.start();
 											
-											numero.setImg(numAux.getImg());
+											try {
+												hilo.join();
+											} catch (InterruptedException ex) {
+												//e.printStackTrace();
+											}
+											
+											if (PantallaBusqueda.listaComics.get(0) != null) {
+												numero.setImg(PantallaBusqueda.listaComics.get(0).getImg());
+											}
+											
 										}
 									}
 									
@@ -733,6 +745,12 @@ public class OperacionesComics {
 									
 									img = null;
 									
+								}
+							} else {
+								if (!txtID.getText().trim().matches("\\d*")) {
+									lblMensajeEntero.setFont(new Font("Caladea", Font.PLAIN, 16));
+									JOptionPane.showMessageDialog(frmComics, lblMensajeEntero,
+											error, JOptionPane.ERROR_MESSAGE);
 								}
 							}
 						}
@@ -767,32 +785,40 @@ public class OperacionesComics {
 							id = (int) aux;
 						} catch (Exception e1) {
 							formato = false;
-							JOptionPane.showMessageDialog(frmComics, mensajeEntero,
+							lblMensajeEntero.setFont(new Font("Caladea", Font.PLAIN, 16));
+							JOptionPane.showMessageDialog(frmComics, lblMensajeEntero,
 									error, JOptionPane.ERROR_MESSAGE);
 							// e1.printStackTrace();
 						}	
 						
-						if (formato)
-						if (id < 0) {
-							JOptionPane.showMessageDialog(frmComics,
-								mensajeID, error,JOptionPane.ERROR_MESSAGE);
-						} else {
-							//Solicitud a servidor de borrar numero
-							String tapa = "";
-							if (cmbTapas.getSelectedIndex() == 0) {
-								tapa = "Blanda";
+						if (formato && txtID.getText().trim().matches("\\d*")) {
+							if (id < 0) {
+								JOptionPane.showMessageDialog(frmComics,
+									mensajeID, error,JOptionPane.ERROR_MESSAGE);
 							} else {
-								tapa = "Dura";
-							}
-							
-							Coleccion coleccion = (Coleccion) cmbColecciones.getSelectedItem();
-							
-							Numero numero = new Numero(id,txtTitulo.getText(),null,tapa,"","",img,coleccion.getId());
+								//Solicitud a servidor de borrar numero
+								String tapa = "";
+								if (cmbTapas.getSelectedIndex() == 0) {
+									tapa = "Blanda";
+								} else {
+									tapa = "Dura";
+								}
+								
+								Coleccion coleccion = (Coleccion) cmbColecciones.getSelectedItem();
+								
+								Numero numero = new Numero(id,txtTitulo.getText(),null,tapa,"","",img,coleccion.getId());
 
-							HiloCliente hilo = new HiloCliente(skCliente, "bajaNumero", numero,tbComics,offset);
-							hilo.start();
-							
-							img = null;
+								HiloCliente hilo = new HiloCliente(skCliente, "bajaNumero", numero,tbComics,offset);
+								hilo.start();
+								
+								img = null;
+							}
+						} else {
+							if (!txtID.getText().trim().matches("\\d*")) {
+								lblMensajeEntero.setFont(new Font("Caladea", Font.PLAIN, 16));
+								JOptionPane.showMessageDialog(frmComics, lblMensajeEntero,
+										error, JOptionPane.ERROR_MESSAGE);
+							}
 						}
 						
 					} catch (Exception e1) {
@@ -955,7 +981,8 @@ public class OperacionesComics {
 		lblFormatoFecha.setText(formatoFecha);
 		lblErrorCampos.setText(errorCampos);
 		lblModificarNumero.setText(mensajeModificarNumero);
-		
+		lblMensajeId.setText(mensajeID);
+		lblMensajeEntero.setText(mensajeEntero);
 	}
 	
 	/**

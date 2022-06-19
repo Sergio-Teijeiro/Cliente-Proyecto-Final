@@ -497,6 +497,22 @@ public class HiloCliente extends Thread {
                 	break;
                 case "getNumeroComics": PantallaBusqueda.numComics = (int) objeto_entrada.readObject();
                 	break;
+                case "cargarComicPorID": int id = (int) objeto;
+                
+	                objeto_salida.writeObject(id);
+	                
+					comics = (ArrayList<Numero>) objeto_entrada.readObject();
+	
+					PantallaBusqueda.listaComics = comics;
+                	break;
+                case "cargarColPorID": id = (int) objeto;
+	                
+	                objeto_salida.writeObject(id);
+	                
+					colecciones = (ArrayList<Coleccion>) objeto_entrada.readObject();
+	
+					PantallaColecciones.listaColecciones = colecciones;
+	            	break;                	
                 default:
                     break;
             }

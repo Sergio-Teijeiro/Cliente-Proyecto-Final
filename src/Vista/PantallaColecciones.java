@@ -98,7 +98,7 @@ public class PantallaColecciones {
 	JLabel lblNoExisteCol = new JLabel(lblNoExisteColValor);
 	JLabel lblBorrarCol = new JLabel(preguntaBorrar);
 	private String borradoCol = "Se ha eliminado correctamente la colección ", borradoListo = "Borrado completado";
-	JLabel lblBorradoCol = new JLabel(borradoCol);
+	JLabel lblBorradoCol = new JLabel(borradoCol), lblMensajeId = new JLabel(mensajeID), lblMensajeEntero = new JLabel (mensajeEntero);;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -435,38 +435,55 @@ public class PantallaColecciones {
 									lblErrorAyuda, error,
 									JOptionPane.ERROR_MESSAGE);
 						} else {
-							long aux = (long) NumberFormat.getNumberInstance().parse(txtID.getText().trim());
-							Integer id = (int) aux;
-							
-							if (id < 0) {
-								JOptionPane.showMessageDialog(frmColecciones,
-										mensajeID, "Error",
-										JOptionPane.ERROR_MESSAGE);
-							} else {
-								//Solicitud a servidor de modificar coleccion
-								Coleccion coleccion = new Coleccion(id,txtNombre.getText(),img);
+							if (txtID.getText().trim().matches("\\d*")) {
+								long aux = (long) NumberFormat.getNumberInstance().parse(txtID.getText().trim());
+								Integer id = (int) aux;
 								
-								if (img == null) {
-									//Preguntar si desea mantener la imagen anterior o eliminarla
-									ImageIcon icono = new ImageIcon(OperacionesComics.class.getResource("/img/app_icon.png"));
-									ImageIcon iconoEscala = new ImageIcon(
-											icono.getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_FAST));
-									int respuesta = JOptionPane.showOptionDialog(frmColecciones, preguntaImg,
-											imgNoEscogidaTitulo, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, iconoEscala,
-											opciones, opciones[0]);
+								if (id < 0) {
+									lblMensajeId.setFont(new Font("Caladea", Font.PLAIN, 16));
+									JOptionPane.showMessageDialog(frmColecciones,
+											lblMensajeId, error,
+											JOptionPane.ERROR_MESSAGE);
+								} else {
+									//Solicitud a servidor de modificar coleccion
+									Coleccion coleccion = new Coleccion(id,txtNombre.getText(),img);
 									
-									if (respuesta == 0) { //si elige si, mantengo la imagen
-										Coleccion colAux = listaColecciones.get(tbColecciones.getSelectedRow());
+									if (img == null) {
+										//Preguntar si desea mantener la imagen anterior o eliminarla
+										ImageIcon icono = new ImageIcon(OperacionesComics.class.getResource("/img/app_icon.png"));
+										ImageIcon iconoEscala = new ImageIcon(
+												icono.getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_FAST));
+										int respuesta = JOptionPane.showOptionDialog(frmColecciones, preguntaImg,
+												imgNoEscogidaTitulo, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, iconoEscala,
+												opciones, opciones[0]);
 										
-										coleccion.setImg(colAux.getImg());
+										if (respuesta == 0) { //si elige si, mantengo la imagen
+											HiloCliente hilo = new HiloCliente(skCliente,"cargarColPorID",coleccion.getId(),tbColecciones);
+											hilo.start();
+											
+											try {
+												hilo.join();
+											} catch (InterruptedException ex) {
+												//e.printStackTrace();
+											}
+											
+											if (listaColecciones.get(0) != null) {
+												coleccion.setImg(listaColecciones.get(0).getImg());
+											}
+										}
 									}
+									
+									HiloCliente hilo = new HiloCliente(skCliente, "modificarColeccion", coleccion,tbColecciones);
+									hilo.start();
+									
+									img = null;
 								}
-								
-								HiloCliente hilo = new HiloCliente(skCliente, "modificarColeccion", coleccion,tbColecciones);
-								hilo.start();
-								
-								img = null;
+							} else {
+								lblMensajeEntero.setFont(new Font("Caladea", Font.PLAIN, 16));
+								JOptionPane.showMessageDialog(frmColecciones, lblMensajeEntero, error,
+										JOptionPane.ERROR_MESSAGE);
 							}
+
 						}
 					} catch (Exception e1) {
 						lblErrorCampos.setFont(new Font("Caladea", Font.PLAIN, 16));
@@ -498,55 +515,62 @@ public class PantallaColecciones {
 							id = (int) aux;
 						} catch (Exception e1) {
 							formato = false;
-							JOptionPane.showMessageDialog(frmColecciones, mensajeEntero,
+							lblMensajeEntero.setFont(new Font("Caladea", Font.PLAIN, 16));
+							JOptionPane.showMessageDialog(frmColecciones, lblMensajeEntero,
 									error, JOptionPane.ERROR_MESSAGE);
 							// e1.printStackTrace();
 						}	
 						
-						if (formato)
-						if (id < 0) {
-							JOptionPane.showMessageDialog(frmColecciones,
-								mensajeID, error,JOptionPane.ERROR_MESSAGE);
-						} else {
-								Coleccion coleccion = new Coleccion(id, txtNombre.getText(), img);
-								// Solicitud a servidor de borrar coleccion
+						if (formato && txtID.getText().trim().matches("\\d*")) {
+							if (id < 0) {
+								JOptionPane.showMessageDialog(frmColecciones,
+									mensajeID, error,JOptionPane.ERROR_MESSAGE);
+							} else {
+									Coleccion coleccion = new Coleccion(id, txtNombre.getText(), img);
+									// Solicitud a servidor de borrar coleccion
 
-								HiloCliente hilo = new HiloCliente(skCliente, "bajaColeccion", coleccion,
-										tbColecciones);
-								hilo.start();
+									HiloCliente hilo = new HiloCliente(skCliente, "bajaColeccion", coleccion,
+											tbColecciones);
+									hilo.start();
 
-								hilo.join();
-								
-								if (!hilo.existeColeccion) {
-			                    	lblNoExisteCol.setFont(new Font("Caladea", Font.PLAIN, 16));
-			                        JOptionPane.showMessageDialog(null, lblNoExisteCol, error, JOptionPane.ERROR_MESSAGE);
-								} else {
-									img = null;
-
-									if (!numerosRelacionados.isEmpty()) {
-										// Si hay numeros relacionados, permito que el usuario escoja si borrar todo
-										lblBorrarCol.setFont(new Font("Caladea", Font.PLAIN, 16));
-										ImageIcon icono = new ImageIcon(
-												PantallaPrincipal.class.getResource("/img/app_icon.png"));
-										ImageIcon iconoEscala = new ImageIcon(
-												icono.getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_FAST));
-										int respuesta = JOptionPane.showOptionDialog(frmColecciones, lblBorrarCol,
-												tituloBorrarColeccion, JOptionPane.YES_NO_OPTION,
-												JOptionPane.QUESTION_MESSAGE, iconoEscala, opciones, opciones[1]);
-										
-										if (respuesta == 0) { // si elige si, mando al servidor coleccion y numeros relacionados y borra primero cada numero y luego col
-											HiloCliente hilo3 = new HiloCliente(skCliente, "bajaColeccionYNumeros", coleccion,
-													tbColecciones);
-											hilo3.start();
-										}
+									hilo.join();
+									
+									if (!hilo.existeColeccion) {
+				                    	lblNoExisteCol.setFont(new Font("Caladea", Font.PLAIN, 16));
+				                        JOptionPane.showMessageDialog(null, lblNoExisteCol, error, JOptionPane.ERROR_MESSAGE);
 									} else {
-				                    	lblBorradoCol.setText(borradoCol+coleccion.getNombre());
-				                    	lblBorradoCol.setFont(new Font("Caladea", Font.PLAIN, 16));
-										JOptionPane.showMessageDialog(null, lblBorradoCol, borradoListo, JOptionPane.INFORMATION_MESSAGE);
+										img = null;
+
+										if (!numerosRelacionados.isEmpty()) {
+											// Si hay numeros relacionados, permito que el usuario escoja si borrar todo
+											lblBorrarCol.setFont(new Font("Caladea", Font.PLAIN, 16));
+											ImageIcon icono = new ImageIcon(
+													PantallaPrincipal.class.getResource("/img/app_icon.png"));
+											ImageIcon iconoEscala = new ImageIcon(
+													icono.getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_FAST));
+											int respuesta = JOptionPane.showOptionDialog(frmColecciones, lblBorrarCol,
+													tituloBorrarColeccion, JOptionPane.YES_NO_OPTION,
+													JOptionPane.QUESTION_MESSAGE, iconoEscala, opciones, opciones[1]);
+											
+											if (respuesta == 0) { // si elige si, mando al servidor coleccion y numeros relacionados y borra primero cada numero y luego col
+												HiloCliente hilo3 = new HiloCliente(skCliente, "bajaColeccionYNumeros", coleccion,
+														tbColecciones);
+												hilo3.start();
+											}
+										} else {
+					                    	lblBorradoCol.setText(borradoCol+coleccion.getNombre());
+					                    	lblBorradoCol.setFont(new Font("Caladea", Font.PLAIN, 16));
+											JOptionPane.showMessageDialog(null, lblBorradoCol, borradoListo, JOptionPane.INFORMATION_MESSAGE);
+										}
 									}
-								}
+							}
+						} else {
+							if (!txtID.getText().trim().matches("\\d*")) {
+								lblMensajeEntero.setFont(new Font("Caladea", Font.PLAIN, 16));
+								JOptionPane.showMessageDialog(frmColecciones, lblMensajeEntero,
+										error, JOptionPane.ERROR_MESSAGE);
+							}
 						}
-						
 					} catch (Exception e1) {
 						lblErrorCampos.setFont(new Font("Caladea", Font.PLAIN, 16));
 						JOptionPane.showMessageDialog(frmColecciones, lblErrorCampos, error,
@@ -648,7 +672,8 @@ public class PantallaColecciones {
 		lblModificarColeccion.setText(mensajeModificarColeccion);
 		lblNoExisteCol.setText(lblNoExisteColValor);
 		lblBorrarCol.setText(preguntaBorrar);
-		
+		lblMensajeId.setText(mensajeID);
+		lblMensajeEntero.setText(mensajeEntero);
 	}
 
 	/**
