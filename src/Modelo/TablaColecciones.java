@@ -18,7 +18,7 @@ public class TablaColecciones extends AbstractTableModel{
 		super();
 		this.listaColecciones = colecciones;
 		
-		if (Locale.getDefault() == new Locale("es","ES")) {
+		if (!Locale.getDefault().getDisplayName().contains("galego")) {
 			columnas[0] = "Nombre";
 		} else {
 			columnas[0] = "Nome";
